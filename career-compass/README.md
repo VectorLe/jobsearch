@@ -31,7 +31,7 @@ This site includes `robots.txt` and `noindex`, **but they do not restrict access
 
 ## Daily refresh workflow
 
-`.github/workflows/daily-refresh.yml` runs at **16:17 UTC every day** (8:17 a.m. PST / 9:17 a.m. PDT) and can also be started with **Actions → Career Atlas — daily research refresh → Run workflow**.
+`.github/workflows/career-compass-daily.yml` (at repository root; the standalone download includes the same workflow under `.github/workflows/daily-refresh.yml`) runs at **16:17 UTC every day** (8:17 a.m. PST / 9:17 a.m. PDT) and can also be started with **Actions → Career Atlas — daily research refresh → Run workflow**.
 
 By default, the job performs three useful things:
 
