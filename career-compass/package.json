@@ -1,0 +1,13 @@
+{
+  "name": "fieldnotes-career-compass",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Static, zero-dependency career research dashboard for Netlify",
+  "scripts": {
+    "test": "node --test tests/logic.test.mjs",
+    "serve": "python3 -m http.server 8000",
+    "refresh": "python3 scripts/refresh.py",
+    "refresh:offline": "python3 scripts/refresh.py --offline"
+  }
+}
