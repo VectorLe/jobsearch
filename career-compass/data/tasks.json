@@ -1,0 +1,130 @@
+[
+  {
+    "id": "apply-pio",
+    "phase": 1,
+    "title": "Check eligibility for the Pío Pico specialist posting",
+    "detail": "Subject-specific classification requirements may limit eligibility. If expired, pivot to docent program.",
+    "careerId": "heritage",
+    "priority": "urgent"
+  },
+  {
+    "id": "contact-pio",
+    "phase": 1,
+    "title": "Contact Pío Pico about volunteer docent training",
+    "detail": "Ask about training, realistic duties and schedule.",
+    "careerId": "heritage",
+    "priority": "high"
+  },
+  {
+    "id": "gilb",
+    "phase": 1,
+    "title": "Apply for a Gilb Museum volunteer shift",
+    "detail": "Build direct public-programming experience.",
+    "careerId": "museum-ed",
+    "priority": "high"
+  },
+  {
+    "id": "auction",
+    "phase": 1,
+    "title": "Attend a John Moran auction preview",
+    "detail": "Talk to staff about receiving, cataloging, previews and client service.",
+    "careerId": "auction",
+    "priority": "high"
+  },
+  {
+    "id": "garden",
+    "phase": 1,
+    "title": "Explore California Botanic Garden volunteer opportunities",
+    "detail": "Compare guide work with grounds and nursery work.",
+    "careerId": "garden",
+    "priority": "medium"
+  },
+  {
+    "id": "coin",
+    "phase": 1,
+    "title": "Talk to a coin dealer or attend a show",
+    "detail": "Ask about counterfeits, training, security and junior roles.",
+    "careerId": "numismatic",
+    "priority": "medium"
+  },
+  {
+    "id": "income",
+    "phase": 1,
+    "title": "Set minimum sustainable income and runway",
+    "detail": "Estimate take-home pay, benefits and acceptable training costs.",
+    "careerId": null,
+    "priority": "high"
+  },
+  {
+    "id": "museum-shift",
+    "phase": 2,
+    "title": "Complete at least two guided or public-program shifts",
+    "detail": "Evaluate actual work: speaking, repetition, walking, administration.",
+    "careerId": "heritage",
+    "priority": "high"
+  },
+  {
+    "id": "physical-shift",
+    "phase": 2,
+    "title": "Try one physical garden or fabrication shift",
+    "detail": "Test tolerance for repetitive work and outdoor conditions.",
+    "careerId": "garden",
+    "priority": "medium"
+  },
+  {
+    "id": "coaching-trial",
+    "phase": 2,
+    "title": "Assist in a supervised beginner class",
+    "detail": "Find out whether teaching brings energy or fatigue.",
+    "careerId": "coaching",
+    "priority": "medium"
+  },
+  {
+    "id": "tours-pilot",
+    "phase": 2,
+    "title": "Design and deliver one local history walk",
+    "detail": "Track route research, safety, public speaking and booking demand.",
+    "careerId": "walking-tours",
+    "priority": "medium"
+  },
+  {
+    "id": "book-pilot",
+    "phase": 2,
+    "title": "Research five collectible editions or objects",
+    "detail": "Write condition notes, compare sold prices and learn provenance.",
+    "careerId": "rare-books",
+    "priority": "medium"
+  },
+  {
+    "id": "score",
+    "phase": 3,
+    "title": "Score three real-world work experiments",
+    "detail": "Prefer observed enjoyment, movement and sustainability over job titles.",
+    "careerId": null,
+    "priority": "high"
+  },
+  {
+    "id": "credentials",
+    "phase": 3,
+    "title": "Confirm credentials and experience for the top role",
+    "detail": "Use official classification and employer requirements.",
+    "careerId": null,
+    "priority": "high"
+  },
+  {
+    "id": "jobs",
+    "phase": 3,
+    "title": "Apply to five truly eligible roles in the chosen field",
+    "detail": "Tailor the résumé around portable business and operational skills.",
+    "careerId": null,
+    "priority": "high"
+  },
+  {
+    "id": "decision",
+    "phase": 3,
+    "title": "Choose a primary track and a fallback",
+    "detail": "Do not change income sources until financial needs are understood.",
+    "careerId": null,
+    "priority": "high"
+  }
+]
