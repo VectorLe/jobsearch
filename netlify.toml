@@ -1,5 +1,4 @@
-# In an existing repository: set Netlify Base directory = career-compass
-# In a standalone repository: leave Base directory empty.
+# Deploy repository root; leave Netlify Base directory blank.
 # There is no build command and there are no npm dependencies.
 [build]
   publish = "."

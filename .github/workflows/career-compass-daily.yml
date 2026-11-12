@@ -30,14 +30,12 @@ jobs:
           ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
         shell: bash
         run: |
-          if [ -d career-compass ]; then ROOT=career-compass; else ROOT=.; fi
-          python "$ROOT/scripts/refresh.py" --root "$ROOT"
-          python -m unittest discover -s "$ROOT/tests" -p 'test_*.py'
+          python scripts/refresh.py --root .
+          python -m unittest discover -s tests -p 'test_*.py'
       - name: Commit refreshed snapshots
         shell: bash
         run: |
-          if [ -d career-compass ]; then ROOT=career-compass; else ROOT=.; fi
-          git add "$ROOT/data/snapshot.json" "$ROOT/data/live_jobs.json"
+          git add data/snapshot.json data/live_jobs.json
           if git diff --cached --quiet; then
             echo "No data changes"
             exit 0

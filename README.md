@@ -20,18 +20,20 @@ A self-contained, fast, responsive career-change research dashboard, created for
 
 ## Deployment on Netlify
 
-This repository can be used in two layouts:
+**This repository now contains only Fieldnotes Career Transition Atlas, directly at its root.** The dashboard entry point is `index.html`; there is no `career-compass/` directory and no frontend build step.
 
-1. **Standalone repo:** `index.html`, `data/`, `js/`, `netlify.toml` are at repository root. Import that repository into Netlify. Leave **Base directory** empty. **Build command:** leave empty. **Publish directory:** `.` (in `netlify.toml`).
-2. **Existing-repo subdirectory:** files live in `career-compass/`. In Netlify select **Base directory:** `career-compass`. **Build command:** leave empty. **Publish directory:** `.` (relative to base). In a GitHub-repository branch deployment, set the production branch to that branch.
+1. Import [VectorLe/personal-site](https://github.com/VectorLe/personal-site) in [Netlify](https://app.netlify.com/start).
+2. Set **Branch to deploy:** `main`. Set **Base directory:** blank. Set **Build command:** blank. Set **Publish directory:** `.` (repository root). These defaults are declared in `netlify.toml`.
+3. Deploy. A push to `main` will trigger a Netlify redeploy through Git integration.
+4. **If you already deployed the old `career-compass/` version**, change that existing Netlify site's **Base directory** from `career-compass` to blank, and change its production branch to `main` if it still points to `career-atlas-gruvbox-2026`. Otherwise Netlify will look for a directory that no longer exists.
 
-Netlify steps: [app.netlify.com/start](https://app.netlify.com/start) → Import existing project → GitHub → select the repository → verify base/publish settings → deploy. Netlify automatically redeploys when the configured branch receives a Git push. Connecting the Netlify account itself requires you to authorize the GitHub repository in Netlify; creating the code alone does not create a live Netlify site.
+The former personal site is archived on the GitHub branch `backup/pre-fieldnotes-root-2026-11-12`, and the Git history remains available. The archive is not part of this deployed site.
 
-This site includes `robots.txt` and `noindex`, **but they do not restrict access**. If career/financial notes should be private, use Netlify access controls and a private repository; avoid publishing identifying notes. No private browser data is ever uploaded by this app.
+This site includes `robots.txt` and `noindex`, **but they do not restrict access**. For private career/financial notes, configure Netlify access controls and avoid publishing identifying details. Personal ratings and notes remain in the browser's localStorage and are never uploaded by this application.
 
 ## Daily refresh workflow
 
-`.github/workflows/career-compass-daily.yml` (at repository root; the standalone download includes the same workflow under `.github/workflows/daily-refresh.yml`) runs at **16:17 UTC every day** (8:17 a.m. PST / 9:17 a.m. PDT) and can also be started with **Actions → Career Atlas — daily research refresh → Run workflow**.
+`.github/workflows/career-compass-daily.yml` runs at **16:17 UTC every day** (8:17 a.m. PST / 9:17 a.m. PDT) and can also be started with **Actions → Career Atlas — daily research refresh → Run workflow**.
 
 By default, the job performs three useful things:
 
@@ -51,7 +53,7 @@ Without API credentials, the curated postings still refresh but **the program do
 
 The updater never posts keys to the dashboard. Query terms and accepted city names are centralized in `scripts/refresh.py`. Adzuna sometimes returns unrelated locations or job titles; the script filters terms and city names, but a human must still check pay, eligibility and availability. If the external API fails, `live_jobs.json` records an error and the curated dashboard remains operational.
 
-**Important GitHub limitation:** `schedule` workflows run from the repository's **default branch**, not a feature branch. If this code is initially on an isolated branch, the workflow must eventually be placed on the default branch of the chosen repo (or moved to its own new repo's default branch) before daily scheduled updates occur. You can still deploy a feature branch on Netlify in the meantime; the static page itself works immediately.
+**GitHub Actions is installed on the default `main` branch**, so scheduled updates can run daily without merging a separate feature branch. Netlify redeploys automatically when the workflow pushes an updated snapshot.
 
 ### Why not scrape dozens of job boards?
 
