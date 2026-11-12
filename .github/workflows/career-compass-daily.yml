@@ -1,0 +1,46 @@
+name: Career Atlas — daily research refresh
+
+on:
+  schedule:
+    # 08:17 PST / 09:17 PDT; schedules are UTC and can be delayed by GitHub.
+    - cron: '17 16 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fieldnotes-daily-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Refresh stored job links and optional external feed
+        env:
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+        shell: bash
+        run: |
+          if [ -d career-compass ]; then ROOT=career-compass; else ROOT=.; fi
+          python "$ROOT/scripts/refresh.py" --root "$ROOT"
+          python -m unittest discover -s "$ROOT/tests" -p 'test_*.py'
+      - name: Commit refreshed snapshots
+        shell: bash
+        run: |
+          if [ -d career-compass ]; then ROOT=career-compass; else ROOT=.; fi
+          git add "$ROOT/data/snapshot.json" "$ROOT/data/live_jobs.json"
+          if git diff --cached --quiet; then
+            echo "No data changes"
+            exit 0
+          fi
+          git -c user.name='fieldnotes-update-bot' -c user.email='github-actions[bot]@users.noreply.github.com' commit -m 'data: refresh career watch snapshot'
+          git push

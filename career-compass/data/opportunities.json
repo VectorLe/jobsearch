@@ -1,0 +1,177 @@
+[
+  {
+    "id": "pio-pico",
+    "title": "Park Interpretive Specialist (seasonal)",
+    "employer": "California State Parks",
+    "city": "Whittier",
+    "category": "Heritage",
+    "salary": "$18.26–$22.15/hr",
+    "schedule": "Seasonal; limited annual hours",
+    "deadline": "2026-11-12",
+    "sourceUrl": "https://calcareers.ca.gov/CalHrPublic/Jobs/JobPosting.aspx?JobControlId=535343",
+    "observedAt": "2026-11-11",
+    "note": "Historic adobe, exhibits, objects, grounds and visitors. Verify state-classification eligibility; B.S. Computer Engineering may not satisfy subject concentration.",
+    "careerIds": [
+      "heritage",
+      "museum-ed"
+    ],
+    "priority": "high"
+  },
+  {
+    "id": "crestmore",
+    "title": "Temporary Recreation Coordinator — Crestmore Manor",
+    "employer": "Riverside County Parks",
+    "city": "Jurupa Valley",
+    "category": "Heritage",
+    "salary": "$20.92–$31.13/hr",
+    "schedule": "Temporary",
+    "deadline": "2026-11-11",
+    "sourceUrl": "https://www.governmentjobs.com/careers/riverside/jobs/5532659-0/temporary-recreation-coordinator-parks",
+    "observedAt": "2026-11-11",
+    "note": "Historic-house tours and events; listing calls for two years of relevant recreation programming experience.",
+    "careerIds": [
+      "heritage",
+      "recreation"
+    ],
+    "priority": "high"
+  },
+  {
+    "id": "la-verne",
+    "title": "Recreation Leader I",
+    "employer": "City of La Verne",
+    "city": "La Verne",
+    "category": "Outdoors & movement",
+    "salary": "$16.90–$19.56/hr",
+    "schedule": "Part-time",
+    "deadline": "2026-11-12",
+    "sourceUrl": "https://www.governmentjobs.com/jobs/5538575-0/recreation-leader-i",
+    "observedAt": "2026-11-11",
+    "note": "An accessible recreational-program experience route; posting listed a noon Pacific filing cutoff.",
+    "careerIds": [
+      "recreation"
+    ],
+    "priority": "medium"
+  },
+  {
+    "id": "pomona",
+    "title": "Community Services Specialist I — After School",
+    "employer": "City of Pomona",
+    "city": "Pomona",
+    "category": "Outdoors & movement",
+    "salary": "$20.62–$23.47/hr",
+    "schedule": "Community programs",
+    "deadline": "2026-11-22",
+    "sourceUrl": "https://www.governmentjobs.com/careers/pomona/jobs/5524208-0/community-services-specialist-i-after-school",
+    "observedAt": "2026-11-11",
+    "note": "Sports and educational programming; listing typically expects relevant experience.",
+    "careerIds": [
+      "recreation",
+      "tutoring"
+    ],
+    "priority": "medium"
+  },
+  {
+    "id": "arcadia-museum",
+    "title": "Museum Education Coordinator (substitute/on-call)",
+    "employer": "City of Arcadia / Gilb Museum",
+    "city": "Arcadia",
+    "category": "Heritage",
+    "salary": "$27.17/hr",
+    "schedule": "On-call; irregular hours",
+    "deadline": "2026-11-30",
+    "sourceUrl": "https://www.governmentjobs.com/careers/arcadiaca/jobs/5509988/museum-education-coordinator-substitute-on-call",
+    "observedAt": "2026-11-11",
+    "note": "Excellent subject match. Requires two years relevant museum, education or interpretive-program experience.",
+    "careerIds": [
+      "museum-ed",
+      "heritage"
+    ],
+    "priority": "high"
+  },
+  {
+    "id": "arcadia-rec",
+    "title": "Recreation Coordinator",
+    "employer": "City of Arcadia",
+    "city": "Arcadia",
+    "category": "Outdoors & movement",
+    "salary": "$63,972–$79,848/yr",
+    "schedule": "Full-time",
+    "deadline": "2026-11-30",
+    "sourceUrl": "https://www.governmentjobs.com/jobs/5541543-0/recreation-coordinator",
+    "observedAt": "2026-11-11",
+    "note": "A stronger full-time destination, but direct experience is required. Early application recommended.",
+    "careerIds": [
+      "recreation"
+    ],
+    "priority": "high"
+  },
+  {
+    "id": "arcadia-leader",
+    "title": "Activity Leader I/II",
+    "employer": "City of Arcadia",
+    "city": "Arcadia",
+    "category": "Outdoors & movement",
+    "salary": "$16.90–$18.65/hr",
+    "schedule": "Part-time",
+    "deadline": null,
+    "sourceUrl": "https://www.governmentjobs.com/jobs/5523488-0/activity-leader-i-ii-part-time",
+    "observedAt": "2026-11-11",
+    "note": "Originally listed as continuous recruitment; check current status.",
+    "careerIds": [
+      "recreation",
+      "coaching"
+    ],
+    "priority": "medium"
+  },
+  {
+    "id": "arcadia-library",
+    "title": "Library Aide",
+    "employer": "City of Arcadia",
+    "city": "Arcadia",
+    "category": "Education & books",
+    "salary": "$16.90–$18.65/hr",
+    "schedule": "Part-time",
+    "deadline": "2026-11-30",
+    "sourceUrl": "https://www.governmentjobs.com/jobs/5507426-0/library-aide-part-time",
+    "observedAt": "2026-11-11",
+    "note": "Entry-level book-adjacent work. Less physically active and lower-paid than some alternatives.",
+    "careerIds": [
+      "library"
+    ],
+    "priority": "low"
+  },
+  {
+    "id": "huntington",
+    "title": "Reader Services Coordinator",
+    "employer": "The Huntington",
+    "city": "San Marino",
+    "category": "Education & books",
+    "salary": "$25/hr",
+    "schedule": "Full-time",
+    "deadline": null,
+    "sourceUrl": "https://huntingtonlibrary.wd1.myworkdayjobs.com/en-US/HuntingtonCareers/job/San-Marino/Reader-Services-Coordinator_R0001379",
+    "observedAt": "2026-11-11",
+    "note": "Book-rich environment, but the description explicitly notes substantial computer work.",
+    "careerIds": [
+      "library"
+    ],
+    "priority": "medium"
+  },
+  {
+    "id": "vincent",
+    "title": "Curator of Educational Programs",
+    "employer": "LACCD / Vincent Price Art Museum",
+    "city": "Monterey Park",
+    "category": "Heritage",
+    "salary": "$84,954–$105,243/yr",
+    "schedule": "Full-time",
+    "deadline": "2026-11-16",
+    "sourceUrl": "https://www.jobapscloud.com/LACCD/sup/bulpreview.asp?R1=26&R2=5156&R3=001",
+    "observedAt": "2026-11-11",
+    "note": "Long-term aspiration, not an immediate fit without the required degree specialization and museum programming experience.",
+    "careerIds": [
+      "museum-ed"
+    ],
+    "priority": "low"
+  }
+]

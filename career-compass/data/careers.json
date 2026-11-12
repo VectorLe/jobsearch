@@ -1,0 +1,709 @@
+[
+  {
+    "id": "heritage",
+    "title": "Historic-site / park interpreter",
+    "category": "Heritage",
+    "tagline": "BEST FIRST EXPERIMENT",
+    "summary": "Lead walks, explain historic places and artifacts, develop interpretive experiences for visitors.",
+    "why": "The clearest intersection of historical curiosity, memorable storytelling, physical places and daily movement.",
+    "day": [
+      "Walk groups around an adobe, monument or historic trail",
+      "Research and explain stories using documented sources",
+      "Prepare materials, answer questions and protect the site"
+    ],
+    "risks": [
+      "Seasonal or part-time entry routes",
+      "Government roles can have history-specific degree requirements",
+      "Tour routines may become repetitive"
+    ],
+    "firstSteps": [
+      "Request a volunteer docent shift at Pío Pico",
+      "Observe a complete tour, including setup and cleanup",
+      "Confirm eligibility before applying for a paid classification"
+    ],
+    "credentials": [
+      "National Association for Interpretation CIG course is optional",
+      "California State Park Interpreter classifications have subject-specific requirements"
+    ],
+    "scores": {
+      "subject": 5,
+      "movement": 5,
+      "entry": 3,
+      "income": 2,
+      "autonomy": 3,
+      "learning": 5
+    },
+    "transition": "Staged (volunteer → seasonal → professional)",
+    "payOutlook": "Entry tours often lower-paid; public-sector professional classifications may pay more.",
+    "primaryLead": "Pío Pico State Historic Park",
+    "links": [
+      {
+        "label": "Pío Pico State Historic Park",
+        "url": "https://www.parks.ca.gov/?page_id=621"
+      },
+      {
+        "label": "Interpretive-guide training",
+        "url": "https://www.interpnet.com/"
+      }
+    ]
+  },
+  {
+    "id": "museum-ed",
+    "title": "Museum educator / public programs",
+    "category": "Heritage",
+    "tagline": "STRONG SUBJECT FIT",
+    "summary": "Create tours, workshops, school visits and public events, sometimes with on-site demonstration.",
+    "why": "A good blend of history and ideas with direct human interaction.",
+    "day": [
+      "Guide school groups and visitors",
+      "Prepare hands-on teaching programs",
+      "Coordinate events, volunteers and classroom materials"
+    ],
+    "risks": [
+      "Museum employment is competitive",
+      "Some jobs involve substantial planning and administration",
+      "Group teaching must be genuinely enjoyable"
+    ],
+    "firstSteps": [
+      "Volunteer with Gilb Museum or another small institution",
+      "Deliver a supervised 10-minute object talk",
+      "Look for public-program assistant and visitor education titles"
+    ],
+    "credentials": [
+      "Build documented museum or educational programming hours",
+      "Specialist roles may require subject degrees and direct experience"
+    ],
+    "scores": {
+      "subject": 5,
+      "movement": 3,
+      "entry": 2,
+      "income": 3,
+      "autonomy": 3,
+      "learning": 5
+    },
+    "transition": "Moderate (experience required)",
+    "payOutlook": "Wide range; higher education coordinator roles can pay considerably more than front-line work.",
+    "primaryLead": "Gilb Museum of Arcadia Heritage",
+    "links": [
+      {
+        "label": "Gilb Museum",
+        "url": "https://www.arcadiaca.gov/enrich/recreation_and_community_services/museum/index.php"
+      }
+    ]
+  },
+  {
+    "id": "auction",
+    "title": "Auction-house / consignment operations",
+    "category": "Objects & commerce",
+    "tagline": "OVERLOOKED OPPORTUNITY",
+    "summary": "Handle physical consignments, research objects, support sales, and work with collectors, estates and buyers.",
+    "why": "Uses practical commerce experience while placing historical objects and direct inspection at the center.",
+    "day": [
+      "Receive and carefully move objects",
+      "Research provenance, condition and prices",
+      "Help arrange previews, auctions and pickups"
+    ],
+    "risks": [
+      "Cataloging and communication still require screens",
+      "Careful object handling and accuracy are essential",
+      "Evening or weekend sale events possible"
+    ],
+    "firstSteps": [
+      "Attend a John Moran public auction preview",
+      "Ask about receiving, preview or cataloging entry roles",
+      "Learn condition reports and simple provenance research"
+    ],
+    "credentials": [
+      "On-the-job experience is often more important than a generic certificate",
+      "Specialist appraisal skills require substantial practice"
+    ],
+    "scores": {
+      "subject": 5,
+      "movement": 4,
+      "entry": 3,
+      "income": 3,
+      "autonomy": 4,
+      "learning": 5
+    },
+    "transition": "Moderate",
+    "payOutlook": "Variable by specialty, region and seniority; independent dealing has inventory risk.",
+    "primaryLead": "John Moran Auctioneers",
+    "links": [
+      {
+        "label": "John Moran",
+        "url": "https://www.johnmoran.com/"
+      }
+    ]
+  },
+  {
+    "id": "numismatic",
+    "title": "Coins / numismatics / bullion dealer",
+    "category": "Objects & commerce",
+    "tagline": "MONEY + HISTORY",
+    "summary": "Buy, evaluate and sell coins and precious metals, combining market literacy with security and customer service.",
+    "why": "Connects money, monetary history, material culture and a direct sales environment.",
+    "day": [
+      "Evaluate coins, test authenticity and explain grades",
+      "Manage inventory, spot prices and premiums",
+      "Meet collectors and handle secure transactions"
+    ],
+    "risks": [
+      "High consequences from fakes and pricing errors",
+      "Bullion sales may be repetitive retail",
+      "Security, compliance and significant inventory capital"
+    ],
+    "firstSteps": [
+      "Attend a local coin show",
+      "Speak with established dealers about junior roles",
+      "Practice grading only with supervision and inexpensive materials"
+    ],
+    "credentials": [
+      "ANA numismatic courses can build knowledge, not guarantee professional certification",
+      "Learn dealer regulations and security before independent sales"
+    ],
+    "scores": {
+      "subject": 5,
+      "movement": 3,
+      "entry": 3,
+      "income": 3,
+      "autonomy": 4,
+      "learning": 5
+    },
+    "transition": "Moderate",
+    "payOutlook": "Dealer wages vary widely; business profits cannot be inferred from sales volumes.",
+    "primaryLead": "Arcadia-area coin shows",
+    "links": [
+      {
+        "label": "ANA diploma program",
+        "url": "https://www.money.org/diploma-program/"
+      }
+    ]
+  },
+  {
+    "id": "rare-books",
+    "title": "Rare-book buyer / antiquarian bookseller",
+    "category": "Objects & commerce",
+    "tagline": "BOOK CULTURE",
+    "summary": "Research editions, bindings, provenance and condition; acquire, catalog and sell collectible books.",
+    "why": "Especially compelling due to a personal library and interest in the physical nature of books.",
+    "day": [
+      "Inspect editions and research printing history",
+      "Visit collections, dealers, fairs and estates",
+      "Catalog, describe, pack and negotiate book sales"
+    ],
+    "risks": [
+      "May become another e-commerce inventory operation",
+      "Slow sales cycles and thin margins",
+      "Specialist bibliographic knowledge takes time"
+    ],
+    "firstSteps": [
+      "Visit an antiquarian bookseller",
+      "Study and document five editions of one title",
+      "Seek mentorship or entry-level cataloging work"
+    ],
+    "credentials": [
+      "ABAA education and mentorship",
+      "Hands-on bibliographic and condition-reporting practice"
+    ],
+    "scores": {
+      "subject": 5,
+      "movement": 3,
+      "entry": 3,
+      "income": 2,
+      "autonomy": 5,
+      "learning": 5
+    },
+    "transition": "Moderate",
+    "payOutlook": "Small-market specialist business; financial outcomes can be irregular.",
+    "primaryLead": "Southern California antiquarian-book shops",
+    "links": [
+      {
+        "label": "ABAA",
+        "url": "https://www.abaa.org/"
+      }
+    ]
+  },
+  {
+    "id": "garden",
+    "title": "Botanical garden guide / horticultural assistant",
+    "category": "Outdoors & movement",
+    "tagline": "OUTDOOR RESET",
+    "summary": "Work with plants, visitors, garden tours, grounds or nursery collections.",
+    "why": "Combines learning, living collections and walking; tests whether hands-on outdoor work is more appealing than desk research.",
+    "day": [
+      "Lead garden walks or work with visitor groups",
+      "Plant, maintain or label living collections",
+      "Assist nursery, herbarium or garden education staff"
+    ],
+    "risks": [
+      "Heat, repetitive chores and physical exertion",
+      "Many entry roles pay modestly",
+      "Botanical knowledge must be developed"
+    ],
+    "firstSteps": [
+      "Try California Botanic Garden volunteering",
+      "Compare a guide shift with a grounds shift",
+      "Record enjoyment of repetitive tasks and weather exposure"
+    ],
+    "credentials": [
+      "Practical gardening training, horticulture courses as needed",
+      "Program roles may seek ecology or education experience"
+    ],
+    "scores": {
+      "subject": 4,
+      "movement": 5,
+      "entry": 4,
+      "income": 2,
+      "autonomy": 3,
+      "learning": 5
+    },
+    "transition": "Accessible via volunteering",
+    "payOutlook": "Outdoor entry jobs can be modestly paid; specialized roles have higher barriers.",
+    "primaryLead": "California Botanic Garden",
+    "links": [
+      {
+        "label": "California Botanic Garden",
+        "url": "https://www.calbg.org/"
+      }
+    ]
+  },
+  {
+    "id": "recreation",
+    "title": "Parks & recreation coordinator",
+    "category": "Outdoors & movement",
+    "tagline": "STRUCTURED CAREER",
+    "summary": "Deliver youth, senior, community and outdoor programs through a city or park department.",
+    "why": "Offers activity, interaction and a clearer public-sector employment ladder.",
+    "day": [
+      "Run classes, camps, sports activities or local events",
+      "Set up facilities and supervise programs",
+      "Handle schedules, attendance and safety processes"
+    ],
+    "risks": [
+      "Higher-ranking roles are often administrative",
+      "Evening/weekend public events",
+      "Relevant experience commonly required for coordinator posts"
+    ],
+    "firstSteps": [
+      "Apply to recreation leader roles",
+      "Build documented hours supervising programs",
+      "Target coordinator openings after qualifying experience"
+    ],
+    "credentials": [
+      "CPR/first aid may be useful or required",
+      "Relevant programming work matters more than unrelated degrees"
+    ],
+    "scores": {
+      "subject": 4,
+      "movement": 4,
+      "entry": 4,
+      "income": 4,
+      "autonomy": 3,
+      "learning": 4
+    },
+    "transition": "Relatively accessible",
+    "payOutlook": "Full-time public-sector coordination can offer more stability than seasonal interpretive work.",
+    "primaryLead": "City of Arcadia recreation department",
+    "links": [
+      {
+        "label": "Arcadia recreation jobs",
+        "url": "https://www.governmentjobs.com/careers/arcadiaca"
+      }
+    ]
+  },
+  {
+    "id": "coaching",
+    "title": "Muay Thai / conditioning coach",
+    "category": "Outdoors & movement",
+    "tagline": "MOST PHYSICAL",
+    "summary": "Teach movement and skills through supervised group or individual instruction.",
+    "why": "Leverages documented participation in combat sports and measurable athletic milestones.",
+    "day": [
+      "Demonstrate drills, supervise practice and correct technique",
+      "Support beginners and manage class safety",
+      "Plan classes, communicate progress and retain clients"
+    ],
+    "risks": [
+      "Athlete experience does not equal coaching qualification",
+      "Evening/weekend work, potential injuries",
+      "Variable client load and earnings"
+    ],
+    "firstSteps": [
+      "Assist a qualified coach for four beginner classes",
+      "Record whether teaching energizes or drains",
+      "Investigate insurance and gym requirements before independent work"
+    ],
+    "credentials": [
+      "Coaching mentorship, first aid, CPR and relevant certifications",
+      "Do not teach beyond demonstrated competency"
+    ],
+    "scores": {
+      "subject": 4,
+      "movement": 5,
+      "entry": 4,
+      "income": 3,
+      "autonomy": 5,
+      "learning": 4
+    },
+    "transition": "Accessible through supervised trial",
+    "payOutlook": "Independent instruction varies by client base; gym wages depend heavily on hours.",
+    "primaryLead": "Local combat-sports gyms",
+    "links": [
+      {
+        "label": "ACE fitness careers",
+        "url": "https://www.acefitness.org/"
+      }
+    ]
+  },
+  {
+    "id": "walking-tours",
+    "title": "Independent historical walking-tour operator",
+    "category": "Independent ventures",
+    "tagline": "ENTREPRENEURIAL PILOT",
+    "summary": "Design, market and guide historically researched small-group walks.",
+    "why": "A direct bridge between local history, movement, storytelling and business ownership.",
+    "day": [
+      "Research routes, verify historical material and design the experience",
+      "Lead groups outdoors and answer questions",
+      "Manage reservations, marketing, permits and customer service"
+    ],
+    "risks": [
+      "Bookings and weather make income uncertain",
+      "Public speaking required",
+      "Commercial activity may require permits, insurance and site approval"
+    ],
+    "firstSteps": [
+      "Pick one clearly defined local theme and route",
+      "Pilot with a small invited group, then a paid group",
+      "Track prep hours, margin and repeat demand"
+    ],
+    "credentials": [
+      "Historical accuracy and basic safety training",
+      "Business registration, permissions and insurance depending on route"
+    ],
+    "scores": {
+      "subject": 5,
+      "movement": 5,
+      "entry": 4,
+      "income": 2,
+      "autonomy": 5,
+      "learning": 5
+    },
+    "transition": "Pilot immediately",
+    "payOutlook": "Event revenue is not owner profit; validate actual demand first.",
+    "primaryLead": "San Gabriel Valley historic districts",
+    "links": [
+      {
+        "label": "California business portal",
+        "url": "https://business.ca.gov/"
+      }
+    ]
+  },
+  {
+    "id": "tutoring",
+    "title": "Private tutoring / adult instruction",
+    "category": "Education & books",
+    "tagline": "FLEXIBLE PILOT",
+    "summary": "Teach an existing area of real competence in-person or in small groups.",
+    "why": "Can channel learning into independent work without more software engineering.",
+    "day": [
+      "Prepare tailored lessons and evaluate progress",
+      "Teach mathematics, study skills or a verified specialist subject",
+      "Communicate with parents or adult learners"
+    ],
+    "risks": [
+      "Liking to study is not proof of teaching ability",
+      "Less movement than outdoor work",
+      "Scheduling and marketing can be demanding"
+    ],
+    "firstSteps": [
+      "Offer two supervised or low-stakes practice sessions",
+      "Choose a subject with demonstrated mastery",
+      "Measure results and desire to repeat the experience"
+    ],
+    "credentials": [
+      "K–12 public-school roles have different credential rules",
+      "Private tutoring requirements vary; verify safeguarding rules"
+    ],
+    "scores": {
+      "subject": 4,
+      "movement": 2,
+      "entry": 5,
+      "income": 3,
+      "autonomy": 5,
+      "learning": 4
+    },
+    "transition": "Low barrier for private tutoring",
+    "payOutlook": "Part-time and variable; no assumption of full utilization.",
+    "primaryLead": "Community centers and local families",
+    "links": [
+      {
+        "label": "California teaching credentials",
+        "url": "https://www.ctc.ca.gov/"
+      }
+    ]
+  },
+  {
+    "id": "exhibits",
+    "title": "Museum exhibition technician / preparator",
+    "category": "Hands-on trades",
+    "tagline": "HANDS + CULTURE",
+    "summary": "Build, assemble, protect and install physical exhibitions and displays.",
+    "why": "A rare synthesis of practical craftsmanship and cultural institutions.",
+    "day": [
+      "Fabricate mounts and install exhibit components",
+      "Move and secure objects according to protocols",
+      "Troubleshoot lighting, cases and visitor-safe displays"
+    ],
+    "risks": [
+      "Tool skill and prior installation experience often required",
+      "Project deadlines and lifting",
+      "Museum technician titles can include high desk/collections workloads"
+    ],
+    "firstSteps": [
+      "Take an introductory woodworking/fabrication class",
+      "Tour a behind-the-scenes or exhibit-production event",
+      "Look for exhibit installation assistant and preparator roles"
+    ],
+    "credentials": [
+      "Tool safety, fabrication practice, collections-handling protocols",
+      "Some specialized roles require arts/museum credentials"
+    ],
+    "scores": {
+      "subject": 4,
+      "movement": 5,
+      "entry": 2,
+      "income": 3,
+      "autonomy": 3,
+      "learning": 5
+    },
+    "transition": "Training needed",
+    "payOutlook": "Potentially rewarding physical niche but vacancies can be infrequent.",
+    "primaryLead": "Museums and exhibit fabricators",
+    "links": [
+      {
+        "label": "American Alliance of Museums jobs",
+        "url": "https://www.aam-us.org/job-board/"
+      }
+    ]
+  },
+  {
+    "id": "carpentry",
+    "title": "Finish carpentry / historic-property maintenance",
+    "category": "Hands-on trades",
+    "tagline": "DEEP CAREER RESET",
+    "summary": "Learn woodworking, finish carpentry and conservation-aware building maintenance.",
+    "why": "Direct physical problem-solving with durable materials; genuinely different from digital work.",
+    "day": [
+      "Measure, cut, assemble, repair and install materials",
+      "Use hand and power tools safely",
+      "Travel to sites and coordinate with other trades"
+    ],
+    "risks": [
+      "Long apprenticeship or training period",
+      "Physical wear and injury exposure",
+      "Historic preservation specialization takes additional experience"
+    ],
+    "firstSteps": [
+      "Complete a short supervised workshop",
+      "Shadow or assist a qualified trade professional",
+      "Compare registered apprenticeship options"
+    ],
+    "credentials": [
+      "Registered apprenticeship for professional trade route",
+      "OSHA/safety and site-specific requirements"
+    ],
+    "scores": {
+      "subject": 3,
+      "movement": 5,
+      "entry": 2,
+      "income": 4,
+      "autonomy": 4,
+      "learning": 5
+    },
+    "transition": "High investment",
+    "payOutlook": "Established skilled trade can exceed many entry cultural jobs; apprentice earnings lower.",
+    "primaryLead": "Ontario-area training and contractors",
+    "links": [
+      {
+        "label": "California apprenticeships",
+        "url": "https://www.dir.ca.gov/databases/das/aigstart.asp"
+      }
+    ]
+  },
+  {
+    "id": "library",
+    "title": "Library circulation / reader services",
+    "category": "Education & books",
+    "tagline": "STABLE ENVIRONMENT",
+    "summary": "Support patrons, collections circulation and research access.",
+    "why": "Strong book-centered environment but often less physical than imagined.",
+    "day": [
+      "Assist patrons, check materials and maintain shelving",
+      "Support readers and coordinate holdings",
+      "Perform records, reservations and access administration"
+    ],
+    "risks": [
+      "Screen-based tasks can dominate",
+      "Repetitive customer-service operations",
+      "Higher professional titles often require MLS/MLIS"
+    ],
+    "firstSteps": [
+      "Visit a library and observe circulation work",
+      "Apply for library aide and circulation associate roles",
+      "Ask about the percentage of time spent standing versus at a computer"
+    ],
+    "credentials": [
+      "Entry circulation positions may not require library school",
+      "Professional librarian roles generally require specialized education"
+    ],
+    "scores": {
+      "subject": 5,
+      "movement": 2,
+      "entry": 4,
+      "income": 3,
+      "autonomy": 2,
+      "learning": 4
+    },
+    "transition": "Accessible for aide roles",
+    "payOutlook": "Stable roles exist, but some desirable reader-services jobs are desk-heavy.",
+    "primaryLead": "Huntington and Arcadia libraries",
+    "links": [
+      {
+        "label": "Huntington careers",
+        "url": "https://huntingtonlibrary.wd1.myworkdayjobs.com/HuntingtonCareers"
+      }
+    ]
+  },
+  {
+    "id": "bitcoin-ops",
+    "title": "Bitcoin / monetary-services nontechnical operations",
+    "category": "Money & markets",
+    "tagline": "INDUSTRY, NOT LIFESTYLE",
+    "summary": "Work in customer operations, education, business development or field events for a monetary-technology company.",
+    "why": "Strong subject interest, but many available roles reproduce screen-based work.",
+    "day": [
+      "Help customers or partners understand products",
+      "Manage support and compliance workflows",
+      "Occasional conferences, meetups or field events"
+    ],
+    "risks": [
+      "Usually desk-heavy despite the industry label",
+      "Financial or compliance constraints",
+      "Industry volatility and potentially misleading job marketing"
+    ],
+    "firstSteps": [
+      "Interview someone in a Bitcoin nontechnical role",
+      "Estimate actual screen time by the hour",
+      "Target physical education or events roles only"
+    ],
+    "credentials": [
+      "Position-specific compliance and product training",
+      "Avoid claims of financial expertise without credentials"
+    ],
+    "scores": {
+      "subject": 5,
+      "movement": 1,
+      "entry": 3,
+      "income": 3,
+      "autonomy": 3,
+      "learning": 4
+    },
+    "transition": "Moderate",
+    "payOutlook": "Varies sharply by company and job; industry fit alone insufficient.",
+    "primaryLead": "Bitcoin events and educational organizations",
+    "links": [
+      {
+        "label": "Bitcoin paper",
+        "url": "https://bitcoin.org/bitcoin.pdf"
+      }
+    ]
+  },
+  {
+    "id": "estate",
+    "title": "Estate collections / liquidation specialist",
+    "category": "Objects & commerce",
+    "tagline": "PRACTICAL BUSINESS",
+    "summary": "Coordinate sorting, documentation, consignment and sale of household collections and valuables.",
+    "why": "Combines hands-on work, varied objects, historical research and commercial decision-making.",
+    "day": [
+      "Visit estates, sort and photograph objects",
+      "Coordinate appraisers, buyers and pickups",
+      "Manage client expectations, records and sales"
+    ],
+    "risks": [
+      "Careful handling and valuation needed",
+      "Estate situations can be emotionally demanding",
+      "Liability, insurance and logistics"
+    ],
+    "firstSteps": [
+      "Shadow an estate-sale or auction professional",
+      "Practice inventories with low-value items",
+      "Learn consignment agreements and vendor networks"
+    ],
+    "credentials": [
+      "Industry experience and insurance important",
+      "Do not present as certified appraiser without qualifying training"
+    ],
+    "scores": {
+      "subject": 4,
+      "movement": 5,
+      "entry": 3,
+      "income": 3,
+      "autonomy": 5,
+      "learning": 4
+    },
+    "transition": "Moderate",
+    "payOutlook": "Business upside and variability; trust and operational competence matter.",
+    "primaryLead": "Monrovia and SGV auction/estate firms",
+    "links": [
+      {
+        "label": "John Moran estate services",
+        "url": "https://www.johnmoran.com/"
+      }
+    ]
+  },
+  {
+    "id": "specialty-field",
+    "title": "Specialty field sales / account service",
+    "category": "Field & commercial",
+    "tagline": "FINANCIAL BRIDGE",
+    "summary": "Visit client sites to demonstrate or sell tangible goods in a selected industry such as outdoor equipment, antiques or building supplies.",
+    "why": "Could preserve business strengths while replacing sitting all day with travel, visits and objects.",
+    "day": [
+      "Drive between appointments and walk facilities",
+      "Demonstrate products, build relationships, negotiate",
+      "Report activity and manage customer follow-up"
+    ],
+    "risks": [
+      "Still sales-target and CRM oriented",
+      "Driving time can dominate walking time",
+      "May not feel like an entirely new career"
+    ],
+    "firstSteps": [
+      "Shadow an outside representative",
+      "Investigate a niche of tangible products",
+      "Confirm actual weekly travel and screen-time split"
+    ],
+    "credentials": [
+      "Product knowledge and documented sales effectiveness"
+    ],
+    "scores": {
+      "subject": 3,
+      "movement": 4,
+      "entry": 4,
+      "income": 4,
+      "autonomy": 3,
+      "learning": 3
+    },
+    "transition": "Relatively accessible",
+    "payOutlook": "May sustain income better than entry museum roles, but less meaningful subject alignment.",
+    "primaryLead": "Inland Empire specialty distributors",
+    "links": [
+      {
+        "label": "BLS sales occupations",
+        "url": "https://www.bls.gov/ooh/sales/home.htm"
+      }
+    ]
+  }
+]

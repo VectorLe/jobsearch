@@ -1,0 +1,121 @@
+[
+  {
+    "id": "pio",
+    "name": "Pío Pico State Historic Park",
+    "city": "Whittier",
+    "address": "6003 Pioneer Blvd, Whittier, CA 90606",
+    "category": "Heritage",
+    "bestFor": "History interpretation, volunteering, living history",
+    "url": "https://www.parks.ca.gov/?page_id=621",
+    "careerIds": [
+      "heritage",
+      "museum-ed"
+    ]
+  },
+  {
+    "id": "gilb",
+    "name": "Gilb Museum of Arcadia Heritage",
+    "city": "Arcadia",
+    "address": "380 W Huntington Dr, Arcadia, CA 91007",
+    "category": "Heritage",
+    "bestFor": "Docent shifts, local history and educational programming",
+    "url": "https://www.arcadiaca.gov/enrich/recreation_and_community_services/museum/index.php",
+    "careerIds": [
+      "museum-ed",
+      "heritage"
+    ]
+  },
+  {
+    "id": "huntington",
+    "name": "The Huntington",
+    "city": "San Marino",
+    "address": "1151 Oxford Rd, San Marino, CA 91108",
+    "category": "Books & culture",
+    "bestFor": "Books, public programs, gardens and research services",
+    "url": "https://www.huntington.org/",
+    "careerIds": [
+      "museum-ed",
+      "rare-books",
+      "library",
+      "garden"
+    ]
+  },
+  {
+    "id": "arboretum",
+    "name": "Los Angeles County Arboretum",
+    "city": "Arcadia",
+    "address": "301 N Baldwin Ave, Arcadia, CA 91007",
+    "category": "Outdoors",
+    "bestFor": "Garden education, horticulture and walking tours",
+    "url": "https://arboretum.org/",
+    "careerIds": [
+      "garden",
+      "heritage"
+    ]
+  },
+  {
+    "id": "calbg",
+    "name": "California Botanic Garden",
+    "city": "Claremont",
+    "address": "1500 N College Ave, Claremont, CA 91711",
+    "category": "Outdoors",
+    "bestFor": "Guide, nursery, herbarium, grounds and library volunteer pathways",
+    "url": "https://www.calbg.org/",
+    "careerIds": [
+      "garden",
+      "museum-ed"
+    ]
+  },
+  {
+    "id": "moran",
+    "name": "John Moran Auctioneers",
+    "city": "Monrovia",
+    "address": "145 E Walnut Ave, Monrovia, CA 91016",
+    "category": "Objects & commerce",
+    "bestFor": "Auction previews, consignments, valuation and client service",
+    "url": "https://www.johnmoran.com/",
+    "careerIds": [
+      "auction",
+      "estate",
+      "rare-books"
+    ]
+  },
+  {
+    "id": "riverside",
+    "name": "Riverside Metropolitan Museum",
+    "city": "Riverside",
+    "address": "3580 Mission Inn Ave, Riverside, CA 92501",
+    "category": "Heritage",
+    "bestFor": "Regional history and cultural programming (verify public-access status)",
+    "url": "https://riversideca.gov/museum/",
+    "careerIds": [
+      "museum-ed",
+      "heritage"
+    ]
+  },
+  {
+    "id": "arcadia-parks",
+    "name": "Arcadia Recreation & Community Services",
+    "city": "Arcadia",
+    "address": "375 Campus Dr, Arcadia, CA 91007",
+    "category": "Outdoors",
+    "bestFor": "Recreation leader roles and events experience",
+    "url": "https://www.governmentjobs.com/careers/arcadiaca",
+    "careerIds": [
+      "recreation",
+      "coaching"
+    ]
+  },
+  {
+    "id": "coin-show",
+    "name": "Arcadia-area coin shows",
+    "city": "Arcadia",
+    "address": "50 W Duarte Rd, Arcadia, CA 91007",
+    "category": "Objects & commerce",
+    "bestFor": "Meet dealers and observe grading and pricing",
+    "url": "https://www.money.org/",
+    "careerIds": [
+      "numismatic"
+    ]
+  }
+]

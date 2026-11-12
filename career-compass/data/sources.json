@@ -1,0 +1,86 @@
+[
+  {
+    "title": "Personal site: topics, goals and personal archive",
+    "publisher": "vectorle.xyz",
+    "url": "https://vectorle.xyz/",
+    "type": "Primary evidence"
+  },
+  {
+    "title": "Combat-sports product business",
+    "publisher": "Kickin’ Combat",
+    "url": "https://kickincombat.com/",
+    "type": "Primary evidence"
+  },
+  {
+    "title": "California State Parks careers",
+    "publisher": "California State Parks",
+    "url": "https://www.parks.ca.gov/?page_id=851",
+    "type": "Career rules"
+  },
+  {
+    "title": "Pío Pico State Historic Park",
+    "publisher": "California State Parks",
+    "url": "https://www.parks.ca.gov/?page_id=621",
+    "type": "Local lead"
+  },
+  {
+    "title": "Arcadia municipal jobs",
+    "publisher": "GovernmentJobs / City of Arcadia",
+    "url": "https://www.governmentjobs.com/careers/arcadiaca",
+    "type": "Job sources"
+  },
+  {
+    "title": "John Moran auctions and previews",
+    "publisher": "John Moran Auctioneers",
+    "url": "https://www.johnmoran.com/buy/upcoming-auctions/",
+    "type": "Local lead"
+  },
+  {
+    "title": "California Botanic Garden",
+    "publisher": "California Botanic Garden",
+    "url": "https://www.calbg.org/",
+    "type": "Local lead"
+  },
+  {
+    "title": "Antiquarian bookseller association",
+    "publisher": "ABAA",
+    "url": "https://www.abaa.org/",
+    "type": "Industry training"
+  },
+  {
+    "title": "Numismatic diploma program",
+    "publisher": "American Numismatic Association",
+    "url": "https://www.money.org/diploma-program/",
+    "type": "Industry training"
+  },
+  {
+    "title": "Tour and travel guides — BLS Occupational Outlook",
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "url": "https://www.bls.gov/ooh/personal-care-and-service/tour-and-travel-guides.htm",
+    "type": "Income context"
+  },
+  {
+    "title": "Recreation workers — BLS Occupational Outlook",
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "url": "https://www.bls.gov/ooh/personal-care-and-service/recreation-workers.htm",
+    "type": "Income context"
+  },
+  {
+    "title": "Carpenters — BLS Occupational Outlook",
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "url": "https://www.bls.gov/ooh/construction-and-extraction/carpenters.htm",
+    "type": "Income context"
+  },
+  {
+    "title": "Netlify deployment from repository",
+    "publisher": "Netlify documentation",
+    "url": "https://docs.netlify.com/start/quickstarts/deploy-from-repository/",
+    "type": "Engineering"
+  },
+  {
+    "title": "GitHub scheduled Actions",
+    "publisher": "GitHub documentation",
+    "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows",
+    "type": "Engineering"
+  }
+]
