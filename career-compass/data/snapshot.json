@@ -1,0 +1,94 @@
+{
+  "generatedAt": "2026-11-12T00:41:21Z",
+  "timezone": "America/Los_Angeles",
+  "method": "Date arithmetic plus URL reachability; HTTP success never proves a position is open.",
+  "deadlines": {
+    "pio-pico": {
+      "state": "soon",
+      "daysRemaining": 1
+    },
+    "crestmore": {
+      "state": "today",
+      "daysRemaining": 0
+    },
+    "la-verne": {
+      "state": "soon",
+      "daysRemaining": 1
+    },
+    "pomona": {
+      "state": "future",
+      "daysRemaining": 11
+    },
+    "arcadia-museum": {
+      "state": "future",
+      "daysRemaining": 19
+    },
+    "arcadia-rec": {
+      "state": "future",
+      "daysRemaining": 19
+    },
+    "arcadia-leader": {
+      "state": "unknown",
+      "daysRemaining": null
+    },
+    "arcadia-library": {
+      "state": "future",
+      "daysRemaining": 19
+    },
+    "huntington": {
+      "state": "unknown",
+      "daysRemaining": null
+    },
+    "vincent": {
+      "state": "soon",
+      "daysRemaining": 5
+    }
+  },
+  "links": {
+    "pio-pico": {
+      "result": "not-checked",
+      "httpStatus": null
+    },
+    "crestmore": {
+      "result": "not-checked",
+      "httpStatus": null
+    },
+    "la-verne": {
+      "result": "not-checked",
+      "httpStatus": null
+    },
+    "pomona": {
+      "result": "not-checked",
+      "httpStatus": null
+    },
+    "arcadia-museum": {
+      "result": "not-checked",
+      "httpStatus": null
+    },
+    "arcadia-rec": {
+      "result": "not-checked",
+      "httpStatus": null
+    },
+    "arcadia-leader": {
+      "result": "not-checked",
+      "httpStatus": null
+    },
+    "arcadia-library": {
+      "result": "not-checked",
+      "httpStatus": null
+    },
+    "huntington": {
+      "result": "not-checked",
+      "httpStatus": null
+    },
+    "vincent": {
+      "result": "not-checked",
+      "httpStatus": null
+    }
+  },
+  "source": {
+    "url": "https://vectorle.xyz/",
+    "state": "not-checked",
+    "changed": null
+  }
+}
