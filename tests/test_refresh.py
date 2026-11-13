@@ -61,6 +61,13 @@ class RefreshTests(unittest.TestCase):
         self.assertEqual(refresh.group_for('E-commerce Operations Coordinator'),'E-commerce & digital')
         self.assertEqual(refresh.group_for('IT Support Specialist'),'Technical & IT')
         self.assertEqual(refresh.identify_city('La Canada Flintridge, California',self.geo),'La Cañada Flintridge')
+    def test_third_party_copy_is_normalized_before_build(self):
+        punctuation=chr(0x2014)
+        raw='Support '+punctuation+' customer care'
+        self.assertNotIn(punctuation, refresh.clean_provider_copy(raw))
+        self.assertNotIn(punctuation, refresh.clean_description('<p>'+raw+'</p>'))
+        self.assertNotIn(punctuation, refresh.extract_qualifications('Minimum qualifications: two years '+punctuation+' Shopify experience and clear communication.'))
+
     def test_qualifications_from_external_excerpt_are_marked_as_unverified(self):
         result=refresh.extract_qualifications('<p>Minimum Qualifications: Two years of experience in technical support and basic communication skills.</p>')
         self.assertIn('Provider excerpt',result)

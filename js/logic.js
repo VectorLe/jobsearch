@@ -1,5 +1,6 @@
 /* Small, dependency-free helpers. Dates are interpreted in the Los Angeles calendar. */
-export const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+export const cleanText = value => String(value ?? '').replace(/\u2014/g, ' - ').replace(/&(?:mdash|#8212|#x2014);/gi, ' - ');
+export const esc = value => cleanText(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function safeURL(value) {
   try { const url = new URL(String(value)); return ['https:','http:'].includes(url.protocol) ? url.href : '#'; }
   catch { return '#'; }
@@ -88,6 +89,8 @@ export function matchJob(job, f, center, geo, saved={}) {
   if(f.category!=='all'&&job.category!==f.category)return false;
   if(f.track==='digital'&&!digitalCategories.has(job.category))return false;
   if(f.track==='physical'&&digitalCategories.has(job.category))return false;
+  if(f.track==='heritage'&&!['Museums & heritage','Books & education'].includes(job.category))return false;
+  if(f.track==='collectibles'&&job.category!=='Collectibles & trade')return false;
   if(f.age!=='all') {
     const age=postedAge(job.postedAt).days;
     if(f.age==='unknown' ? age!==null : age===null||age>Number(f.age))return false;

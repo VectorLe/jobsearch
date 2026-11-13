@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 
-test('Job watch renders the SGV selector, qualifications and expanded roles', async()=>{
+test('Job Watch presents useful filters, qualifications, pay and separate job-title searches', async()=>{
   let body='',results='',counter='',ideas='';
   const wrap={addEventListener(){},get innerHTML(){return body;},set innerHTML(x){body=x;}};
   const result={get innerHTML(){return results;},set innerHTML(x){results=x;}};
@@ -15,17 +15,22 @@ test('Job watch renders the SGV selector, qualifications and expanded roles', as
   globalThis.document={querySelector:selector=>mocks[selector]||null,querySelectorAll:()=>[]};
   globalThis.fetch=async url=>({ok:true,json:async()=>JSON.parse(await readFile(new URL('../'+url.replace(/^\.\//,''),import.meta.url),'utf8'))});
   await import('../js/app.js');
-  await new Promise(resolve=>setTimeout(resolve,70));
-  assert.match(body,/Job watch/);
+  for(let attempt=0;attempt<30&&!results;attempt++)await new Promise(resolve=>setTimeout(resolve,10));
+  assert.match(body,/Find work that/);
+  assert.match(body,/Find your next role/);
   assert.match(body,/All 31 SGV cities/);
   assert.match(body,/Bradbury/);
   assert.match(body,/West Covina/);
-  assert.match(body,/E-commerce & tech/);
-  assert.match(body,/43 more job titles/);
+  assert.match(body,/Shopify and tech/);
+  assert.match(body,/Explore 43 other job titles/);
+  assert.match(body,/Browse matching jobs/);
   assert.match(results,/Museum Education Coordinator/);
-  assert.match(results,/Qualifications/);
+  assert.match(results,/Qualifications to check/);
   assert.match(results,/\$27\.17/);
-  assert.match(counter,/matching jobs/);
+  assert.match(results,/Reported pay/);
+  assert.match(results,/aria-label="View employer posting for/);
+  assert.match(counter,/jobs match/);
   assert.match(ideas,/Historic-site interpreter/);
   assert.match(ideas,/Typical qualifications/);
+  assert.match(body,/not verified vacancies/);
 });

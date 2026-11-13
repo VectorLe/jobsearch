@@ -23,17 +23,18 @@ def fallback(data: dict) -> str:
     now = datetime.now(ZoneInfo('America/Los_Angeles')).date()
     jobs = data['opportunities']
     visible = [job for job in jobs if not job.get('deadline') or job['deadline'] >= now.isoformat()]
-    if not visible:
-        visible = jobs[:8]
+    # If all curated deadlines passed, do not suggest archived jobs are still open.
     chunks = [
-        '<section class="hero"><div><div class="eyebrow">San Gabriel Valley · job watch</div>',
-        '<h1>Work beyond <span>the screen.</span></h1>',
-        '<p>A source-linked list of local careers. The interactive filters are optional; original job links work without JavaScript.</p>',
-        '</div><aside class="hero-aside"><small>Search center</small><strong>El Monte</strong>',
-        '<p>Explore the San Gabriel Valley first. This fallback shows recorded jobs without interactive filters.</p></aside></section>',
-        '<section class="group"><div class="group-head"><h3>Researched job listings</h3>',
-        '<span>Verify current availability with employers</span></div><div class="job-grid">',
+        '<section class="hero"><div><div class="eyebrow">Local job research, built around you</div>',
+        '<h1>Find work that <span>fits your life.</span></h1>',
+        '<p>Compare pay, qualifications, location and deadlines for roles around the San Gabriel Valley. Each lead links to its original source.</p>',
+        '</div><aside class="hero-aside"><small>Your starting point</small><strong>El Monte</strong>',
+        '<p>The source-linked list remains available even when interactive filters cannot load.</p></aside></section>',
+        '<section class="group"><div class="group-head"><h3>Browse researched leads</h3>',
+        '<span>Confirm openings with each employer</span></div><div class="job-grid">',
     ]
+    if not visible:
+        chunks.append('<div class="empty"><h3>No current leads in the saved snapshot</h3><p>All saved deadlines have passed. Check employer career pages for current openings.</p></div>')
     for job in visible:
         url = escape(job.get('sourceUrl') or '#', quote=True)
         title = escape(job.get('title') or 'Job listing')
@@ -48,14 +49,14 @@ def fallback(data: dict) -> str:
         chunks.append(
             f'<article class="job-card"><div><h3><a class="job-title-link" href="{url}" target="_blank" rel="noopener noreferrer">{title}</a></h3>'
             f'<p class="company">{employer} · {city}</p></div>'
-            f'<div class="pay"><span>Pay</span><strong>{salary}</strong></div>'
+            f'<div class="pay"><span>Reported pay</span><strong>{salary}</strong></div>'
             '<div class="job-metadata">'
             f'<div class="field"><span>Posted</span><strong>{posted}</strong></div>'
             f'<div class="field"><span>Closing</span><strong>{deadline}</strong></div>'
             f'<div class="field"><span>Schedule</span><strong>{schedule}</strong></div></div>'
-            f'<div class="qualifications"><h4>Qualifications</h4><p>{requirements}</p></div>'
+            f'<div class="qualifications"><h4>Qualifications to check</h4><p>{requirements}</p></div>'
             f'<p class="job-summary">{note}</p><div class="card-actions">'
-            f'<a class="button button-primary" href="{url}" target="_blank" rel="noopener noreferrer">View job posting ↗</a>'
+            f'<a class="button button-primary" href="{url}" target="_blank" rel="noopener noreferrer">Open original listing ↗</a>'
             '</div></article>'
         )
     chunks.append('</div></section>')
@@ -74,24 +75,27 @@ def build(root: Path = ROOT) -> tuple[str, str]:
     app = re.sub(r'^import\s+\{[^\n]+\}\s+from\s+[\'\"]\./logic\.js[\'\"];\s*\n', '', app, count=1)
     if app.startswith('import '):
         raise ValueError('Failed to remove the JavaScript module import')
-    old = "    const data=await Promise.all(keys.map(async key=>{const r=await fetch('./data/'+key+'.json');if(!r.ok)throw new Error(key+': HTTP '+r.status);return r.json();}));"
-    new = ("    const seed=document.querySelector('#job-seed');\n"
-           "    const embedded=seed?JSON.parse(seed.textContent):null;\n"
-           "    const data=embedded?keys.map(key=>embedded[key]):await Promise.all(keys.map(async key=>{const r=await fetch('./data/'+key+'.json');if(!r.ok)throw new Error(key+': HTTP '+r.status);return r.json();}));")
-    if app.count(old) != 1:
-        raise ValueError('Failed to find the job-data fetch line; inspect app.js after edits')
-    app = app.replace(old, new)
+    # The app directly reads #job-seed when present. Build-time editing of app
+    # internals is intentionally avoided: it is brittle and hard to maintain.
+    if "document.querySelector('#job-seed')" not in app:
+        raise ValueError('The app must support embedded job data before bundling')
     inline_js = '\n' + logic + '\n' + app + '\n'
     digest = base64.b64encode(hashlib.sha256(inline_js.encode('utf-8')).digest()).decode('ascii')
     json_seed = json.dumps(data, separators=(',', ':'), ensure_ascii=False).replace('<', '\\u003c').replace('>', '\\u003e').replace('&', '\\u0026')
     if template.count('<link rel="stylesheet" href="./styles.css">') != 1 or template.count('<script type="module" src="./js/app.js"></script>') != 1:
         raise ValueError('The HTML template no longer matches expected asset references')
     html = template.replace('<link rel="stylesheet" href="./styles.css">', '<style>\n' + css + '\n</style>')
-    html = html.replace('<div class="loading">Loading job research…</div>', fallback(data))
+    html, placeholders = re.subn(r'<div class="loading">[^<]*</div>', lambda _: fallback(data), html, count=1)
+    if placeholders != 1:
+        raise ValueError('Missing accessible fallback placeholder in HTML template')
     html = html.replace('<script type="module" src="./js/app.js"></script>',
                         '<script type="application/json" id="job-seed">' + json_seed + '</script>\n<script>' + inline_js + '</script>')
     if html.count('id="job-seed"') != 1:
         raise ValueError('Missing job data')
+    forbidden = (chr(0x2014), '&'+'mdash;', '&#'+'8212;', '&#x'+'2014;')
+    for marker in forbidden:
+        if marker.lower() in html.lower():
+            raise ValueError('Prohibited em dash reached the generated website')
     (root / 'index.html').write_text(html, encoding='utf-8')
     config_path = root / 'netlify.toml'
     config = config_path.read_text(encoding='utf-8')

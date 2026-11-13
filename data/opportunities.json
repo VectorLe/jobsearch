@@ -10,7 +10,7 @@
     "deadline": "2026-11-12",
     "sourceUrl": "https://calcareers.ca.gov/CalHrPublic/Jobs/JobPosting.aspx?JobControlId=535343",
     "observedAt": "2026-11-11",
-    "note": "Historic adobe, exhibits, objects, grounds and visitors. Verify state-classification eligibility; B.S. Computer Engineering may not satisfy subject concentration.",
+    "note": "Walk historic grounds, introduce visitors to local history and help care for exhibits. Check subject-specific state eligibility.",
     "careerIds": [
       "heritage",
       "museum-ed"
@@ -27,7 +27,7 @@
   },
   {
     "id": "crestmore",
-    "title": "Temporary Recreation Coordinator — Crestmore Manor",
+    "title": "Temporary Recreation Coordinator: Crestmore Manor",
     "employer": "Riverside County Parks",
     "city": "Jurupa Valley",
     "category": "Museums & heritage",
@@ -36,7 +36,7 @@
     "deadline": "2026-11-11",
     "sourceUrl": "https://www.governmentjobs.com/careers/riverside/jobs/5532659-0/temporary-recreation-coordinator-parks",
     "observedAt": "2026-11-11",
-    "note": "Historic-house tours and events; listing calls for two years of relevant recreation programming experience.",
+    "note": "Help run historic-house tours and events. Two years of relevant recreation programming experience are listed.",
     "careerIds": [
       "heritage",
       "recreation"
@@ -62,7 +62,7 @@
     "deadline": "2026-11-12",
     "sourceUrl": "https://www.governmentjobs.com/jobs/5538575-0/recreation-leader-i",
     "observedAt": "2026-11-11",
-    "note": "An accessible recreational-program experience route; posting listed a noon Pacific filing cutoff.",
+    "note": "Assist with recreation programs and community activities. Check current shifts and filing status.",
     "careerIds": [
       "recreation"
     ],
@@ -78,7 +78,7 @@
   },
   {
     "id": "pomona",
-    "title": "Community Services Specialist I — After School",
+    "title": "Community Services Specialist I: After School",
     "employer": "City of Pomona",
     "city": "Pomona",
     "category": "Parks & outdoors",
@@ -87,7 +87,7 @@
     "deadline": "2026-11-22",
     "sourceUrl": "https://www.governmentjobs.com/careers/pomona/jobs/5524208-0/community-services-specialist-i-after-school",
     "observedAt": "2026-11-11",
-    "note": "Sports and educational programming; listing typically expects relevant experience.",
+    "note": "Support after-school activities, sports and youth programs. Review supervision and experience requirements.",
     "careerIds": [
       "recreation",
       "tutoring"
@@ -113,7 +113,7 @@
     "deadline": "2026-11-30",
     "sourceUrl": "https://www.governmentjobs.com/careers/arcadiaca/jobs/5509988/museum-education-coordinator-substitute-on-call",
     "observedAt": "2026-11-11",
-    "note": "Requires two years relevant museum, education or interpretive-program experience.",
+    "note": "Lead museum learning programs and visitor activities. Relevant program experience is required.",
     "careerIds": [
       "museum-ed",
       "heritage"
@@ -139,7 +139,7 @@
     "deadline": "2026-11-30",
     "sourceUrl": "https://www.governmentjobs.com/jobs/5541543-0/recreation-coordinator",
     "observedAt": "2026-11-11",
-    "note": "A stronger full-time destination, but direct experience is required. Early application recommended.",
+    "note": "Plan city recreation programs and events. This role requires prior program experience.",
     "careerIds": [
       "recreation"
     ],
@@ -164,7 +164,7 @@
     "deadline": null,
     "sourceUrl": "https://www.governmentjobs.com/jobs/5523488-0/activity-leader-i-ii-part-time",
     "observedAt": "2026-11-11",
-    "note": "Originally listed as continuous recruitment; check current status.",
+    "note": "Supervise activities and help run recreation programs. Recruitment may close without a fixed deadline.",
     "careerIds": [
       "recreation",
       "coaching"
@@ -190,7 +190,7 @@
     "deadline": "2026-11-30",
     "sourceUrl": "https://www.governmentjobs.com/jobs/5507426-0/library-aide-part-time",
     "observedAt": "2026-11-11",
-    "note": "Entry-level book-adjacent work. Less physically active and lower-paid than some alternatives.",
+    "note": "Help patrons and shelve materials. A hands-on entry point to a library setting, with modest pay.",
     "careerIds": [
       "library"
     ],
@@ -215,7 +215,7 @@
     "deadline": null,
     "sourceUrl": "https://huntingtonlibrary.wd1.myworkdayjobs.com/en-US/HuntingtonCareers/job/San-Marino/Reader-Services-Coordinator_R0001379",
     "observedAt": "2026-11-11",
-    "note": "Book-rich environment, but the description explicitly notes substantial computer work.",
+    "note": "Support readers and research services at a major library. Expect substantial computer work.",
     "careerIds": [
       "library"
     ],
@@ -239,7 +239,7 @@
     "deadline": "2026-11-16",
     "sourceUrl": "https://www.jobapscloud.com/LACCD/sup/bulpreview.asp?R1=26&R2=5156&R3=001",
     "observedAt": "2026-11-11",
-    "note": "Long-term aspiration, not an immediate fit without the required degree specialization and museum programming experience.",
+    "note": "Design and lead museum education programs. Specialist education and experience requirements apply.",
     "careerIds": [
       "museum-ed"
     ],
@@ -255,7 +255,7 @@
   },
   {
     "id": "pomona-inclusion",
-    "title": "Technical Specialist I — Inclusion Aide",
+    "title": "Technical Specialist I: Inclusion Aide",
     "employer": "City of Pomona",
     "city": "Pomona",
     "category": "Parks & outdoors",
@@ -265,7 +265,7 @@
     "deadline": "2026-11-25",
     "sourceUrl": "https://www.governmentjobs.com/careers/pomona/jobs/5208023/technical-specialist-i-inclusion-aide",
     "observedAt": "2026-11-12",
-    "note": "Support inclusive recreational activities for youth with developmental disabilities; direct, active work with participants.",
+    "note": "Help participants join inclusive recreation activities. Expect active, people-centered work.",
     "requirements": "High school diploma/GED and at least one year of relevant inclusion or disability-services experience.",
     "careerIds": [
       "recreation",
@@ -281,7 +281,7 @@
   },
   {
     "id": "pasadena-librarian",
-    "title": "Librarian — Part-time weekends",
+    "title": "Librarian: Part-time weekends",
     "employer": "City of Pasadena",
     "city": "Pasadena",
     "category": "Books & education",
@@ -291,7 +291,7 @@
     "deadline": "2026-11-19",
     "sourceUrl": "https://www.governmentjobs.com/careers/pasadena/jobs/5540617-0/librarian-p-t-10-hrs",
     "observedAt": "2026-11-12",
-    "note": "Public-facing library service and weekend leadership. Longer-term option rather than an immediate entry path.",
+    "note": "Serve library patrons and support weekend operations. Professional qualifications may be required.",
     "requirements": "ALA-accredited master’s in library and information studies or an equivalent combination of training and experience; Class C license required. Supervisory experience preferred.",
     "careerIds": [
       "library"
@@ -316,7 +316,7 @@
     "deadline": "2026-11-30",
     "sourceUrl": "https://www.governmentjobs.com/jobs/5509833-0/librarian-i-substitute-on-call",
     "observedAt": "2026-11-12",
-    "note": "Public-facing reader assistance and library operations; likely requires professional librarian qualifications.",
+    "note": "Help readers and library visitors. Check professional librarian credential requirements.",
     "requirements": "ALA-accredited Master of Library Science (or equivalent training); a year of public library paraprofessional work is desirable.",
     "careerIds": [
       "library"
@@ -331,7 +331,7 @@
   },
   {
     "id": "pasadena-rec-leader",
-    "title": "Recreation Leader — After School",
+    "title": "Recreation Leader: After School",
     "employer": "City of Pasadena",
     "city": "Pasadena",
     "category": "Parks & outdoors",
@@ -340,7 +340,7 @@
     "deadline": null,
     "postedAt": "2026-10-01",
     "sourceUrl": "https://www.governmentjobs.com/careers/pasadena/jobs/5494758-0/recreation-leader-after-school-part-time-up-to-19-hours-per-week",
-    "note": "Lead after-school games and recreation activities, with regular movement and participant supervision. Continuous posting can close early.",
+    "note": "Run games and after-school activities. Active supervision and some lifting are part of the role.",
     "requirements": "At least 50 hours of paid or volunteer experience in recreation, physical education, or a related field; able to lift/carry up to 50 lb.",
     "experienceLevel": "Entry / transferable experience",
     "jobNumber": "27-059",
@@ -363,7 +363,7 @@
     "deadline": "2026-11-15",
     "postedAt": "2026-10-13",
     "sourceUrl": "https://www.governmentjobs.com/jobs/5514313-0/recreation-leader",
-    "note": "Set up activities, coach games and assist with community events across city recreation facilities.",
+    "note": "Set up recreation activities, help with community events and coach games.",
     "requirements": "High school/GED preferred; posting alternatively describes one year of related college coursework or verifiable public-facing recreation work. Check the exact wording.",
     "experienceLevel": "Entry-accessible",
     "jobNumber": "2026-040",
@@ -386,7 +386,7 @@
     "deadline": "2026-11-12",
     "postedAt": "2026-10-29",
     "sourceUrl": "https://www.governmentjobs.com/careers/pasadena/jobs/5533778-0/it-support-specialist",
-    "note": "Service-desk and field troubleshooting of computers, software and mobile devices. More walking than desk-only web administration.",
+    "note": "Troubleshoot devices and software across city locations. A mix of desk support and on-site visits.",
     "requirements": "Two-year technical-college coursework and three years of progressive end-user support, or an equivalent mix; valid Class C license. MCP or CompTIA A+ by end of probation; background check.",
     "experienceLevel": "Prior technical support",
     "jobNumber": "27-058",
@@ -409,7 +409,7 @@
     "deadline": "2026-11-25",
     "postedAt": "2026-11-05",
     "sourceUrl": "https://www.governmentjobs.com/careers/covinaca/jobs/5538258-0/information-technology-services-manager",
-    "note": "Senior IT management, vendors, budgeting and infrastructure oversight. Included as a long-term or management-only stretch option.",
+    "note": "Manage IT staff, budgets, suppliers and infrastructure. A senior role, not an entry-level transition.",
     "requirements": "Typically bachelor’s in IT/CS or related field plus five years progressive IT experience, including two years managing people, vendors and budgets; Class C license and background check.",
     "experienceLevel": "Senior / stretch",
     "jobNumber": "2026-00031",
@@ -432,7 +432,7 @@
     "deadline": "2026-11-17",
     "postedAt": "2026-11-10",
     "sourceUrl": "https://www.governmentjobs.com/jobs/5545953-0/administrative-aide",
-    "note": "Departmental coordination, public inquiries, reports and operational support. Less active, but skills can transfer from customer-facing e-commerce work.",
+    "note": "Support city services, public inquiries and department operations. Mostly desk-based work.",
     "requirements": "Department administrative and public-service skills; review employer posting for exact education and experience minimums.",
     "experienceLevel": "Transferable operations skills",
     "jobNumber": "2026-046",
@@ -455,7 +455,7 @@
     "deadline": null,
     "postedAt": "2026-11-02",
     "sourceUrl": "https://www.academicgates.com/index.php/job/cgu-technology-support-engagement-specialist/753065",
-    "note": "Campus-facing IT support, proactive coaching and hands-on equipment troubleshooting. A bridge between teaching, walking and technology.",
+    "note": "Help staff with technology and equipment on campus. Combines troubleshooting and face-to-face guidance.",
     "requirements": "Three years of technical support or customer-facing technology enablement preferred; communications and troubleshooting; A+ / Network+ preferred. Check official CGU requisition REQ-8535.",
     "experienceLevel": "Prior support experience",
     "jobNumber": "REQ-8535",
@@ -469,7 +469,7 @@
   },
   {
     "id": "pasadena-ecommerce-associate",
-    "title": "E-commerce Associate — Pasadena",
+    "title": "E-commerce Associate: Pasadena",
     "employer": "The Salvation Army ARC",
     "city": "Pasadena",
     "category": "E-commerce & digital",
@@ -478,7 +478,7 @@
     "deadline": null,
     "postedAt": null,
     "sourceUrl": "https://www.indeed.com/viewjob?jk=890eaae9e1dee168",
-    "note": "Photograph, list and ship donated merchandise in a physical distribution center. Hybrid of e-commerce experience and hands-on inventory.",
+    "note": "Photograph, list, pack and ship merchandise. Applies e-commerce skills in a more physical setting.",
     "requirements": "High-school diploma/GED; listing references two years retail/customer service and one year merchandising, listing software, Excel and physical handling of objects up to 50 lb.",
     "experienceLevel": "Relevant e-commerce / retail",
     "jobNumber": null,
@@ -501,7 +501,7 @@
     "deadline": null,
     "postedAt": null,
     "sourceUrl": "https://www.indeed.com/viewjob?jk=a5ee9195dbb16a1e",
-    "note": "Source and present merchandise in live selling events, mixing retail goods handling, speaking and digital sales.",
+    "note": "Present merchandise in live sales and work with retail inventory. Requires on-camera comfort.",
     "requirements": "On-camera selling confidence and retail/e-commerce familiarity; see full listing for formal education and experience minimums.",
     "experienceLevel": "Retail / presentation skills",
     "jobNumber": null,
@@ -524,7 +524,7 @@
     "deadline": "2026-11-16",
     "postedAt": "2026-11-02",
     "sourceUrl": "https://www.governmentjobs.com/careers/sogate/jobs/5537916-0/recreation-leader-iii-hourly",
-    "note": "Lead recreation programs and support facility grounds and event activities. Outside SGV, shown when the radius expands.",
+    "note": "Lead recreation sessions and support events. Outside the SGV; appears as the radius expands.",
     "requirements": "See city posting for required recreation experience, certifications and physical duties.",
     "experienceLevel": "Prior recreation experience",
     "jobNumber": "202600759",

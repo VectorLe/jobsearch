@@ -140,12 +140,18 @@ def group_for(title):
         return 'Collectibles & trade'
     return 'Parks & outdoors'
 
+def clean_provider_copy(value):
+    # Normalize external punctuation before adding it to public HTML or JSON.
+    return (str(value or '').replace(chr(0x2014), ' - ')
+            .replace('&'+'mdash;', ' - ').replace('&#'+'8212;', ' - ')
+            .replace('&#x'+'2014;', ' - '))
+
 def clean_description(value):
-    text=html.unescape(re.sub(r'<[^>]+>',' ',str(value or '')))
+    text=clean_provider_copy(html.unescape(re.sub(r'<[^>]+>',' ',str(value or ''))))
     return re.sub(r'\s+',' ',text).strip()[:280]
 
 def extract_qualifications(description):
-    text=html.unescape(re.sub(r'<[^>]+>',' ',str(description or '')))
+    text=clean_provider_copy(html.unescape(re.sub(r'<[^>]+>',' ',str(description or ''))))
     text=re.sub(r'\s+',' ',text).strip()
     match=re.search(r'\b(?:minimum qualifications|qualifications|required skills|requirements)\s*[:\-]\s*(.{30,280})',text,re.I)
     if match:
@@ -172,7 +178,7 @@ def load_adzuna(app_id,app_key,checked_at,geo,previous=None):
         try:
             _,payload=fetch_bytes('https://api.adzuna.com/v1/api/jobs/us/search/1?'+params)
             for job in json.loads(payload.decode('utf-8')).get('results',[]):
-                title=str(job.get('title') or '');city=identify_city(job.get('location') or {},geo)
+                title=clean_provider_copy(job.get('title'));city=identify_city(job.get('location') or {},geo)
                 uri=str(job.get('redirect_url') or '')
                 if not relevant_title(title) or not city or not uri.startswith('https://'):continue
                 if distance_miles(base,geo['cities'][city])>75:continue
@@ -184,7 +190,7 @@ def load_adzuna(app_id,app_key,checked_at,geo,previous=None):
                 except ValueError:continue
                 if not 0<=age<=30:continue
                 pay,source=salary_display(job)
-                record={'id':key,'title':title[:180],'employer':str((job.get('company') or {}).get('display_name') or 'Employer not specified')[:130],
+                record={'id':key,'title':title[:180],'employer':clean_provider_copy((job.get('company') or {}).get('display_name') or 'Employer not specified')[:130],
                     'city':city,'category':group_for(title),'salary':pay,'payType':source,
                     'schedule':'Check original listing','postedAt':date_text,'seenAt':first_seen.get(key) or today,
                     'sourceUrl':uri,'sourceType':'Adzuna feed','requirements':extract_qualifications(job.get('description')), 

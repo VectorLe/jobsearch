@@ -11,7 +11,7 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Frame-Options = "DENY"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
-    Content-Security-Policy = "default-src 'self'; img-src 'self' data:; font-src 'self'; script-src 'self' 'sha256-eJqFLwV+UGGvdpW3+KGOMqscKwS0Cy4bVOICf7DIHOs='; style-src 'self' 'unsafe-inline'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
+    Content-Security-Policy = "default-src 'self'; img-src 'self' data:; font-src 'self'; script-src 'self' 'sha256-4lJW+DbzeuF3JVUfMzlokE86OC27KtwPxeoPhA/5kiM='; style-src 'self' 'unsafe-inline'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
 
 [[headers]]
   for = "/index.html"
