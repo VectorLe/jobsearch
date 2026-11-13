@@ -32,6 +32,23 @@ Repository: `VectorLe/jobsearch`.
 
 Import the GitHub repository into Netlify and deploy. `netlify.toml` supplies the publish directory and security headers. Commits to `main` trigger Netlify Git deployments when the site is connected. If you had a previous deployment based on `career-compass/`, **clear its old Base directory** first.
 
+
+## Single-file deployment fix (November 2026)
+
+Production `index.html` is **generated** from `index.template.html`, `styles.css`, `js/logic.js`, `js/app.js`, and seven `data/*.json` files. CSS, JavaScript, and the current JSON are embedded in the generated HTML. It therefore works even if a Netlify deployment serves the HTML but the browser fails to load separate CSS or JavaScript assets. There is also a pre-rendered list of jobs when JavaScript is disabled.
+
+**Do not edit the generated `index.html` directly.** Edit source files and regenerate:
+
+```sh
+python3 scripts/build.py
+python3 -m unittest discover -s tests -p 'test_*.py'
+node --test tests/*.test.mjs
+```
+
+The builder updates the `script-src` SHA-256 hash in `netlify.toml`, preserving a strict Content Security Policy without enabling arbitrary inline JavaScript. The daily GitHub Actions workflow rebuilds `index.html` after refreshing the job data, then commits the changed files. Netlify can continue deploying the repository root (`main`, base directory `.`, blank build command, publish directory `.`).
+
+If the page still appears unstyled, inspect the **published deploy** in Netlify to ensure the site is serving the latest commit, and use **Clear cache and deploy site** once.
+
 ## Daily updates
 
 The GitHub workflow `.github/workflows/career-compass-daily.yml` runs at `16:17 UTC` daily (8:17 a.m. PST / 9:17 a.m. PDT) and can also be run manually. It:

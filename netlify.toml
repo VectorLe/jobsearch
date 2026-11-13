@@ -1,6 +1,5 @@
-# Explicitly pin the site to the repository root. This overrides stale Netlify UI
-# base-directory settings from when the dashboard lived in /career-compass.
-# There is no frontend build command or package installation.
+# Explicit repository-root deployment. No build command is necessary.
+# This project serves a single-file bundle at index.html.
 [build]
   base = "."
   publish = "."
@@ -12,7 +11,7 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Frame-Options = "DENY"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
-    Content-Security-Policy = "default-src 'self'; img-src 'self' data:; font-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
+    Content-Security-Policy = "default-src 'self'; img-src 'self' data:; font-src 'self'; script-src 'self' 'sha256-jUCo7nRNbPwE5Ff2NclvmykJ0cqBW0YLOfgNRIZ+CHE='; style-src 'self' 'unsafe-inline'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
 
 [[headers]]
   for = "/index.html"

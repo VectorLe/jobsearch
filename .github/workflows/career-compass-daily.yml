@@ -29,13 +29,15 @@ jobs:
           ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
           ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
         run: python scripts/refresh.py --root .
+      - name: Rebuild self-contained site
+        run: python scripts/build.py
       - name: Run tests
         run: |
           python -m unittest discover -s tests -p 'test_*.py'
           node --test tests/*.test.mjs
       - name: Commit updated data
         run: |
-          git add data/snapshot.json data/live_jobs.json
+          git add data/snapshot.json data/live_jobs.json index.html netlify.toml
           if git diff --cached --quiet; then
             echo 'No changes to the job data'
             exit 0
