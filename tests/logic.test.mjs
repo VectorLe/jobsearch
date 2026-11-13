@@ -55,3 +55,13 @@ test('digital filter includes ecommerce and technical support, not museums',()=>
   assert.equal(categoryTone('E-commerce & digital'),'ecommerce');
   assert.equal(categoryTone('Technical & IT'),'technical');
 });
+
+import {jobURLKey} from '../js/logic.js';
+test('deduplication preserves distinct Indeed job IDs but ignores tracking tags',()=>{
+  const a='https://www.indeed.com/viewjob?jk=alpha&from=search';
+  const b='https://www.indeed.com/viewjob?jk=beta&from=search';
+  assert.notEqual(jobURLKey(a),jobURLKey(b));
+  assert.equal(jobURLKey(a),jobURLKey('https://www.indeed.com/viewjob?from=homepage&jk=alpha'));
+  assert.equal(jobURLKey('https://example.org/role?utm_source=abc'),jobURLKey('https://example.org/role?utm_source=def'));
+  assert.equal(jobURLKey('javascript:alert(1)'), '');
+});

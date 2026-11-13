@@ -1,6 +1,17 @@
 /* Small, dependency-free helpers. Dates are interpreted in the Los Angeles calendar. */
 export const cleanText = value => String(value ?? '').replace(/\u2014/g, ' - ').replace(/&(?:mdash|#8212|#x2014);/gi, ' - ');
 export const esc = value => cleanText(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+/** Canonical job URL. Keep identity query parameters such as Indeed's jk. */
+export function jobURLKey(value) {
+  try {
+    const url=new URL(String(value));
+    if(!['https:','http:'].includes(url.protocol))return '';
+    const stable=['jk','JobControlId','jobId','job_id','gh_jid'];
+    const keys=stable.filter(key=>url.searchParams.has(key));
+    const suffix=keys.map(key=>key+'='+url.searchParams.get(key)).join('&');
+    return url.hostname.toLowerCase()+url.pathname.replace(/\/$/,'')+(suffix?'?'+suffix:'');
+  }catch{return '';}
+}
 export function safeURL(value) {
   try { const url = new URL(String(value)); return ['https:','http:'].includes(url.protocol) ? url.href : '#'; }
   catch { return '#'; }
@@ -60,7 +71,7 @@ export function distanceBand(miles) {
   if(miles<=50)return 2;
   return 3;
 }
-export const bandNames=['Within 15 miles','16–30 miles','31–50 miles','Beyond 50 miles','Location to verify / remote'];
+export const bandNames=['Within 15 miles','16 to 30 miles','31 to 50 miles','Beyond 50 miles','Remote jobs and locations to verify'];
 export function hourlyFloor(pay) {
   const raw=String(pay||'');const m=raw.match(/\$\s*([\d,]+(?:\.\d+)?)/);
   if(!m)return null;
@@ -83,6 +94,7 @@ export function categoryTone(category) {
 export function matchJob(job, f, center, geo, saved={}) {
   const miles=jobMiles(job,center,geo);
   const remote=String(job.city||'').toLowerCase()==='remote'||String(job.workMode||'').toLowerCase()==='remote';
+  if(f.includeRemote===false&&remote)return false;
   if(f.radius!=='all'&&!remote&&(miles===null||miles>Number(f.radius)))return false;
   if(!f.archived&&deadlineStatus(job.deadline).key==='passed')return false;
   if(f.saved&&!saved[job.id])return false;

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Daily source checks and optional San Gabriel Valley job discovery. Standard library only.
+"""Daily source checks, public employer and remote feeds, and optional Adzuna. Standard library only.
 
 Employer posting dates are curated in data/opportunities.json. Adzuna creation dates
 are provider-reported. A responsive URL does not confirm an open vacancy.
@@ -20,6 +20,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from zoneinfo import ZoneInfo
+from public_feeds import load_public_jobs
 
 USER_AGENT='FieldnotesJobWatch/2.0 (source status check)'
 CONTEXT=ssl.create_default_context()
@@ -214,9 +215,24 @@ def refresh(root,offline=False,now=None):
     write_json(data/'snapshot.json',snapshot)
     old_path=data/'live_jobs.json'
     previous=read_json(old_path).get('jobs',[]) if old_path.exists() else []
-    feed=load_adzuna(os.environ.get('ADZUNA_APP_ID'),os.environ.get('ADZUNA_APP_KEY'),stamp,geo,previous) if not offline else {'generatedAt':stamp,'status':'not-configured','message':'Offline test: job API not queried.','jobs':[]}
+    if offline:
+        feed={'generatedAt':stamp,'status':'offline', 'message':'Offline build. Public job APIs were not queried.',
+              'sources':{'greenhouse':0,'jobicy':0,'adzuna':0},'jobs':[]}
+    else:
+        # Public employer boards and US-eligible remote positions work without secrets.
+        public, source_counts, errors=load_public_jobs(geo,stamp,previous)
+        adzuna=load_adzuna(os.environ.get('ADZUNA_APP_ID'),os.environ.get('ADZUNA_APP_KEY'),stamp,geo,previous)
+        combined=public + adzuna['jobs']
+        source_counts['adzuna']=len(adzuna['jobs'])
+        source_counts['curated']=len(jobs)
+        errors.extend(adzuna.get('errors',[]))
+        feed={'generatedAt':stamp,
+              'status':'partial' if errors else 'ok',
+              'message':f'{len(combined)} additional sourced postings. Employer boards and Jobicy require no keys. Adzuna is optional.',
+              'sources':source_counts,'adzunaStatus':adzuna['status'],
+              'errors':errors[:20], 'jobs':combined[:205]}
     write_json(old_path,feed)
-    print(f'Refreshed {len(jobs)} curated jobs; feed status: {feed["status"]}; {stamp}')
+    print(f'Refreshed {len(jobs)} curated jobs and {len(feed["jobs"])} live feed records; status: {feed["status"]}; {stamp}')
     return snapshot,feed
 
 def main():

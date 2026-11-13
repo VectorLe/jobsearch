@@ -217,3 +217,9 @@ p {line-height:1.65}
   .filter-chip {min-height:40px}
 }
 @media(prefers-reduced-motion:reduce) {html {scroll-behavior:auto}* {transition:none!important;transform:none!important}}
+
+/* More results are progressively revealed so a larger feed remains easy to scan. */
+.more-jobs{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;padding:23px;margin:18px 0 32px;background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:12px}
+.more-jobs p{margin:0;color:var(--fg-soft);font-size:12px}
+.more-jobs button{min-height:42px}
+@media(max-width:600px){.more-jobs{flex-direction:column;text-align:center}.more-jobs button{width:100%}}
