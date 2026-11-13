@@ -37,7 +37,7 @@ jobs:
           node --test tests/*.test.mjs
       - name: Commit updated data
         run: |
-          git add data/snapshot.json data/live_jobs.json index.html netlify.toml
+          git add data/opportunities.json data/snapshot.json data/live_jobs.json index.html netlify.toml
           if git diff --cached --quiet; then
             echo 'No changes to the job data'
             exit 0

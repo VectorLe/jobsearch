@@ -166,5 +166,41 @@
       "Write a concise troubleshooting guide for a real service process"
     ],
     "movement": "Mostly desk"
+  },
+  {
+    "id": "trade-electrical",
+    "title": "Electrical and low-voltage trades",
+    "category": "Skilled trades",
+    "summary": "Earn while learning electrical work, controls, safety and field troubleshooting.",
+    "firstSteps": [
+      "Check IBEW/ETI apprenticeship requirements and the next application period."
+    ]
+  },
+  {
+    "id": "trade-pipe",
+    "title": "Pipe, sprinkler and HVAC trades",
+    "category": "Skilled trades",
+    "summary": "Outdoor and indoor installation work with math, tools, fabrication and strong physical involvement.",
+    "firstSteps": [
+      "Compare Local 345 in Duarte, 398 in El Monte and sprinkler Local 709 in Whittier."
+    ]
+  },
+  {
+    "id": "trade-fabrication",
+    "title": "Welding, sheet metal and ironwork",
+    "category": "Skilled trades",
+    "summary": "Tangible fabrication and construction work, sometimes at height or outdoors.",
+    "firstSteps": [
+      "Review SMART Local 105 application timing, then observe a welding or fabrication class."
+    ]
+  },
+  {
+    "id": "trade-machinery",
+    "title": "Elevator and heavy equipment trades",
+    "category": "Skilled trades",
+    "summary": "Combine mechanical diagnostics with hands-on installation and maintenance.",
+    "firstSteps": [
+      "Request NEIEP Local 18 recruiting alerts and ask IUOE Local 12 about training."
+    ]
   }
 ]

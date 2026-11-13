@@ -60,7 +60,7 @@ class PublicFeedTests(unittest.TestCase):
 
     def test_fetch_fails_gracefully_and_retains_short_lived_stale_record(self):
         previous = [{'id': 'jobicy-998', 'provider': 'jobicy', 'city': 'Remote',
-                     'observedAt': '2026-11-12', 'title': 'Shopify Specialist'}]
+                     'observedAt': '2026-11-12', 'postedAt': '2026-11-11', 'title': 'Shopify Specialist'}]
         def fail(*args, **kwargs):
             raise OSError('Fixture outage')
         jobs, sources, errors = feeds.load_public_jobs(self.geo, '2026-11-13T08:00:00Z', previous, fail)
@@ -80,17 +80,29 @@ class PublicFeedTests(unittest.TestCase):
                 return {'jobs': [{'id': 999, 'title': 'Technical Support Specialist',
                                   'location': {'name': 'Arcadia, CA'},
                                   'absolute_url': 'https://job-boards.greenhouse.io/sample/jobs/999',
+                                  'first_published':'2026-11-12T14:00:00Z',
                                   'content': '<p>Provide technical assistance.</p>'}]}
+            if 'remotive' in url:
+                return {'jobs': [{'id': 123, 'title': 'E-commerce Support Specialist', 'company_name': 'Test', 'url':'https://remotive.com/remote-jobs/customer-support/test-123','publication_date':'2026-11-12T14:00:00', 'candidate_required_location':'USA'}]}
             return {'success': True, 'jobs': [{'id': 100, 'url': 'https://jobicy.com/jobs/customer-support',
                                               'jobTitle': 'Customer Support Specialist',
                                               'companyName': 'Sample Co', 'pubDate': '2026-11-12T12:00:00Z',
                                               'jobGeo': 'USA'}], 'nextCursor': None}
         jobs, counts, errors = feeds.load_public_jobs(self.geo, '2026-11-13T00:00:00Z', [], fixture)
-        self.assertEqual(len(jobs), len(feeds.GREENHOUSE_BOARDS)+1)
+        self.assertEqual(len(jobs), len(feeds.GREENHOUSE_BOARDS)+2)
         self.assertEqual(counts['greenhouse'],len(feeds.GREENHOUSE_BOARDS))
         self.assertEqual(counts['jobicy'],1)
+        self.assertEqual(counts['remotive'],1)
         self.assertFalse(errors)
         self.assertTrue(any('geo=usa' in u for u in calls))
+
+    def test_old_or_undated_greenhouse_and_remotive_are_excluded(self):
+        raw={'id': 66, 'title':'Maintenance Technician', 'location':{'name':'Arcadia, CA'},
+             'absolute_url':'https://job-boards.greenhouse.io/test/jobs/66',
+             'content':'Repair equipment.'}
+        self.assertIsNone(feeds.normalize_greenhouse(raw,'test','Test',self.geo,date(2026,11,13),{}))
+        self.assertIsNone(feeds.normalize_greenhouse({**raw,'first_published':'2026-10-01'},'test','Test',self.geo,date(2026,11,13),{}))
+        self.assertIsNone(feeds.normalize_remotive({'id':77,'title':'Shopify Support Specialist','url':'https://remotive.com/remote-jobs/test','publication_date':'2026-11-12','candidate_required_location':'UK only'},date(2026,11,13),{}))
 
     def test_markup_and_external_em_dash_are_sanitized(self):
         raw = 'Required Skills: Shopify ' + chr(8212) + ' two years experience'

@@ -51,6 +51,41 @@ SEARCHES=[
     ('technical support', 'Rosemead, California', 30),
     ('field service technician', 'El Monte, California', 30),
     ('digital merchandising', 'West Covina, California', 30),
+    ('electrician apprentice','El Monte, California',35),
+    ('electrical apprentice','Pasadena, California',35),
+    ('low voltage installer','Alhambra, California',35),
+    ('fire sprinkler fitter','Whittier, California',35),
+    ('sprinkler apprentice','Industry, California',35),
+    ('plumber apprentice','Pomona, California',40),
+    ('pipefitter apprentice','El Monte, California',40),
+    ('steamfitter apprentice','Walnut, California',40),
+    ('welding apprentice','Industry, California',40),
+    ('welder trainee','Azusa, California',40),
+    ('sheet metal apprentice','Glendora, California',40),
+    ('hvac apprentice','La Verne, California',40),
+    ('refrigeration technician trainee','Covina, California',40),
+    ('elevator apprentice','Glendora, California',45),
+    ('elevator mechanic helper','Pasadena, California',45),
+    ('heavy equipment operator apprentice','Whittier, California',40),
+    ('carpenter apprentice','Montebello, California',40),
+    ('finish carpenter','Arcadia, California',40),
+    ('ironworker apprentice','Whittier, California',40),
+    ('glazier apprentice','Industry, California',40),
+    ('millwright apprentice','Pomona, California',40),
+    ('machinist apprentice','Ontario, California',40),
+    ('industrial maintenance technician','El Monte, California',40),
+    ('building maintenance technician','San Gabriel, California',40),
+    ('utility operator trainee','West Covina, California',40),
+    ('water treatment operator trainee','Monrovia, California',40),
+    ('fire alarm technician','Alhambra, California',40),
+    ('solar installer','Azusa, California',40),
+    ('field technician','Covina, California',40),
+    ('facilities maintenance','Pasadena, California',40),
+    ('construction inspector trainee','Pomona, California',40),
+    ('grounds maintenance','Monrovia, California',40),
+    ('apprenticeship','El Monte, California',35),
+    ('apprentice','La Puente, California',40),
+    ('trainee','West Covina, California',35),
 ]
 # Narrow text filters avoid unrelated jobs with ambiguous keywords like "it" or "book".
 TERMS=('museum','historic','historical','heritage','interpreter','interpretive',
@@ -70,6 +105,11 @@ TERMS=('museum','historic','historical','heritage','interpreter','interpretive',
 def read_json(path):return json.loads(Path(path).read_text(encoding='utf-8'))
 def write_json(path,obj):Path(path).write_text(json.dumps(obj,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
 def local_today(now=None):return (now or datetime.now(timezone.utc)).astimezone(ZoneInfo('America/Los_Angeles')).date()
+
+def _recent(value,today):
+    try: age=(today-date.fromisoformat(str(value)[:10])).days
+    except (TypeError,ValueError):return False
+    return 0<=age<=30
 
 def deadline_state(iso,today=None):
     today=today or local_today()
@@ -129,6 +169,11 @@ def distance_miles(a,b):
 
 def group_for(title):
     t=title.lower()
+    if any(w in t for w in ('electrician','sprinkler fitter','sprinkler apprentice','pipefitter','steamfitter','weld','sheet metal',
+                            'hvac','refrigeration','elevator','heavy equipment','carpenter','ironworker','glazier','millwright',
+                            'machinist','building maintenance','facilities maintenance','water treatment',
+                            'utility operator','fire alarm','solar install','construction inspector','apprentice','apprenticeship')):
+        return 'Skilled trades'
     if any(w in t for w in ('shopify','woocommerce','wordpress','ecommerce','e-commerce','fulfillment','merchandising','marketplace','product listing')):
         return 'E-commerce & digital'
     if any(w in t for w in ('it support','technical support','computer support','desktop support','computer technician','field service technician','technology support','technical trainer','website coordinator','web content','cms specialist','technical writer')):
@@ -205,6 +250,10 @@ def load_adzuna(app_id,app_key,checked_at,geo,previous=None):
 
 def refresh(root,offline=False,now=None):
     root=Path(root);data=root/'data';geo=read_json(data/'geo.json');jobs=read_json(data/'opportunities.json')
+    today=local_today(now)
+    recent=lambda job: bool(job.get('postedAt')) and _recent(job['postedAt'],today)
+    jobs=[j for j in jobs if recent(j)]
+    write_json(data/'opportunities.json',jobs)
     stamp=(now or datetime.now(timezone.utc)).replace(microsecond=0).isoformat().replace('+00:00','Z')
     if offline:links={j['id']:{'result':'not-checked','httpStatus':None} for j in jobs}
     else:
@@ -222,7 +271,7 @@ def refresh(root,offline=False,now=None):
         # Public employer boards and US-eligible remote positions work without secrets.
         public, source_counts, errors=load_public_jobs(geo,stamp,previous)
         adzuna=load_adzuna(os.environ.get('ADZUNA_APP_ID'),os.environ.get('ADZUNA_APP_KEY'),stamp,geo,previous)
-        combined=public + adzuna['jobs']
+        combined=[j for j in public + adzuna['jobs'] if recent(j)]
         source_counts['adzuna']=len(adzuna['jobs'])
         source_counts['curated']=len(jobs)
         errors.extend(adzuna.get('errors',[]))
@@ -230,7 +279,7 @@ def refresh(root,offline=False,now=None):
               'status':'partial' if errors else 'ok',
               'message':f'{len(combined)} additional sourced postings. Employer boards and Jobicy require no keys. Adzuna is optional.',
               'sources':source_counts,'adzunaStatus':adzuna['status'],
-              'errors':errors[:20], 'jobs':combined[:205]}
+              'errors':errors[:20], 'jobs':combined[:400]}
     write_json(old_path,feed)
     print(f'Refreshed {len(jobs)} curated jobs and {len(feed["jobs"])} live feed records; status: {feed["status"]}; {stamp}')
     return snapshot,feed

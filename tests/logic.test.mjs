@@ -37,7 +37,7 @@ test('HTML escaping and external-link safety',()=>{
 });
 
 // Complete region coverage and careful separation of technical work from field jobs.
-import {normalizeCity,categoryTone} from '../js/logic.js';
+import {normalizeCity} from '../js/logic.js';
 test('all SGV centers including accented names resolve without inventing commute distances',async()=>{
   const fs=await import('node:fs/promises');
   const j=JSON.parse(await fs.readFile(new URL('../data/geo.json',import.meta.url),'utf8'));
@@ -56,7 +56,7 @@ test('digital filter includes ecommerce and technical support, not museums',()=>
   assert.equal(categoryTone('Technical & IT'),'technical');
 });
 
-import {jobURLKey} from '../js/logic.js';
+import {jobURLKey,isRecentPosting,categoryTone} from '../js/logic.js';
 test('deduplication preserves distinct Indeed job IDs but ignores tracking tags',()=>{
   const a='https://www.indeed.com/viewjob?jk=alpha&from=search';
   const b='https://www.indeed.com/viewjob?jk=beta&from=search';
@@ -64,4 +64,12 @@ test('deduplication preserves distinct Indeed job IDs but ignores tracking tags'
   assert.equal(jobURLKey(a),jobURLKey('https://www.indeed.com/viewjob?from=homepage&jk=alpha'));
   assert.equal(jobURLKey('https://example.org/role?utm_source=abc'),jobURLKey('https://example.org/role?utm_source=def'));
   assert.equal(jobURLKey('javascript:alert(1)'), '');
+});
+
+test('30-day age limit is inclusive and overrides archived/unknown date filters',()=>{
+  assert.equal(isRecentPosting('2026-10-14','2026-11-13'),true);
+  assert.equal(isRecentPosting('2026-10-13','2026-11-13'),false);
+  assert.equal(isRecentPosting(null,'2026-11-13'),false);
+  assert.equal(isRecentPosting('2026-11-14','2026-11-13'),false);
+  assert.equal(categoryTone('Skilled trades'),'trades');
 });

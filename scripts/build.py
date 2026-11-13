@@ -15,14 +15,18 @@ import re
 from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ('opportunities', 'live_jobs', 'careers', 'places', 'tasks', 'geo', 'snapshot', 'role_ideas')
+DATA = ('opportunities', 'live_jobs', 'careers', 'places', 'tasks', 'geo', 'snapshot', 'role_ideas', 'apprenticeships')
 
 
 def fallback(data: dict) -> str:
     """Accessible, styled fallback when browser JavaScript cannot execute."""
     now = datetime.now(ZoneInfo('America/Los_Angeles')).date()
     jobs = data['opportunities']
-    visible = [job for job in jobs if not job.get('deadline') or job['deadline'] >= now.isoformat()]
+    def fresh(job):
+        try: age=(now - datetime.strptime(job['postedAt'], '%Y-%m-%d').date()).days
+        except (TypeError, ValueError, KeyError): return False
+        return 0 <= age <= 30
+    visible = [job for job in jobs if fresh(job) and (not job.get('deadline') or job['deadline'] >= now.isoformat())]
     # If all curated deadlines passed, do not suggest archived jobs are still open.
     chunks = [
         '<section class="hero"><div><div class="eyebrow">Local job research, built around you</div>',

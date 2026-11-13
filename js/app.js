@@ -1,4 +1,4 @@
-import {esc,safeURL,jobURLKey,todayLA,prettyDate,postedAge,deadlineStatus,jobMiles,distanceBand,bandNames,hourlyFloor,digitalCategories,categoryTone,matchJob,sortJobs} from './logic.js';
+import {esc,safeURL,jobURLKey,todayLA,prettyDate,isRecentPosting,postedAge,deadlineStatus,jobMiles,distanceBand,bandNames,hourlyFloor,digitalCategories,categoryTone,matchJob,sortJobs} from './logic.js';
 
 /* One stateful screen, one secondary guide, and no client dependencies. */
 const root=document.querySelector('#app');
@@ -6,7 +6,7 @@ const STORAGE='fieldnotes-jobwatch-v3';
 const defaults={query:'',center:'El Monte',radius:'30',category:'all',track:'all',sort:'closest',age:'all',minPay:'all',archived:false,saved:false,includeRemote:true};
 let filter={...defaults},db=null,current='jobs',ideasQuery='',ideasCategory='all',ideasExpanded=false;
 let cachedJobs=null;
-let visibleCount=24;
+let visibleCount=24, apprenticeshipExpanded=false;
 const PAGE_SIZE=24;
 const state=loadState();
 
@@ -38,8 +38,8 @@ const health=j=>{
 };
 function normalizeJobs(){
   if(cachedJobs)return cachedJobs;
-  const curated=db.opportunities.map(j=>({...j,liveFeed:false}));
-  const feed=(db.live?.jobs||[]).map(j=>({...j,liveFeed:true,category:j.category||'Operations & services',sourceType:j.sourceType||'Third-party job feed',observedAt:j.observedAt||j.seenAt||null,postedAt:j.postedAt||null,deadline:j.deadline||null,requirements:j.requirements||'See the original source for education, experience and certifications.',note:j.note||j.description||'Verify with the source.',salary:j.salary||'Pay not published',schedule:j.schedule||'Schedule not listed'}));
+  const curated=db.opportunities.filter(j=>isRecentPosting(j.postedAt)).map(j=>({...j,liveFeed:false}));
+  const feed=(db.live?.jobs||[]).filter(j=>isRecentPosting(j.postedAt)).map(j=>({...j,liveFeed:true,category:j.category||'Operations & services',sourceType:j.sourceType||'Third-party job feed',observedAt:j.observedAt||j.seenAt||null,postedAt:j.postedAt||null,deadline:j.deadline||null,requirements:j.requirements||'See the original source for education, experience and certifications.',note:j.note||j.description||'Verify with the source.',salary:j.salary||'Pay not published',schedule:j.schedule||'Schedule not listed'}));
   // De-duplicate by employer, role, city even when different feeds reuse a posting.
   const ids=new Set(),fingerprints=new Set(),urls=new Set();
   cachedJobs=[...curated,...feed].filter(j=>{
@@ -98,7 +98,7 @@ function sectionStats(){
   const saved=all.filter(j=>state.favorites[j.id]).length;
   const snapshot=db.snapshot?.generatedAt?prettyDate(db.snapshot.generatedAt.slice(0,10)):'Not checked yet';
   return `<div class="metrics">
-    <div class="metric accent-aqua"><strong>${all.length}</strong><span>Source-linked job records</span></div>
+    <div class="metric accent-aqua"><strong>${all.length}</strong><span>Jobs posted in past 30 days</span></div>
     <div class="metric accent-green"><strong id="nearby-count">${nearby}</strong><span>Within 15 miles of ${text(filter.center)}</span></div>
     <div class="metric accent-purple"><strong>${withPay}</strong><span>With reported pay</span></div>
     <div class="metric accent-yellow"><strong id="saved-count">${saved}</strong><span>Saved for review</span></div>
@@ -107,10 +107,10 @@ function sectionStats(){
 function shell(){
   const fields=[...new Set(normalizeJobs().map(j=>j.category||'Operations & services'))].sort();
   const sources=db.live?.sources||{};
-  const feed=`<div class="notice"><span class="notice-mark">i</span><div><strong>Where these leads come from</strong><p>${sources.greenhouse||0} employer-board listings and ${sources.jobicy||0} US-eligible remote listings from public feeds, plus ${db.opportunities.length} researched records.${sources.adzuna?` ${sources.adzuna} additional Adzuna listings.`:' Adzuna can add more local leads with optional API credentials.'} Availability is never guaranteed. ${db.live?.errors?.length?'Some sources could not be refreshed; check individual listings.':''}</p></div></div>`;
+  const feed=`<div class="notice"><span class="notice-mark">i</span><div><strong>Only jobs posted in the last 30 days</strong><p>Listings must have a genuine published date. ${db.opportunities.length} reviewed job records, ${sources.greenhouse||0} employer-board results, ${sources.jobicy||0} Jobicy leads, ${sources.remotive||0} Remotive remote leads and ${sources.adzuna||0} optional Adzuna leads. Openings and wages need source confirmation. Undated postings and older jobs are excluded. Training programs below are not job vacancies.</p></div></div>`;
   return `<section class="hero"><div><div class="eyebrow">Local job research, built around you</div><h1>Find work that <span>fits your life.</span></h1>
-    <p>Search around any San Gabriel Valley city. Compare pay, required experience, location and deadlines before deciding where to apply.</p>
-    <div class="hero-chips"><span>31 SGV cities</span><span>In-person and remote options</span><span>Original source links</span></div></div>
+    <p>Search around any San Gabriel Valley city. Compare pay, qualifications, location and deadlines for jobs posted in the past 30 days. Compare trade apprenticeships separately.</p>
+    <div class="hero-chips"><span>31 SGV cities</span><span>Past 30 days only</span><span>In-person and remote options</span><span>Original source links</span></div></div>
     <aside class="hero-aside"><small>Your starting point</small><strong id="current-center">${text(filter.center)}</strong><p>Choose your city, narrow your interests, then open the original listing to check whether applications are still being accepted.</p><a class="hero-jump" href="#results-count">Browse matching jobs <span aria-hidden="true">&darr;</span></a></aside></section>
     ${sectionStats()}
     <section class="search-panel" aria-label="Search and filter jobs"><div class="panel-title"><h2>Find your next role</h2><p>Start broad, then narrow by city, pay and experience.</p></div>
@@ -120,6 +120,7 @@ function shell(){
       <button type="button" data-track="heritage" class="track ${filter.track==='heritage'?'selected':''}" aria-pressed="${filter.track==='heritage'}">History and books</button>
       <button type="button" data-track="collectibles" class="track ${filter.track==='collectibles'?'selected':''}" aria-pressed="${filter.track==='collectibles'}">Coins and auctions</button>
       <button type="button" data-track="digital" class="track ${filter.track==='digital'?'selected':''}" aria-pressed="${filter.track==='digital'}">Shopify and tech</button>
+      <button type="button" data-track="trades" class="track ${filter.track==='trades'?'selected':''}" aria-pressed="${filter.track==='trades'}">Skilled trades</button>
     </div>
     <div class="filter-grid">
       <div class="filter filter-query"><label for="job-query">Job title, skill or employer</label><input id="job-query" data-search type="search" value="${text(filter.query)}" placeholder="Try museum educator, Shopify, park ranger" autocomplete="off"></div>
@@ -129,15 +130,16 @@ function shell(){
     </div>
     <details class="advanced"><summary>More ways to narrow your results</summary><div class="advanced-grid">
       <div class="filter"><label for="sort">Order jobs</label><select id="sort" data-control="sort">${opts([['closest','Closest first'],['newest','Most recently posted'],['deadline','Closing soon'],['pay','Highest published pay']],filter.sort)}</select></div>
-      <div class="filter"><label for="age">Published within</label><select id="age" data-control="age">${opts([['all','All dates'],['7','7 days'],['14','14 days'],['30','30 days'],['unknown','Dates not supplied']],filter.age)}</select></div>
+      <div class="filter"><label for="age">Published within</label><select id="age" data-control="age">${opts([['all','Last 30 days'],['7','7 days'],['14','14 days']],filter.age)}</select></div>
       <div class="filter"><label for="minPay">Minimum published pay (hourly equivalent)</label><select id="minPay" data-control="minPay">${opts([['all','Any / undisclosed'],['20','$20+ / hr'],['25','$25+ / hr'],['30','$30+ / hr'],['40','$40+ / hr']],filter.minPay)}</select></div>
     </div><div class="checks"><label><input type="checkbox" data-control="saved" ${isChecked(filter.saved)}> Saved only</label>
       <label><input type="checkbox" data-control="includeRemote" ${isChecked(filter.includeRemote)}> Include US-eligible remote jobs</label>
-      <label><input type="checkbox" data-control="archived" ${isChecked(filter.archived)}> Include past-deadline listings</label></div></details>
+      <label><input type="checkbox" data-control="archived" ${isChecked(filter.archived)}> Include recent jobs with passed deadlines</label></div></details>
     <div class="panel-foot"><span id="center-label">Distances are approximate and measured between city centers. Not driving times.</span><button class="button button-light" id="reset-filters" type="button">Clear filters</button></div>
     </section>${feed}
     <div id="results-count" class="results-bar" aria-live="polite"></div>
     <div id="job-results"></div>
+    ${apprenticeshipSection()}
     ${roleExplorer()}
     <div class="method-note"><strong>Before you apply</strong><p>Every lead links to its source. Pay, dates and qualifications come from available listings and may be incomplete or outdated. Posting age uses the published date, not the day this site discovered the job. A working link is not proof of an open position. Verify the full requirements and deadline with the employer.</p></div>`;
 }
@@ -147,7 +149,7 @@ function appliedFilters(){
     radius:filter.radius!==defaults.radius?`Radius: ${filter.radius==='all'?'all locations':filter.radius+' mi'}`:null,
     category:filter.category!=='all'?filter.category:null,
     track:filter.track!=='all'?{
-      physical:'More movement',heritage:'History and books',collectibles:'Coins and auctions',digital:'Shopify and tech'
+      physical:'More movement',heritage:'History and books',collectibles:'Coins and auctions',digital:'Shopify and tech',trades:'Skilled trades'
     }[filter.track]:null,
     age:filter.age!=='all'?`Published: ${filter.age==='unknown'?'date missing':filter.age+' days'}`:null,
     minPay:filter.minPay!=='all'?`At least $${filter.minPay}/hr`:null,
@@ -169,11 +171,37 @@ function renderJobResults(){
   const nearbyNode=document.querySelector('#nearby-count');if(nearbyNode)nearbyNode.textContent=String(nearby);
   const savedNode=document.querySelector('#saved-count');if(savedNode)savedNode.textContent=String(normalizeJobs().filter(j=>state.favorites[j.id]).length);
   counter.innerHTML=`<div><h2>${filtered.length} ${filtered.length===1?'job matches':'jobs match'} your search</h2><p>${text(filter.sort==='closest'?`Nearest to ${filter.center} first`:{newest:'Most recently published first',deadline:'Upcoming deadlines first',pay:'Highest comparable pay first'}[filter.sort]||'Nearest first')}. Check current status before applying.</p>${filterSummary()}</div><span class="count-label">${normalizeJobs().length} source-linked records · ${db.role_ideas?.length||0} additional role searches</span>`;
-  if(!filtered.length){container.innerHTML='<div class="empty"><h3>No matching leads yet</h3><p>Try a nearby city, expand your radius, or clear a filter. You can also browse the job-title searches below.</p><button class="button button-primary" type="button" id="reset-filters">Clear filters</button></div>';return;}
+  if(!filtered.length){container.innerHTML='<div class="empty"><h3>No matching recent jobs</h3><p>Expand your radius or try a different city. See trade training programs below and browse additional role searches.</p><button class="button button-primary" type="button" id="reset-filters">Clear filters</button></div>';return;}
   const more=filtered.length>shown.length?`<div class="more-jobs"><p>Showing ${shown.length} of ${filtered.length} matching records</p><button type="button" class="button button-light" data-more-jobs>Show ${Math.min(PAGE_SIZE,filtered.length-shown.length)} more jobs</button></div>`:'';
   if(filter.sort!=='closest'){container.innerHTML=`<div class="job-grid">${shown.map(card).join('')}</div>${more}`;return;}
   const groups=new Map();for(const j of shown){const k=distanceBand(jobMiles(j,filter.center,db.geo));if(!groups.has(k))groups.set(k,[]);groups.get(k).push(j);}
   container.innerHTML=[...groups.entries()].sort((a,b)=>a[0]-b[0]).map(([k,rows])=>`<section class="group"><div class="group-head"><h3>${text(bandNames[k])}</h3><span>${rows.length} ${rows.length===1?'role':'roles'} shown</span></div><div class="job-grid">${rows.map(card).join('')}</div></section>`).join('')+more;
+}
+/** Apprentice program references are not job postings and have no invented posting date. */
+function apprenticeshipSection(){
+  return `<section id="apprenticeships" class="apprenticeship-section" aria-labelledby="apprenticeship-title">
+    <div class="section-title"><h2 id="apprenticeship-title">Union apprenticeships and skilled trades</h2>
+    <p>Compare paid training and hands-on work. These are standing programs or recruitment calendars, not jobs posted within 30 days. Verify each intake before applying.</p></div>
+    <div class="trade-quicklinks"><span>Explore:</span><a href="#apprenticeship-list">Electrical</a><a href="#apprenticeship-list">Sprinkler fitting</a><a href="#apprenticeship-list">Welding</a><a href="#apprenticeship-list">Elevators</a><a href="#apprenticeship-list">Piping and HVAC</a></div>
+    <div id="apprenticeship-list"></div></section>`;
+}
+function renderApprenticeships(){
+  const dest=document.querySelector('#apprenticeship-list');if(!dest)return;
+  const programs=[...(db.apprenticeships||[])].sort((a,b)=>
+    (jobMiles(a,filter.center,db.geo)??9999)-(jobMiles(b,filter.center,db.geo)??9999));
+  const shown=apprenticeshipExpanded?programs:programs.slice(0,6);
+  dest.innerHTML=`<div class="apprenticeship-grid">${shown.map(p=>{
+    const distance=jobMiles(p,filter.center,db.geo);
+    return `<article class="apprenticeship-card"><div class="pills"><span class="pill trade-kind">${text(p.kind)}</span><span class="pill">${distance===null?'Region-wide / see program':`≈ ${distance} mi from ${text(filter.center)}`}</span></div>
+      <h3>${text(p.title)}</h3><p class="company">${text(p.sponsor)} · ${text(p.city)}</p>
+      <div class="trade-status"><strong>Application status</strong><span>${text(p.status)}</span></div>
+      <p class="trade-work">${text(p.work)}</p>
+      <div class="qualifications"><h4>Qualifications to check</h4><p>${text(p.requirements)}</p></div>
+      <p class="trade-pay"><strong>Pay:</strong> ${text(p.pay)}</p>
+      <p class="trade-action">${text(p.action)}</p>
+      ${link(p.url,'Check official apprenticeship details','button button-light',`Official apprenticeship details for ${p.sponsor}`)}
+    </article>`;}).join('')}</div>
+    ${programs.length>6?`<button class="button button-light" type="button" data-show-apprenticeships>${apprenticeshipExpanded?'Show fewer programs':`Show all ${programs.length} apprenticeship programs`}</button>`:''}`;
 }
 function roleExplorer(){return `<details id="role-explorer" class="idea-section"><summary><span><small>Broaden the search</small><strong>Explore ${db.role_ideas?.length||0} other job titles</strong><span class="idea-note">Take your search beyond the saved leads. These links open live searches, not verified vacancies.</span></span><span class="idea-arrow" aria-hidden="true">+</span></summary>
     <div class="idea-body"><div class="idea-controls"><div class="filter"><label for="idea-query">Search role ideas</label><input id="idea-query" data-idea-search type="search" value="${text(ideasQuery)}" placeholder="Coin, Shopify, garden…"></div>
@@ -193,7 +221,7 @@ function renderRoleResults(){
       return `<article class="idea-card tone-${categoryTone(r.category)}"><span>${text(r.category)}</span><h4>${text(r.title)}</h4><p>${text(r.summary)}</p><p class="idea-qual"><strong>Typical qualifications:</strong> ${text(r.typicalQualifications)}</p><small>${text(r.movement)}</small><div class="idea-links">${link(indeed,'Search jobs','',`Search job listings for ${r.title}`)}${link(gov,'Public-sector search','',`Search public-sector listings for ${r.title}`)}</div></article>`;}).join('')}</div>
     ${filtered.length>12?`<button class="button button-light show-ideas" type="button" data-show-ideas>${ideasExpanded?'Show fewer roles':`Show all ${filtered.length} roles`}</button>`:''}`;
 }
-function renderJobs(){root.innerHTML=shell();renderJobResults();renderRoleResults();}
+function renderJobs(){root.innerHTML=shell();renderJobResults();renderApprenticeships();renderRoleResults();}
 function renderExplore(){
   const careers=db.careers||[],sites=[...db.places].sort((a,b)=>(jobMiles(a,state.center,db.geo)??9999)-(jobMiles(b,state.center,db.geo)??9999));
   const tasks=db.tasks||[],done=tasks.filter(x=>state.completed[x.id]).length;
@@ -217,7 +245,7 @@ root.addEventListener('change',event=>{
   if(control){visibleCount=PAGE_SIZE;filter[control]=event.target.type==='checkbox'?event.target.checked:event.target.value;
     if(control==='includeRemote'){state.includeRemote=filter.includeRemote;persist();}
     if(control==='center'){state.center=filter.center;persist();const node=document.querySelector('#center-label');if(node)node.textContent=`Starting in ${filter.center}. Straight-line city-center distances.`;const here=document.querySelector('#current-center');if(here)here.textContent=filter.center;}
-    renderJobResults();renderRoleResults();
+    renderJobResults();renderApprenticeships();renderRoleResults();
   }
   if(event.target.matches('[data-idea-category]')){ideasCategory=event.target.value;ideasExpanded=false;renderRoleResults();}
   const task=event.target.dataset.task;
@@ -238,18 +266,19 @@ root.addEventListener('click',event=>{
   const save=event.target.closest('[data-save-id]');
   if(save){state.favorites[save.dataset.saveId]=!state.favorites[save.dataset.saveId];persist();renderJobResults();return;}
   const pick=event.target.closest('[data-track]');
-  if(pick){visibleCount=PAGE_SIZE;filter.track=pick.dataset.track;document.querySelectorAll('[data-track]').forEach(el=>{const yes=el.dataset.track===filter.track;el.classList.toggle('selected',yes);el.setAttribute('aria-pressed',String(yes));});renderJobResults();renderRoleResults();return;}
+  if(pick){visibleCount=PAGE_SIZE;filter.track=pick.dataset.track;document.querySelectorAll('[data-track]').forEach(el=>{const yes=el.dataset.track===filter.track;el.classList.toggle('selected',yes);el.setAttribute('aria-pressed',String(yes));});renderJobResults();renderRoleResults();if(filter.track==='trades'){document.querySelector('#apprenticeships')?.scrollIntoView({behavior:'smooth',block:'start'});}return;}
   const clear=event.target.closest('[data-clear-filter]');
   if(clear){visibleCount=PAGE_SIZE;filter[clear.dataset.clearFilter]=defaults[clear.dataset.clearFilter];renderJobs();return;}
   if(event.target.closest('#reset-filters')){visibleCount=PAGE_SIZE;filter={...defaults,center:state.center,includeRemote:state.includeRemote};ideasQuery='';ideasCategory='all';renderJobs();return;}
   if(event.target.closest('[data-more-jobs]')){visibleCount+=PAGE_SIZE;renderJobResults();return;}
   if(event.target.closest('[data-show-ideas]')){ideasExpanded=!ideasExpanded;renderRoleResults();}
+  if(event.target.closest('[data-show-apprenticeships]')){apprenticeshipExpanded=!apprenticeshipExpanded;renderApprenticeships();}
 });
 window.addEventListener('hashchange',render);
 
 async function start(){
   try{
-    const keys=['opportunities','live_jobs','careers','places','tasks','geo','snapshot','role_ideas'];
+    const keys=['opportunities','live_jobs','careers','places','tasks','geo','snapshot','role_ideas','apprenticeships'];
     const seed=document.querySelector('#job-seed');
     const embedded=seed?JSON.parse(seed.textContent):null;
     const data=embedded?keys.map(key=>embedded[key]):await Promise.all(keys.map(async key=>{

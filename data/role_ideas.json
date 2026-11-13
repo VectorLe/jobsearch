@@ -428,5 +428,255 @@
     "typicalQualifications": "Experience, gym supervision and safety culture",
     "query": "Combat-sports class assistant",
     "type": "role-idea"
+  },
+  {
+    "id": "trade-01",
+    "title": "Electrician apprentice",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Wire residential and commercial systems",
+    "typicalQualifications": "Entry aptitude, algebra and reliable travel",
+    "query": "Electrician apprentice",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-02",
+    "title": "Fire sprinkler fitter apprentice",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Install and test safety piping",
+    "typicalQualifications": "Age 18+, math and physical work",
+    "query": "Fire sprinkler fitter apprentice",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-03",
+    "title": "Pipefitter or steamfitter apprentice",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Join and install industrial piping",
+    "typicalQualifications": "Math, hand tools and safe field work",
+    "query": "Pipefitter or steamfitter apprentice",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-04",
+    "title": "Welding apprentice",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Fabricate and weld steel components",
+    "typicalQualifications": "Safety, fabrication training and certifications as required",
+    "query": "Welding apprentice",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-05",
+    "title": "Elevator mechanic apprentice",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Work on lift equipment and controls",
+    "typicalQualifications": "EIAT test and interview at recruitment",
+    "query": "Elevator mechanic apprentice",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-06",
+    "title": "Sheet metal worker apprentice",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Fabricate and install ductwork",
+    "typicalQualifications": "Math aptitude, safety and tools",
+    "query": "Sheet metal worker apprentice",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-07",
+    "title": "Refrigeration or HVAC apprentice",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Install and maintain climate systems",
+    "typicalQualifications": "Mechanical aptitude, training and safety",
+    "query": "Refrigeration or HVAC apprentice",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-08",
+    "title": "Heavy equipment operator apprentice",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Operate construction earthmoving equipment",
+    "typicalQualifications": "Testing, safety and driving qualifications",
+    "query": "Heavy equipment operator apprentice",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-09",
+    "title": "Commercial carpenter apprentice",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Build and finish structures",
+    "typicalQualifications": "Physical work, tools and measurements",
+    "query": "Commercial carpenter apprentice",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-10",
+    "title": "Reinforcing ironworker apprentice",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Assemble and place rebar",
+    "typicalQualifications": "Physical ability, heights and safety",
+    "query": "Reinforcing ironworker apprentice",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-11",
+    "title": "Structural ironworker apprentice",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Rig steel and build elevated structures",
+    "typicalQualifications": "Physical ability, safety and tools",
+    "query": "Structural ironworker apprentice",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-12",
+    "title": "Glazier apprentice",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Install architectural glass",
+    "typicalQualifications": "Safety, measurement and tools",
+    "query": "Glazier apprentice",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-13",
+    "title": "Industrial maintenance mechanic",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Repair manufacturing equipment",
+    "typicalQualifications": "Mechanical troubleshooting and plant safety",
+    "query": "Industrial maintenance mechanic",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-14",
+    "title": "Millwright apprentice",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Align and maintain machinery",
+    "typicalQualifications": "Mechanical aptitude and precision tools",
+    "query": "Millwright apprentice",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-15",
+    "title": "Fire alarm technician",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Install and inspect alarm devices",
+    "typicalQualifications": "Low-voltage knowledge and possible licensing",
+    "query": "Fire alarm technician",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-16",
+    "title": "Solar installer apprentice",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Assemble rooftop photovoltaic systems",
+    "typicalQualifications": "Outdoor safety, heights and electrical basics",
+    "query": "Solar installer apprentice",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-17",
+    "title": "Utility groundsman",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Support electrical power line crews",
+    "typicalQualifications": "Commercial license may be required",
+    "query": "Utility groundsman",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-18",
+    "title": "Water utility operator trainee",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Operate and monitor water systems",
+    "typicalQualifications": "Certification may be required by agency",
+    "query": "Water utility operator trainee",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-19",
+    "title": "Machinist apprentice",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Set up and operate machine tools",
+    "typicalQualifications": "Measurement, precision and CNC fundamentals",
+    "query": "Machinist apprentice",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-20",
+    "title": "Irrigation installer apprentice",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Build outdoor irrigation systems",
+    "typicalQualifications": "Heavy outdoor work and pipe handling",
+    "query": "Irrigation installer apprentice",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-21",
+    "title": "Plumber apprentice",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Install pipes, fixtures and drains",
+    "typicalQualifications": "Age, diploma and licensing vary",
+    "query": "Plumber apprentice",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-22",
+    "title": "Building automation technician",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Maintain controls for buildings",
+    "typicalQualifications": "Electrical basics and technical troubleshooting",
+    "query": "Building automation technician",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-23",
+    "title": "Construction materials inspector trainee",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Test concrete and soil materials",
+    "typicalQualifications": "Field mobility and certification training",
+    "query": "Construction materials inspector trainee",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-24",
+    "title": "Facilities maintenance technician",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Maintain buildings and systems",
+    "typicalQualifications": "Hands-on troubleshooting and physical work",
+    "query": "Facilities maintenance technician",
+    "type": "role-idea"
+  },
+  {
+    "id": "trade-25",
+    "title": "Construction surveying technician",
+    "category": "Skilled trades",
+    "movement": "High movement",
+    "summary": "Measure site layouts and elevations",
+    "typicalQualifications": "Math, outdoor work and tools",
+    "query": "Construction surveying technician",
+    "type": "role-idea"
   }
 ]

@@ -30,6 +30,11 @@ export function prettyDate(date) {
   if(daysUntil(date,date)===null)return 'Not supplied';
   return new Intl.DateTimeFormat('en-US',{timeZone:'UTC',month:'short',day:'numeric',year:'numeric'}).format(new Date(date+'T12:00:00Z'));
 }
+export const MAX_JOB_AGE_DAYS = 30;
+export function isRecentPosting(date,now=todayLA()) {
+  const n=daysUntil(date,now);
+  return n!==null && n<=0 && n>=-MAX_JOB_AGE_DAYS;
+}
 export function postedAge(date,now=todayLA()) {
   const n=daysUntil(date,now);
   if(n===null)return {text:'Date not published',days:null,known:false};
@@ -89,11 +94,13 @@ export function categoryTone(category) {
   if(category==='Collectibles & trade')return 'collectibles';
   if(category==='E-commerce & digital')return 'ecommerce';
   if(category==='Technical & IT')return 'technical';
+  if(category==='Skilled trades')return 'trades';
   return 'services';
 }
 export function matchJob(job, f, center, geo, saved={}) {
   const miles=jobMiles(job,center,geo);
   const remote=String(job.city||'').toLowerCase()==='remote'||String(job.workMode||'').toLowerCase()==='remote';
+  if(!isRecentPosting(job.postedAt))return false;
   if(f.includeRemote===false&&remote)return false;
   if(f.radius!=='all'&&!remote&&(miles===null||miles>Number(f.radius)))return false;
   if(!f.archived&&deadlineStatus(job.deadline).key==='passed')return false;
@@ -103,6 +110,7 @@ export function matchJob(job, f, center, geo, saved={}) {
   if(f.track==='physical'&&digitalCategories.has(job.category))return false;
   if(f.track==='heritage'&&!['Museums & heritage','Books & education'].includes(job.category))return false;
   if(f.track==='collectibles'&&job.category!=='Collectibles & trade')return false;
+  if(f.track==='trades'&&job.category!=='Skilled trades')return false;
   if(f.age!=='all') {
     const age=postedAge(job.postedAt).days;
     if(f.age==='unknown' ? age!==null : age===null||age>Number(f.age))return false;

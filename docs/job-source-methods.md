@@ -8,14 +8,21 @@ This research dashboard offers source-linked opportunities, not a job-placement 
 | --- | --- | --- | --- |
 | Curated records (`data/opportunities.json`) | Manually researched source links | SGV and surrounding cities, with an occasional farther-away contrast | Specific reported pay, source posting date, official requirements and deadline when publicly stated |
 | Greenhouse Job Board API | Public read-only employer GET endpoint, no API key | Selected employer job boards and postings whose explicit city matches an SGV or nearby city | Source-linked title, employer, location and provider-reported first published date; pay only when shown unambiguously |
+| Remotive public API | No-key public JSON, fetched daily with source attribution | US-eligible remote work, where the eligibility text explicitly permits it | Published date, original Remotive link, reported pay and requirements excerpt |
 | Jobicy public API | Public read-only API, no API key | Remote jobs that the provider marks geographically eligible for the United States | Remote job title, original publication date, US eligibility tag, provider pay, summary and requirements excerpts |
 | Adzuna API (optional) | Application ID and API key stored in GitHub Actions secrets | Targeted SGV and nearby-city searches | Provider reported dates and salary, clearly marked as estimated when the provider says so |
+| Union and apprenticeship references (`data/apprenticeships.json`) | Official sponsor or state-registered program sites | Local electrical, piping, sprinkler, sheet metal, welding, elevator and equipment routes | Program entrance requirements and intake status, not a vacancy or publication date |
 | Role ideas (`data/role_ideas.json`) | Search links only | Many categories matching the user's interests and technical experience | Suggested job titles, **not verified vacancies** |
 
 Public API documentation:
 - [Greenhouse Job Board API](https://docs.greenhouse.io/job-board): read-only GET endpoints do not require authentication. `content=true` includes the job description.
 - [Jobicy public jobs API](https://github.com/Jobicy/remote-jobs-api): `geo=usa`, cursor pagination, provider-reported `pubDate` and salary fields. The public API returns recently published opportunities, generally within seven days.
+- [Remotive public API](https://remotive.com/remote-jobs/api): once-daily feed with attribution and source URLs.
 - [Adzuna developer API](https://developer.adzuna.com/): optional broader keyword discovery with credentials.
+
+## Maximum age
+
+Job records must have a real `postedAt` date between today and 30 days ago in the Pacific time zone. Undated or older records cannot appear, even under archived filters or in the no-JavaScript fallback. The daily refresh removes outdated curated entries and excludes older feed entries, including cached records during temporary source failures. Apprentice programs remain separate reference cards because recruitment windows are not job posting dates.
 
 ## What is not claimed
 
@@ -29,7 +36,7 @@ Public API documentation:
 
 ## Performance and reliability
 
-GitHub Actions retrieves sources once per day and publishes a static JSON snapshot. The browser only loads the site bundle and does not call outside job APIs. Each public feed is limited by item count, response size and network timeout. Source failures never remove hand-researched records, and delayed provider results are explicitly marked. The site combines records and removes duplicates by job ID, URL and employer/title/city fingerprints. No web scraping of protected job boards is used.
+GitHub Actions retrieves sources once per day and publishes a static JSON snapshot. The browser only loads the site bundle and does not call outside job APIs. Each public feed is limited by item count, response size and network timeout. Source failures do not turn old entries into current vacancies, and delayed provider results are explicitly marked. The site combines records and removes duplicates by job ID, URL and employer/title/city fingerprints. No web scraping of protected job boards is used.
 
 The static seed is included in `index.html` so the site is readable even when separate assets are not available. When new daily records arrive, the updater runs `scripts/build.py` and automatically adjusts Netlify's Content Security Policy script hash. No frontend packages or hosted database are required.
 

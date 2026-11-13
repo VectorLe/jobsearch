@@ -93,8 +93,8 @@ def source_json(url, timeout=12):
     request = Request(url, headers={'User-Agent': USER_AGENT, 'Accept': 'application/json'})
     with urlopen(request, timeout=timeout) as response:
         # A bounded read avoids unbounded memory and rejects truncated JSON.
-        raw = response.read(6_000_001)
-        if len(raw) > 6_000_000:
+        raw = response.read(12_000_001)
+        if len(raw) > 12_000_000:
             raise ValueError('API response exceeds size limit')
         return json.loads(raw.decode('utf-8'))
 
@@ -201,6 +201,9 @@ def normalize_greenhouse(job, board, employer, geo, today, first_seen):
     jid = str(job.get('id') or '')
     if not jid.isdigit():
         return None
+    posted = safe_date(job.get('first_published'), today)
+    if not posted or not 0 <= (today - date.fromisoformat(posted)).days <= 30:
+        return None
     desc = job.get('content') or ''
     summary = plain_html(desc)
     schedule = 'Part-time' if re.search(r'part[- ]time', title + ' ' + summary[:900], re.I) else 'Full-time' if re.search(r'full[- ]time', title + ' ' + summary[:900], re.I) else 'See source'
@@ -211,7 +214,7 @@ def normalize_greenhouse(job, board, employer, geo, today, first_seen):
         'category': category_for(title), 'salary': listed_pay,
         'payType': 'Employer description; verify' if listed_pay != 'Pay not published' else 'Pay not provided on board',
         'schedule': schedule, 'workMode': 'On site / verify',
-        'postedAt': safe_date(job.get('first_published'), today),
+        'postedAt': posted,
         'deadline': safe_date(job.get('application_deadline'), today=None),
         'observedAt': today.isoformat(), 'seenAt': first_seen.get(key) or today.isoformat(),
         'sourceUrl': url, 'sourceType': 'Employer posting via Greenhouse',
@@ -232,7 +235,7 @@ def normalize_jobicy(job, today, first_seen):
     if not url.startswith('https://jobicy.com/'):
         return None
     posted = safe_date(job.get('pubDate'), today)
-    if not posted or (today - date.fromisoformat(posted)).days > 14:
+    if not posted or (today - date.fromisoformat(posted)).days > 30:
         return None
     level = _text(job.get('jobLevel') or 'Not provided', 60)
     if re.search(r'principal|staff|vp|vice president|chief', level, re.I):
@@ -240,6 +243,8 @@ def normalize_jobicy(job, today, first_seen):
     region = _text(job.get('jobGeo'), 90)
     # Geographic eligibility is provider reported, not a promise that an
     # employer will hire from California. Reject explicitly foreign-only roles.
+    if not re.search(r'\b(?:usa|united states|us only|north america|worldwide|anywhere|global)\b', region, re.I):
+        return None
     if re.search(r'\b(?:europe only|eu only|united kingdom only|uk only|canada only|india only|australia only)\b', region, re.I):
         return None
     description = job.get('jobDescription') or ''
@@ -302,6 +307,57 @@ def load_jobicy(today, first_seen, fetch=source_json):
     return list(found.values())[:70], errors
 
 
+def normalize_remotive(raw, today, first_seen):
+    """Normalize a public Remotive posting with explicit US hiring eligibility."""
+    title = _text(raw.get('title'), 170)
+    if not relevant(title, REMOTE_TITLES):
+        return None
+    jid = str(raw.get('id') or '')
+    if not jid.isdigit():
+        return None
+    url = str(raw.get('url') or '')
+    if not url.startswith('https://remotive.com/'):
+        return None
+    posted = safe_date(raw.get('publication_date'), today)
+    if not posted or not 0 <= (today - date.fromisoformat(posted)).days <= 30:
+        return None
+    region = _text(raw.get('candidate_required_location'), 100)
+    if not re.search(r'\b(?:usa|united states|us only|north america|worldwide|anywhere|global)\b', region, re.I):
+        return None
+    if re.search(r'\b(?:europe only|eu only|canada only|uk only|india only)\b', region, re.I):
+        return None
+    desc = raw.get('description') or ''
+    key = 'remotive-' + jid
+    salary = _text(raw.get('salary'), 90) or 'Pay not published'
+    return {
+        'id': key, 'title': title, 'employer': _text(raw.get('company_name') or 'Employer not specified', 110),
+        'city': 'Remote', 'category': category_for(title), 'salary': salary,
+        'payType': 'Remotive reported; confirm units and with employer',
+        'schedule': _text(raw.get('job_type') or 'See source', 50).replace('_', ' ').title(),
+        'workMode': 'Remote', 'postedAt': posted, 'deadline': None,
+        'observedAt': today.isoformat(), 'seenAt': first_seen.get(key) or today.isoformat(),
+        'sourceUrl': url, 'sourceType': 'Remotive', 'provider': 'remotive',
+        'requirements': qualifications(desc), 'note': _text(plain_html(desc), 260),
+        'eligibility': region,
+    }
+
+
+def load_remotive(today, first_seen, fetch=source_json):
+    """Use Remotive's public API once a day and attribute every listing."""
+    try:
+        payload = fetch('https://remotive.com/api/remote-jobs', timeout=16)
+        if not isinstance(payload, dict) or not isinstance(payload.get('jobs'), list):
+            raise ValueError('Invalid Remotive data')
+        found = {}
+        for raw in payload['jobs']:
+            job = normalize_remotive(raw, today, first_seen)
+            if job:
+                found[job['id']] = job
+        return list(found.values())[:110], []
+    except (OSError, ValueError, KeyError, TypeError, TimeoutError, json.JSONDecodeError) as exc:
+        return [], [f'Remotive: {type(exc).__name__}']
+
+
 def load_public_jobs(geo, checked_at, previous=None, fetch=source_json):
     """Return actual source-linked postings and provider errors, never search ideas."""
     # Use the same local day as the dashboard's posting-age labels.
@@ -309,9 +365,10 @@ def load_public_jobs(geo, checked_at, previous=None, fetch=source_json):
     first_seen = {j['id']: j.get('seenAt') for j in previous or [] if isinstance(j, dict) and j.get('id')}
     greenhouse, gh_errors = load_greenhouse(geo, now, first_seen, fetch)
     jobicy, j_errors = load_jobicy(now, first_seen, fetch)
-    jobs = greenhouse + jobicy
-    errors = gh_errors + j_errors
-    provider_counts = {'greenhouse': len(greenhouse), 'jobicy': len(jobicy)}
+    remotive, r_errors = load_remotive(now, first_seen, fetch)
+    jobs = greenhouse + jobicy + remotive
+    errors = gh_errors + j_errors + r_errors
+    provider_counts = {'greenhouse': len(greenhouse), 'jobicy': len(jobicy), 'remotive': len(remotive)}
     # A transient API failure should not erase yesterday's research, but stale
     # cards must be labeled and never retained indefinitely.
     failed = {err.split(':', 1)[0] for err in errors}
@@ -321,15 +378,16 @@ def load_public_jobs(geo, checked_at, previous=None, fetch=source_json):
             if not isinstance(old, dict) or old.get('id') in existing_ids:
                 continue
             board = old.get('id', '').split('-')[1] if old.get('provider') == 'greenhouse' else None
-            relevant_failure = (board in failed or (old.get('provider') == 'jobicy' and 'Jobicy' in failed))
+            relevant_failure = (board in failed or (old.get('provider') == 'jobicy' and 'Jobicy' in failed) or (old.get('provider') == 'remotive' and 'Remotive' in failed))
             if not relevant_failure:
                 continue
             try:
                 seen = date.fromisoformat((old.get('observedAt') or old.get('seenAt') or '')[:10])
             except ValueError:
                 continue
-            if now - seen <= timedelta(days=3):
+            posted = safe_date(old.get('postedAt'), now)
+            if posted and 0 <= (now - date.fromisoformat(posted)).days <= 30 and now - seen <= timedelta(days=3):
                 old = dict(old)
                 old['feedStale'] = True
                 jobs.append(old)
-    return jobs[:115], provider_counts, errors
+    return jobs[:240], provider_counts, errors

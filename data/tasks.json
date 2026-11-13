@@ -126,5 +126,37 @@
     "detail": "Do not change income sources until financial needs are understood.",
     "careerId": null,
     "priority": "high"
+  },
+  {
+    "id": "trade-local-345",
+    "phase": 1,
+    "title": "Contact Local 345 in Duarte",
+    "detail": "Ask how its applicant pool, physical demands, dues and apprentice wages actually work.",
+    "careerId": "trade-pipe",
+    "priority": "high"
+  },
+  {
+    "id": "trade-local-398",
+    "phase": 1,
+    "title": "Call Local 398 for an apprentice appointment",
+    "detail": "Confirm El Monte training, Rancho Cucamonga intake, prerequisites, commute and wait list.",
+    "careerId": "trade-pipe",
+    "priority": "high"
+  },
+  {
+    "id": "trade-smart-105",
+    "phase": 1,
+    "title": "Prepare for SMART Local 105 December application",
+    "detail": "Check December 7, 2026 opening time, math test and intake cap at the official training center.",
+    "careerId": "trade-fabrication",
+    "priority": "high"
+  },
+  {
+    "id": "trade-job-shadow",
+    "phase": 2,
+    "title": "Observe a real trade workday",
+    "detail": "Compare physical demands, commute, paid training, hazards and long-term income with museum and commerce roles.",
+    "careerId": "trade-electrical",
+    "priority": "medium"
   }
 ]

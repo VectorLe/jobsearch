@@ -11,6 +11,12 @@ import refresh
 class RefreshTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):cls.geo=refresh.read_json(ROOT/'data/geo.json')
+    def test_strict_30_day_window(self):
+        self.assertTrue(refresh._recent('2026-10-14',date(2026,11,13)))
+        self.assertFalse(refresh._recent('2026-10-13',date(2026,11,13)))
+        self.assertFalse(refresh._recent(None,date(2026,11,13)))
+        self.assertEqual(refresh.group_for('Electrical apprentice'),'Skilled trades')
+
     def test_deadline_states(self):
         self.assertEqual(refresh.deadline_state('2026-11-30',date(2026,11,12))['daysRemaining'],18)
         self.assertEqual(refresh.deadline_state('2026-11-11',date(2026,11,12))['state'],'passed')
@@ -44,6 +50,13 @@ class RefreshTests(unittest.TestCase):
         feed=refresh.load_adzuna(None,None,'2026-11-12T22:00:00Z',self.geo)
         self.assertEqual(feed['status'],'not-configured')
         self.assertEqual(feed['jobs'],[])
+
+    def test_apprenticeship_programs_are_separate_from_jobs(self):
+        programs=refresh.read_json(ROOT/'data/apprenticeships.json')
+        self.assertGreaterEqual(len(programs),15)
+        self.assertTrue(all(p['url'].startswith('https://') for p in programs))
+        self.assertTrue(all('postedAt' not in p for p in programs))
+        self.assertTrue(all(p['requirements'] and p['status'] for p in programs))
 
     def test_entire_sgv_cities_and_suggestions(self):
         self.assertEqual(len(self.geo['centers']),31)
