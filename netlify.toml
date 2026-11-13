@@ -1,6 +1,8 @@
-# Deploy repository root; leave Netlify Base directory blank.
-# There is no build command and there are no npm dependencies.
+# Explicitly pin the site to the repository root. This overrides stale Netlify UI
+# base-directory settings from when the dashboard lived in /career-compass.
+# There is no frontend build command or package installation.
 [build]
+  base = "."
   publish = "."
 
 [[headers]]
