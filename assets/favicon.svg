@@ -1,6 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="13" fill="#282828"/>
-  <rect x="7" y="7" width="50" height="50" rx="9" fill="none" stroke="#d79921" stroke-width="2"/>
-  <text x="16" y="47" font-family="Georgia,serif" font-weight="bold" font-size="42" fill="#ebdbb2">F</text>
-  <circle cx="47" cy="44" r="5" fill="#b8bb26"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="13" fill="#282828"/><rect x="7" y="7" width="50" height="50" rx="9" fill="none" stroke="#8ec07c" stroke-width="2"/><text x="16" y="47" font-family="Georgia,serif" font-weight="bold" font-size="42" fill="#ebdbb2">F</text><circle cx="47" cy="44" r="5" fill="#b8bb26"/></svg>

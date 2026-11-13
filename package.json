@@ -1,9 +1,9 @@
 {
-  "name": "fieldnotes-career-compass",
-  "version": "1.0.0",
+  "name": "fieldnotes-sgv-job-watch",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
-  "description": "Static, zero-dependency career research dashboard for Netlify",
+  "description": "Simple static job search centered on the San Gabriel Valley",
   "scripts": {
     "test": "node --test tests/logic.test.mjs",
     "serve": "python3 -m http.server 8000",

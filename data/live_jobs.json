@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-12T00:41:21Z",
+  "generatedAt": "2026-11-13T06:18:35Z",
   "status": "not-configured",
-  "message": "Optional feed not checked in offline mode.",
+  "message": "Offline test: job API not queried.",
   "jobs": []
 }

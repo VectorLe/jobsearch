@@ -6,7 +6,7 @@
     "city": "Whittier",
     "category": "Heritage",
     "salary": "$18.26–$22.15/hr",
-    "schedule": "Seasonal; limited annual hours",
+    "schedule": "Seasonal; up to 1,500 hours/year",
     "deadline": "2026-11-12",
     "sourceUrl": "https://calcareers.ca.gov/CalHrPublic/Jobs/JobPosting.aspx?JobControlId=535343",
     "observedAt": "2026-11-11",
@@ -15,7 +15,12 @@
       "heritage",
       "museum-ed"
     ],
-    "priority": "high"
+    "priority": "high",
+    "postedAt": null,
+    "requirements": "California state classification requirements; valid Class C license and background check.",
+    "jobNumber": "JC-535343",
+    "sourceType": "Employer listing",
+    "payType": "Published range"
   },
   {
     "id": "crestmore",
@@ -24,7 +29,7 @@
     "city": "Jurupa Valley",
     "category": "Heritage",
     "salary": "$20.92–$31.13/hr",
-    "schedule": "Temporary",
+    "schedule": "Temporary; some weekend events",
     "deadline": "2026-11-11",
     "sourceUrl": "https://www.governmentjobs.com/careers/riverside/jobs/5532659-0/temporary-recreation-coordinator-parks",
     "observedAt": "2026-11-11",
@@ -33,7 +38,12 @@
       "heritage",
       "recreation"
     ],
-    "priority": "high"
+    "priority": "high",
+    "postedAt": "2026-10-28",
+    "requirements": "Two years leading recreational or community programs; driver license.",
+    "jobNumber": "26-85065-01TCM",
+    "sourceType": "Employer listing",
+    "payType": "Published range"
   },
   {
     "id": "la-verne",
@@ -42,7 +52,7 @@
     "city": "La Verne",
     "category": "Outdoors & movement",
     "salary": "$16.90–$19.56/hr",
-    "schedule": "Part-time",
+    "schedule": "Part-time; up to 28 hrs/week",
     "deadline": "2026-11-12",
     "sourceUrl": "https://www.governmentjobs.com/jobs/5538575-0/recreation-leader-i",
     "observedAt": "2026-11-11",
@@ -50,7 +60,12 @@
     "careerIds": [
       "recreation"
     ],
-    "priority": "medium"
+    "priority": "medium",
+    "postedAt": "2026-11-03",
+    "requirements": "At least 18; recreation experience desirable, flexible schedule required.",
+    "jobNumber": "26-35",
+    "sourceType": "Employer listing",
+    "payType": "Published range"
   },
   {
     "id": "pomona",
@@ -59,7 +74,7 @@
     "city": "Pomona",
     "category": "Outdoors & movement",
     "salary": "$20.62–$23.47/hr",
-    "schedule": "Community programs",
+    "schedule": "Part-time; approximately 20 hrs/week",
     "deadline": "2026-11-22",
     "sourceUrl": "https://www.governmentjobs.com/careers/pomona/jobs/5524208-0/community-services-specialist-i-after-school",
     "observedAt": "2026-11-11",
@@ -68,7 +83,12 @@
       "recreation",
       "tutoring"
     ],
-    "priority": "medium"
+    "priority": "medium",
+    "postedAt": "2026-11-04",
+    "requirements": "Youth programming experience and suitability for after-school supervision.",
+    "jobNumber": "26-CSSIRL/2",
+    "sourceType": "Employer listing",
+    "payType": "Published range"
   },
   {
     "id": "arcadia-museum",
@@ -77,16 +97,21 @@
     "city": "Arcadia",
     "category": "Heritage",
     "salary": "$27.17/hr",
-    "schedule": "On-call; irregular hours",
+    "schedule": "Part-time, substitute/on-call",
     "deadline": "2026-11-30",
     "sourceUrl": "https://www.governmentjobs.com/careers/arcadiaca/jobs/5509988/museum-education-coordinator-substitute-on-call",
     "observedAt": "2026-11-11",
-    "note": "Excellent subject match. Requires two years relevant museum, education or interpretive-program experience.",
+    "note": "Requires two years relevant museum, education or interpretive-program experience.",
     "careerIds": [
       "museum-ed",
       "heritage"
     ],
-    "priority": "high"
+    "priority": "high",
+    "postedAt": "2026-11-09",
+    "requirements": "Two years in museum, education, or interpretive program delivery.",
+    "jobNumber": "26-33",
+    "sourceType": "Employer listing",
+    "payType": "Published range"
   },
   {
     "id": "arcadia-rec",
@@ -103,7 +128,12 @@
     "careerIds": [
       "recreation"
     ],
-    "priority": "high"
+    "priority": "high",
+    "postedAt": "2026-11-09",
+    "requirements": "Two years of recreation programming or comparable experience.",
+    "jobNumber": "26-36",
+    "sourceType": "Employer listing",
+    "payType": "Published range"
   },
   {
     "id": "arcadia-leader",
@@ -111,8 +141,8 @@
     "employer": "City of Arcadia",
     "city": "Arcadia",
     "category": "Outdoors & movement",
-    "salary": "$16.90–$18.65/hr",
-    "schedule": "Part-time",
+    "salary": "$16.90–$18.65/hr (I); $18.59–$20.52/hr (II)",
+    "schedule": "Part-time; continuous filing",
     "deadline": null,
     "sourceUrl": "https://www.governmentjobs.com/jobs/5523488-0/activity-leader-i-ii-part-time",
     "observedAt": "2026-11-11",
@@ -121,7 +151,12 @@
       "recreation",
       "coaching"
     ],
-    "priority": "medium"
+    "priority": "medium",
+    "postedAt": "2026-11-09",
+    "requirements": "Leader I: age 16+, some recreation experience desirable; Leader II: two seasons required.",
+    "jobNumber": "26-35",
+    "sourceType": "Employer listing",
+    "payType": "Published range"
   },
   {
     "id": "arcadia-library",
@@ -138,7 +173,12 @@
     "careerIds": [
       "library"
     ],
-    "priority": "low"
+    "priority": "low",
+    "postedAt": "2026-11-09",
+    "requirements": "Check employer requirements for library support and public service.",
+    "jobNumber": "26-31",
+    "sourceType": "Employer listing",
+    "payType": "Published range"
   },
   {
     "id": "huntington",
@@ -155,7 +195,11 @@
     "careerIds": [
       "library"
     ],
-    "priority": "medium"
+    "priority": "medium",
+    "postedAt": null,
+    "requirements": "Research support and computer-heavy reader services; verify skills.",
+    "sourceType": "Employer listing",
+    "payType": "Published range"
   },
   {
     "id": "vincent",
@@ -172,6 +216,78 @@
     "careerIds": [
       "museum-ed"
     ],
+    "priority": "low",
+    "postedAt": null,
+    "requirements": "Specialized art-related degree and relevant museum-education experience.",
+    "jobNumber": "26-5156-001",
+    "sourceType": "Employer listing",
+    "payType": "Published range"
+  },
+  {
+    "id": "pomona-inclusion",
+    "title": "Technical Specialist I — Inclusion Aide",
+    "employer": "City of Pomona",
+    "city": "Pomona",
+    "category": "Outdoors & movement",
+    "salary": "$23.00–$26.00/hr",
+    "schedule": "Part-time; about 10–20 hrs/week",
+    "postedAt": "2026-11-04",
+    "deadline": "2026-11-25",
+    "sourceUrl": "https://www.governmentjobs.com/careers/pomona/jobs/5208023/technical-specialist-i-inclusion-aide",
+    "observedAt": "2026-11-12",
+    "note": "Support inclusive recreational activities for youth with developmental disabilities; direct, active work with participants.",
+    "requirements": "High school diploma/GED and at least one year of relevant inclusion or disability-services experience.",
+    "careerIds": [
+      "recreation",
+      "tutoring"
+    ],
+    "jobNumber": "26-XTSIIA/1",
+    "sourceType": "Employer listing",
+    "payType": "Published range",
+    "priority": "medium"
+  },
+  {
+    "id": "pasadena-librarian",
+    "title": "Librarian — Part-time weekends",
+    "employer": "City of Pasadena",
+    "city": "Pasadena",
+    "category": "Education & books",
+    "salary": "$36.54–$45.67/hr",
+    "schedule": "Part-time; 10 hrs/week, Fri–Sun",
+    "postedAt": "2026-11-05",
+    "deadline": "2026-11-19",
+    "sourceUrl": "https://www.governmentjobs.com/careers/pasadena/jobs/5540617-0/librarian-p-t-10-hrs",
+    "observedAt": "2026-11-12",
+    "note": "Public-facing library service and weekend leadership. Longer-term option rather than an immediate entry path.",
+    "requirements": "Librarian role: verify library-science degree and experience requirements before considering.",
+    "careerIds": [
+      "library"
+    ],
+    "jobNumber": "27-060",
+    "sourceType": "Employer listing",
+    "payType": "Published range",
+    "priority": "low"
+  },
+  {
+    "id": "arcadia-librarian",
+    "title": "Librarian I (Substitute / On-Call)",
+    "employer": "City of Arcadia",
+    "city": "Arcadia",
+    "category": "Education & books",
+    "salary": "$37.45/hr",
+    "schedule": "Part-time, substitute/on-call",
+    "postedAt": "2026-11-09",
+    "deadline": "2026-11-30",
+    "sourceUrl": "https://www.governmentjobs.com/jobs/5509833-0/librarian-i-substitute-on-call",
+    "observedAt": "2026-11-12",
+    "note": "Public-facing reader assistance and library operations; likely requires professional librarian qualifications.",
+    "requirements": "Check library-science degree and professional requirements on the official listing.",
+    "careerIds": [
+      "library"
+    ],
+    "jobNumber": "26-32",
+    "sourceType": "Employer listing",
+    "payType": "Published wage",
     "priority": "low"
   }
 ]

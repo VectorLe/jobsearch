@@ -1,69 +1,95 @@
-/* Pure helpers: easy to unit test, no framework or external dependency. */
-export const dimensions = [
-  { key: 'subject', label: 'Subject interest', short: 'Interest' },
-  { key: 'movement', label: 'Daily movement', short: 'Movement' },
-  { key: 'entry', label: 'Ease of transition', short: 'Access' },
-  { key: 'income', label: 'Income potential', short: 'Income' },
-  { key: 'autonomy', label: 'Independence', short: 'Autonomy' },
-  { key: 'learning', label: 'Room to learn', short: 'Learning' }
-];
-export const defaultWeights = { subject: 5, movement: 5, entry: 3, income: 3, autonomy: 2, learning: 3 };
-export const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+/* Small, testable helpers shared by the job board. No dependencies. */
+export const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function safeURL(value) {
-  try { const url = new URL(String(value)); return url.protocol === 'https:' || url.protocol === 'http:' ? url.href : '#'; }
+  try { const url = new URL(String(value)); return ['https:','http:'].includes(url.protocol) ? url.href : '#'; }
   catch { return '#'; }
 }
 export function todayLA(now = new Date()) {
-  const parts = new Intl.DateTimeFormat('en-US', {timeZone: 'America/Los_Angeles', year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(now);
-  const obj = Object.fromEntries(parts.map(p => [p.type, p.value]));
+  const parts = new Intl.DateTimeFormat('en-US', {timeZone:'America/Los_Angeles',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(now);
+  const obj = Object.fromEntries(parts.map(p => [p.type,p.value]));
   return `${obj.year}-${obj.month}-${obj.day}`;
 }
-export function daysUntil(isoDate, nowIso = todayLA()) {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(isoDate))) return null;
-  const a = Date.parse(`${nowIso}T00:00:00Z`), b = Date.parse(`${isoDate}T00:00:00Z`);
-  return Number.isFinite(a) && Number.isFinite(b) ? Math.round((b-a)/86400000) : null;
-}
-export function deadlineStatus(deadline, nowIso = todayLA()) {
-  const days = daysUntil(deadline, nowIso);
-  if (days === null) return {key:'unknown',label:'Deadline unconfirmed',days:null};
-  if (days < 0) return {key:'passed',label:'Deadline passed',days};
-  if (days === 0) return {key:'today',label:'Deadline today',days};
-  if (days <= 7) return {key:'soon',label:`Closes in ${days}d`,days};
-  return {key:'dated',label:`Deadline ${prettyDate(deadline)}`,days};
+export function daysUntil(iso, today = todayLA()) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(iso || ''))) return null;
+  const from = Date.parse(today + 'T00:00:00Z');
+  const to = Date.parse(iso + 'T00:00:00Z');
+  return Number.isFinite(from) && Number.isFinite(to) ? Math.round((to - from) / 86400000) : null;
 }
 export function prettyDate(iso) {
-  if (!iso || !/^\d{4}-\d{2}-\d{2}$/.test(iso)) return 'Not specified';
-  return new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'}).format(new Date(iso+'T12:00:00Z'));
+  if (daysUntil(iso, iso) === null) return 'Not supplied';
+  return new Intl.DateTimeFormat('en-US', {timeZone:'UTC',month:'short',day:'numeric',year:'numeric'}).format(new Date(iso+'T12:00:00Z'));
 }
-export function freshnessDays(stamp, now = new Date()) {
-  if (!stamp) return null;
-  const then = Date.parse(stamp);
-  return Number.isFinite(then) ? Math.max(0,Math.floor((now.getTime()-then)/86400000)) : null;
+export function postedAge(postedAt, now = todayLA()) {
+  const days = daysUntil(postedAt, now);
+  if (days === null) return {text:'Posting date not provided',days:null,known:false};
+  if (days > 0) return {text:'Posting date needs review',days:null,known:false};
+  const age = -days;
+  return {text:age===0?'Posted today':age===1?'Posted yesterday':`Posted ${age} days ago`,days:age,known:true};
 }
-export function scoreCareer(career, weights = defaultWeights) {
-  const total = dimensions.reduce((a,d)=>a+Math.max(0,Number(weights[d.key])||0),0);
-  if (!total) return 0;
-  return dimensions.reduce((sum,d)=>sum+(Number(career.scores?.[d.key])||0)*Math.max(0,Number(weights[d.key])||0),0)/total;
+export function deadlineStatus(deadline, now = todayLA()) {
+  const days = daysUntil(deadline,now);
+  if (days===null) return {key:'unknown',text:'Closing date not listed',days:null};
+  if (days<0) return {key:'passed',text:`Closed ${-days}d ago (per listed deadline)`,days};
+  if (days===0) return {key:'today',text:'Deadline today',days};
+  if (days<=7) return {key:'soon',text:`Closes in ${days}d`,days};
+  return {key:'future',text:`Closes ${prettyDate(deadline)}`,days};
 }
-export function rankCareers(careers, weights) { return [...careers].sort((a,b)=>scoreCareer(b,weights)-scoreCareer(a,weights)); }
-export function careerMatches(career, query, category = 'All', minMovement = 1) {
-  const search = [career.title,career.category,career.summary,career.why,career.tagline].join(' ').toLowerCase();
-  return (category==='All'||career.category===category) && career.scores.movement>=minMovement && (!query||search.includes(query.toLowerCase()));
+export function distanceMiles(a,b) {
+  if (!Array.isArray(a)||!Array.isArray(b)||a.length<2||b.length<2) return null;
+  if (![...a.slice(0,2),...b.slice(0,2)].every(Number.isFinite)) return null;
+  const rad=Math.PI/180,lat=(b[0]-a[0])*rad,lon=(b[1]-a[1])*rad;
+  const h=Math.sin(lat/2)**2+Math.cos(a[0]*rad)*Math.cos(b[0]*rad)*Math.sin(lon/2)**2;
+  return Math.round(3958.76 * 2 * Math.atan2(Math.sqrt(h),Math.sqrt(Math.max(0,1-h))));
 }
-export function grossAnnual(hourly, hours, weeks) {
-  const vals=[hourly,hours,weeks].map(Number);
-  return vals.every(x=>Number.isFinite(x)&&x>=0) ? vals.reduce((a,b)=>a*b,1) : 0;
+export function jobMiles(job, centerCity, geo) {
+  return distanceMiles(geo?.cities?.[centerCity],geo?.cities?.[job.city]);
 }
-export function runwayMonths(savings, monthlyExpenses) {
-  const s=Math.max(0,Number(savings)||0), e=Number(monthlyExpenses);
-  return e>0 ? s/e : null;
+export function distanceBand(miles) {
+  if (miles===null) return 4;
+  if (miles<=15) return 0;
+  if (miles<=30) return 1;
+  if (miles<=50) return 2;
+  return 3;
 }
-export function countProgress(tasks, completed) {
-  const done=tasks.filter(t=>Boolean(completed?.[t.id])).length;
-  return { done, total:tasks.length, pct:tasks.length?Math.round(done/tasks.length*100):0 };
+export const bandNames = ['In and around the San Gabriel Valley','Expanding outward · 16–30 miles','Wider search · 31–50 miles','Outer area · beyond 50 miles','Location needs checking'];
+export function hourlyFloor(pay) {
+  const text = String(pay||'');
+  const match = text.match(/\$\s*([\d,]+(?:\.\d+)?)/);
+  if (!match) return null;
+  const first=Number(match[1].replaceAll(',',''));
+  if (!(first>0)) return null;
+  if (/\/yr|annual|per year/i.test(text)) return Math.round(first/2080*100)/100;
+  if (/\/hr|hourly|per hour/i.test(text)) return first;
+  return null;
 }
-export function byClosing(a,b,nowIso=todayLA()) {
-  const x=daysUntil(a.deadline,nowIso),y=daysUntil(b.deadline,nowIso);
-  const norm=d=>d===null?9999:d<0?9998+Math.abs(d):d;
-  return norm(x)-norm(y);
+export function matchJob(job, f, center, geo, saved={}) {
+  const miles=jobMiles(job,center,geo);
+  if (f.radius!=='all' && (miles===null || miles>Number(f.radius))) return false;
+  if (!f.archived && deadlineStatus(job.deadline).key==='passed') return false;
+  if (f.saved && !saved[job.id]) return false;
+  if (f.category!=='all' && job.category!==f.category) return false;
+  if (f.age!=='all') {
+    const age=postedAge(job.postedAt).days;
+    if (f.age==='unknown' ? age!==null : age===null || age>Number(f.age)) return false;
+  }
+  if (f.minPay!=='all') {
+    const pay=hourlyFloor(job.salary);
+    if (pay===null || pay<Number(f.minPay)) return false;
+  }
+  if (f.query) {
+    const search=[job.title,job.employer,job.city,job.category,job.note,job.requirements].join(' ').toLowerCase();
+    if (!search.includes(f.query.trim().toLowerCase())) return false;
+  }
+  return true;
+}
+export function sortJobs(jobs, sort='closest',center='',geo={}) {
+  const dist=j=>jobMiles(j,center,geo) ?? 9999;
+  const age=j=>postedAge(j.postedAt).days ?? 9999;
+  const deadline=j=>{const d=deadlineStatus(j.deadline).days;return d===null?9999:d<0?9998:d;};
+  return [...jobs].sort((a,b)=>{
+    if (sort==='newest') return age(a)-age(b)||dist(a)-dist(b);
+    if (sort==='deadline') return deadline(a)-deadline(b)||dist(a)-dist(b);
+    if (sort==='pay') return (hourlyFloor(b.salary)??-1)-(hourlyFloor(a.salary)??-1)||dist(a)-dist(b);
+    return distanceBand(dist(a))-distanceBand(dist(b))||dist(a)-dist(b)||age(a)-age(b);
+  });
 }

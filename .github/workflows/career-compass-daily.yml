@@ -1,8 +1,7 @@
-name: Career Atlas — daily research refresh
+name: Fieldnotes daily job watch update
 
 on:
   schedule:
-    # 08:17 PST / 09:17 PDT; schedules are UTC and can be delayed by GitHub.
     - cron: '17 16 * * *'
   workflow_dispatch:
 
@@ -18,27 +17,28 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
-      - name: Check out source
-        uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Refresh stored job links and optional external feed
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Update job feed and check curated links
         env:
           ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
           ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
-        shell: bash
+        run: python scripts/refresh.py --root .
+      - name: Run tests
         run: |
-          python scripts/refresh.py --root .
           python -m unittest discover -s tests -p 'test_*.py'
-      - name: Commit refreshed snapshots
-        shell: bash
+          node --test tests/*.test.mjs
+      - name: Commit updated data
         run: |
           git add data/snapshot.json data/live_jobs.json
           if git diff --cached --quiet; then
-            echo "No data changes"
+            echo 'No changes to the job data'
             exit 0
           fi
-          git -c user.name='fieldnotes-update-bot' -c user.email='github-actions[bot]@users.noreply.github.com' commit -m 'data: refresh career watch snapshot'
+          git -c user.name='fieldnotes-update-bot' -c user.email='github-actions[bot]@users.noreply.github.com' commit -m 'data: refresh local job watch'
           git push

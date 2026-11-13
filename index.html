@@ -2,67 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#1d2021">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <meta name="description" content="A research-backed career transition dashboard: history, parks, books, collectibles and hands-on work in Southern California.">
+  <meta name="theme-color" content="#282828">
+  <meta name="description" content="Job leads and hands-on career paths around the San Gabriel Valley, ranked by proximity and grounded in original sources.">
   <meta name="robots" content="noindex,nofollow">
-  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./styles.css">
-  <title>Fieldnotes — Career Transition Atlas</title>
+  <title>Fieldnotes | San Gabriel Valley job search</title>
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to content</a>
-  <div class="site-shell">
-    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
-      <div class="brand-block">
-        <a class="brand" href="#/overview" aria-label="Fieldnotes home">
-          <span class="brand-mark" aria-hidden="true">F<span class="mark-dot">.</span></span>
-          <span><strong>FIELDNOTES</strong><small>CAREER TRANSITION ATLAS</small></span>
-        </a>
-        <p class="sidebar-intro">A working dossier on the next chapter. Built for a life beyond the screen.</p>
-      </div>
-      <nav class="nav" aria-label="Sections">
-        <span class="nav-heading">EXPLORE</span>
-        <a href="#/overview" data-nav="overview"><span class="nav-symbol">◫</span> Overview <span class="nav-num">01</span></a>
-        <a href="#/careers" data-nav="careers"><span class="nav-symbol">▤</span> Career paths <span class="nav-num">02</span></a>
-        <a href="#/compare" data-nav="compare"><span class="nav-symbol">▥</span> Compare paths <span class="nav-num">03</span></a>
-        <a href="#/opportunities" data-nav="opportunities"><span class="nav-symbol">⌕</span> Job watch <span class="nav-num">04</span></a>
-        <a href="#/places" data-nav="places"><span class="nav-symbol">⌖</span> Local field guide <span class="nav-num">05</span></a>
-        <span class="nav-heading">DECIDE</span>
-        <a href="#/profile" data-nav="profile"><span class="nav-symbol">◇</span> Evidence & fit <span class="nav-num">06</span></a>
-        <a href="#/plan" data-nav="plan"><span class="nav-symbol">☷</span> 90-day plan <span class="nav-num">07</span></a>
-        <a href="#/finances" data-nav="finances"><span class="nav-symbol">$</span> Income & runway <span class="nav-num">08</span></a>
-        <a href="#/sources" data-nav="sources"><span class="nav-symbol">↗</span> Sources & methods <span class="nav-num">09</span></a>
+  <a class="skip" href="#app">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#jobs" aria-label="Fieldnotes jobs home"><span class="brand-symbol" aria-hidden="true">F<span>.</span></span><span class="brand-label"><strong>Fieldnotes</strong><small>Work beyond the screen</small></span></a>
+      <nav class="navigation" aria-label="Main sections">
+        <a href="#jobs" data-view="jobs">Job watch</a>
+        <a href="#explore" data-view="explore">Explore careers</a>
       </nav>
-      <div class="sidebar-foot">
-        <span class="mini-kicker">GEOGRAPHIC FOCUS</span>
-        <p>San Gabriel Valley<br>Claremont · Inland Empire</p>
-        <span class="small-muted">Southern California / outside central LA</span>
-        <a href="https://vectorle.xyz/" target="_blank" rel="noopener noreferrer" class="source-mini">SOURCE: VECTORLE.XYZ ↗</a>
-      </div>
-    </aside>
-    <div class="main-column">
-      <header class="topbar">
-        <div class="topbar-left">
-          <button class="menu-toggle" id="menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">☰</button>
-          <span class="breadcrumb">RESEARCH / <strong id="current-section">OVERVIEW</strong></span>
-        </div>
-        <div class="topbar-right">
-          <span class="live-dot" aria-hidden="true"></span>
-          <span id="top-date" class="top-date">Data snapshot pending</span>
-          <a href="#/sources" class="top-link">METHODOLOGY ↗</a>
-        </div>
-      </header>
-      <main id="main-content" tabindex="-1">
-        <div class="loading-state"><div class="loader"></div><p>Opening the research file…</p></div>
-      </main>
-      <footer class="footer">
-        <span>FIELDNOTES <span class="muted-dot">●</span> INDEPENDENT CAREER RESEARCH</span>
-        <span>Facts ≠ hypotheses. Check every opening before applying.</span>
-      </footer>
+      <span class="header-location"><span class="location-dot"></span> San Gabriel Valley, CA</span>
     </div>
-  </div>
+  </header>
+  <main id="app" class="container" tabindex="-1"><div class="loading">Loading job research…</div></main>
+  <footer class="site-footer"><span>Fieldnotes · Independent career research</span><span>Always confirm salary, eligibility and closing dates with the employer.</span></footer>
   <script type="module" src="./js/app.js"></script>
 </body>
 </html>
