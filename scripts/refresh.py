@@ -11,6 +11,7 @@ from datetime import date, datetime, timezone
 import html
 import json
 import math
+import unicodedata
 import os
 from pathlib import Path
 import re
@@ -22,15 +23,47 @@ from zoneinfo import ZoneInfo
 
 USER_AGENT='FieldnotesJobWatch/2.0 (source status check)'
 CONTEXT=ssl.create_default_context()
+# Radius queries cover the whole SGV: northwest/west/central/east and Pomona Valley.
+# Adzuna is optional; 24 targeted searches per day across the region.
 SEARCHES=[
-    ('museum','El Monte, California',25),('recreation','El Monte, California',25),
-    ('park','El Monte, California',35),('library','El Monte, California',30),
-    ('museum educator','Pasadena, California',35),('historic','Pasadena, California',30),
-    ('auction','Monrovia, California',30),('book','Pasadena, California',30),
-    ('horticulture','Covina, California',40),('recreation','Covina, California',45),
-    ('coin','Arcadia, California',40),('outdoor educator','Claremont, California',35)
+    ('museum', 'Pasadena, California', 30),
+    ('museum educator', 'Arcadia, California', 25),
+    ('historic', 'Monrovia, California', 35),
+    ('recreation', 'El Monte, California', 30),
+    ('parks', 'West Covina, California', 35),
+    ('horticulture', 'Claremont, California', 30),
+    ('groundskeeper', 'Pomona, California', 30),
+    ('library aide', 'Alhambra, California', 30),
+    ('bookstore', 'Pasadena, California', 30),
+    ('tutor', 'San Gabriel, California', 25),
+    ('auction', 'Monrovia, California', 30),
+    ('numismatic', 'Arcadia, California', 30),
+    ('coin', 'West Covina, California', 30),
+    ('ecommerce', 'El Monte, California', 30),
+    ('Shopify', 'Pasadena, California', 30),
+    ('ecommerce fulfillment', 'Industry, California', 30),
+    ('ecommerce coordinator', 'Walnut, California', 35),
+    ('WordPress content', 'Alhambra, California', 30),
+    ('IT support', 'Pasadena, California', 30),
+    ('computer technician', 'Covina, California', 35),
+    ('desktop support', 'Claremont, California', 35),
+    ('technical support', 'Rosemead, California', 30),
+    ('field service technician', 'El Monte, California', 30),
+    ('digital merchandising', 'West Covina, California', 30),
 ]
-TERMS=('museum','historic','historical','heritage','interpreter','interpretive','park','recreation','garden','horticultur','arboretum','auction','consign','coin','numismatic','bullion','book','library','docent','exhibit','education','educator','tutor','outdoor','trail','maintenance','visitor','antique','archiv','public program')
+# Narrow text filters avoid unrelated jobs with ambiguous keywords like "it" or "book".
+TERMS=('museum','historic','historical','heritage','interpreter','interpretive',
+       'park','recreation','garden','horticultur','arboretum','groundskeeper',
+       'auction','consign','coin','numismatic','bullion','precious metal','antique',
+       'bookstore','bookseller','library','docent','exhibit','educator','education',
+       'tutor','outdoor','trail','maintenance','visitor','archiv','public program',
+       'shopify','ecommerce','e-commerce','woocommerce','wordpress','fulfillment',
+       'merchandising','marketplace','product listing','inventory coordinator',
+       'computer support','desktop support','technical support','it support',
+       'computer technician','field service technician','technology support',
+       'retail technology','website coordinator','web content','cms specialist',
+       'digital marketing coordinator','technical trainer','technical writer')
+
 
 
 def read_json(path):return json.loads(Path(path).read_text(encoding='utf-8'))
@@ -61,22 +94,27 @@ def check_link(job):
     except (urllib.error.URLError,OSError,TimeoutError,ValueError) as e:
         return job['id'],{'result':'unknown','httpStatus':None,'error':type(e).__name__}
 
-def relevant_title(title):return any(t in str(title or '').lower() for t in TERMS)
+def relevant_title(title):
+    t=str(title or '').lower()
+    return not any(w in t for w in ('bookkeeper','bookkeeping','software engineer','cloud architect','network architect','real estate broker')) and any(word in t for word in TERMS)
+
+def normalize_location(value):
+    return ''.join(c for c in unicodedata.normalize('NFD',str(value).casefold()) if unicodedata.category(c) != 'Mn').strip()
 
 def identify_city(location,geo):
     cities=geo['cities']
+    def lookup(word):
+        cleaned=normalize_location(word).removeprefix('city of ')
+        return next((city for city in cities if normalize_location(city).removeprefix('city of ')==cleaned),None)
     if isinstance(location,dict):
         area=location.get('area') or []
         if isinstance(area,list):
             for item in reversed(area):
-                for city in cities:
-                    if str(item).strip().casefold()==city.casefold():return city
+                city=lookup(item)
+                if city:return city
         raw=location.get('display_name','')
     else:raw=str(location or '')
-    first=str(raw).split(',')[0].strip().casefold()
-    for city in cities:
-        if first==city.casefold():return city
-    return None
+    return lookup(str(raw).split(',')[0])
 
 def permitted_area(location,geo):return identify_city(location,geo) is not None
 
@@ -90,14 +128,29 @@ def distance_miles(a,b):
 
 def group_for(title):
     t=title.lower()
-    if any(w in t for w in ('museum','historic','heritage','archive','interpret','docent')):return 'Heritage'
-    if any(w in t for w in ('library','book','tutor','education','educator','teacher')):return 'Education & books'
-    if any(w in t for w in ('coin','numismatic','auction','antique','bullion','consign')):return 'Objects & collectibles'
-    return 'Outdoors & movement'
+    if any(w in t for w in ('shopify','woocommerce','wordpress','ecommerce','e-commerce','fulfillment','merchandising','marketplace','product listing')):
+        return 'E-commerce & digital'
+    if any(w in t for w in ('it support','technical support','computer support','desktop support','computer technician','field service technician','technology support','technical trainer','website coordinator','web content','cms specialist','technical writer')):
+        return 'Technical & IT'
+    if any(w in t for w in ('museum','historic','heritage','archive','interpret','docent','exhibit')):
+        return 'Museums & heritage'
+    if any(w in t for w in ('library','bookstore','bookseller','tutor','education','educator')):
+        return 'Books & education'
+    if any(w in t for w in ('coin','numismatic','auction','antique','bullion','precious metal','consign')):
+        return 'Collectibles & trade'
+    return 'Parks & outdoors'
 
 def clean_description(value):
     text=html.unescape(re.sub(r'<[^>]+>',' ',str(value or '')))
     return re.sub(r'\s+',' ',text).strip()[:280]
+
+def extract_qualifications(description):
+    text=html.unescape(re.sub(r'<[^>]+>',' ',str(description or '')))
+    text=re.sub(r'\s+',' ',text).strip()
+    match=re.search(r'\b(?:minimum qualifications|qualifications|required skills|requirements)\s*[:\-]\s*(.{30,280})',text,re.I)
+    if match:
+        return 'Provider excerpt (verify with employer): '+match.group(1).strip()[:245]
+    return 'Qualifications not supplied in the search feed. Check the original employer posting for minimum education, experience and certifications.'
 
 def salary_display(job):
     low=job.get('salary_min');high=job.get('salary_max')
@@ -134,12 +187,12 @@ def load_adzuna(app_id,app_key,checked_at,geo,previous=None):
                 record={'id':key,'title':title[:180],'employer':str((job.get('company') or {}).get('display_name') or 'Employer not specified')[:130],
                     'city':city,'category':group_for(title),'salary':pay,'payType':source,
                     'schedule':'Check original listing','postedAt':date_text,'seenAt':first_seen.get(key) or today,
-                    'sourceUrl':uri,'sourceType':'Adzuna feed','requirements':'See employer posting for required experience, education and certification.',
+                    'sourceUrl':uri,'sourceType':'Adzuna feed','requirements':extract_qualifications(job.get('description')), 
                     'note':clean_description(job.get('description')) or 'Verify the original employer listing for duties and availability.'}
                 found[key]=record
         except (ValueError,KeyError,urllib.error.URLError,TimeoutError,OSError,UnicodeError) as e:
             errors.append(f'{what}: {type(e).__name__}')
-    jobs=sorted(found.values(),key=lambda x:(distance_miles(base,geo['cities'][x['city']]),-date.fromisoformat(x['postedAt']).toordinal()))[:60]
+    jobs=sorted(found.values(),key=lambda x:(distance_miles(base,geo['cities'][x['city']]),-date.fromisoformat(x['postedAt']).toordinal()))[:90]
     state='ok' if not errors else 'partial' if jobs else 'error'
     return {'generatedAt':checked_at,'status':state,'message':f'{len(jobs)} geographically matched jobs; {len(errors)} query errors.','errors':errors[:12],'jobs':jobs}
 

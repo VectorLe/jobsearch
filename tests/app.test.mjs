@@ -2,23 +2,30 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 
-test('dashboard loads job cards and has a single secondary view',async()=>{
-  let body='',results='',counter='';
-  const root={addEventListener(){},get innerHTML(){return body;},set innerHTML(x){body=x;}};
-  const resultEl={get innerHTML(){return results;},set innerHTML(x){results=x;}};
-  const countEl={get innerHTML(){return counter;},set innerHTML(x){counter=x;}};
+test('Job watch renders the SGV selector, qualifications and expanded roles', async()=>{
+  let body='',results='',counter='',ideas='';
+  const wrap={addEventListener(){},get innerHTML(){return body;},set innerHTML(x){body=x;}};
+  const result={get innerHTML(){return results;},set innerHTML(x){results=x;}};
+  const count={get innerHTML(){return counter;},set innerHTML(x){counter=x;}};
+  const idea={get innerHTML(){return ideas;},set innerHTML(x){ideas=x;}};
+  const mocks={'#app':wrap,'#job-results':result,'#results-count':count,'#idea-results':idea,'#nearby-count':{textContent:''}};
   globalThis.localStorage={getItem:()=>null,setItem:()=>{}};
   globalThis.location={hash:'#jobs'};
   globalThis.window={addEventListener(){}};
-  globalThis.document={querySelector:(selector)=>({
-    '#app':root,'#job-results':resultEl,'#results-count':countEl,'#saved-count':{textContent:''}
-  })[selector]||null,querySelectorAll:()=>[]};
-  globalThis.fetch=async (url)=>({ok:true,json:async()=>JSON.parse(await readFile(new URL('../'+url.replace(/^\.\//,''),import.meta.url),'utf8'))});
+  globalThis.document={querySelector:selector=>mocks[selector]||null,querySelectorAll:()=>[]};
+  globalThis.fetch=async url=>({ok:true,json:async()=>JSON.parse(await readFile(new URL('../'+url.replace(/^\.\//,''),import.meta.url),'utf8'))});
   await import('../js/app.js');
-  await new Promise(resolve=>setTimeout(resolve,50));
-  assert.match(body,/Search jobs/);
+  await new Promise(resolve=>setTimeout(resolve,70));
+  assert.match(body,/Job watch/);
+  assert.match(body,/All 31 SGV cities/);
+  assert.match(body,/Bradbury/);
+  assert.match(body,/West Covina/);
+  assert.match(body,/E-commerce & tech/);
+  assert.match(body,/43 more job titles/);
   assert.match(results,/Museum Education Coordinator/);
-  assert.match(results,/Posted .* days ago|Posted yesterday|Posted today/);
-  assert.match(results,/Pay|\$27\.17/);
+  assert.match(results,/Qualifications/);
+  assert.match(results,/\$27\.17/);
   assert.match(counter,/matching jobs/);
+  assert.match(ideas,/Historic-site interpreter/);
+  assert.match(ideas,/Typical qualifications/);
 });

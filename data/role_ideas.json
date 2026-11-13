@@ -1,0 +1,432 @@
+[
+  {
+    "id": "role-01",
+    "title": "Historic-site interpreter",
+    "category": "Museums & heritage",
+    "movement": "High movement",
+    "summary": "Visitor tours, site interpretation, California history",
+    "typicalQualifications": "Public speaking, historical research, on-site visitor experience",
+    "query": "Historic-site interpreter",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-02",
+    "title": "Museum education assistant",
+    "category": "Museums & heritage",
+    "movement": "Medium movement",
+    "summary": "School groups and hands-on exhibits",
+    "typicalQualifications": "Presenting, event support, patience with groups",
+    "query": "Museum education assistant",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-03",
+    "title": "Museum visitor services associate",
+    "category": "Museums & heritage",
+    "movement": "High movement",
+    "summary": "Visitor reception and gallery floor rounds",
+    "typicalQualifications": "Public-facing communication and ticketing",
+    "query": "Museum visitor services associate",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-04",
+    "title": "Living history demonstrator",
+    "category": "Museums & heritage",
+    "movement": "High movement",
+    "summary": "Historical crafts and demonstrations",
+    "typicalQualifications": "Relevant craft and ability to engage visitors",
+    "query": "Living history demonstrator",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-05",
+    "title": "Exhibition installation technician",
+    "category": "Museums & heritage",
+    "movement": "High movement",
+    "summary": "Install cases, panels and visitor-facing exhibits",
+    "typicalQualifications": "Handling tools, safe lifting, basic fabrication",
+    "query": "Exhibition installation technician",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-06",
+    "title": "Archives assistant",
+    "category": "Museums & heritage",
+    "movement": "Light movement",
+    "summary": "Process documents and rare records",
+    "typicalQualifications": "Careful cataloging and records handling",
+    "query": "Archives assistant",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-07",
+    "title": "Recreation leader",
+    "category": "Parks & outdoors",
+    "movement": "High movement",
+    "summary": "Youth games, afterschool and community programs",
+    "typicalQualifications": "Recreation experience and safety awareness",
+    "query": "Recreation leader",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-08",
+    "title": "Park maintenance worker",
+    "category": "Parks & outdoors",
+    "movement": "High movement",
+    "summary": "Maintain trails, grounds and public facilities",
+    "typicalQualifications": "Physical work, safe tools, sometimes Class C license",
+    "query": "Park maintenance worker",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-09",
+    "title": "Botanical garden horticulture assistant",
+    "category": "Parks & outdoors",
+    "movement": "High movement",
+    "summary": "Nursery, watering, planting and visitor gardens",
+    "typicalQualifications": "Plant knowledge, physical work and outdoor schedule",
+    "query": "Botanical garden horticulture assistant",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-10",
+    "title": "Trail crew / natural resource technician",
+    "category": "Parks & outdoors",
+    "movement": "High movement",
+    "summary": "Maintain trails and restore habitat",
+    "typicalQualifications": "Field safety, hiking stamina, equipment use",
+    "query": "Trail crew / natural resource technician",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-11",
+    "title": "Park docent / naturalist",
+    "category": "Parks & outdoors",
+    "movement": "High movement",
+    "summary": "Guided nature walks and visitor programs",
+    "typicalQualifications": "Interpretation and first aid often useful",
+    "query": "Park docent / naturalist",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-12",
+    "title": "Historic preservation apprentice",
+    "category": "Parks & outdoors",
+    "movement": "High movement",
+    "summary": "Restore old buildings and work with tools",
+    "typicalQualifications": "Construction safety, apprenticeship readiness",
+    "query": "Historic preservation apprentice",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-13",
+    "title": "Bookstore associate / buyer",
+    "category": "Books & education",
+    "movement": "Medium movement",
+    "summary": "Stock, recommend and source books",
+    "typicalQualifications": "Retail customer service and book knowledge",
+    "query": "Bookstore associate / buyer",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-14",
+    "title": "Library aide / page",
+    "category": "Books & education",
+    "movement": "Medium movement",
+    "summary": "Shelving, circulation, assisting patrons",
+    "typicalQualifications": "High-school level reading and public service",
+    "query": "Library aide / page",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-15",
+    "title": "Adult education tutor",
+    "category": "Books & education",
+    "movement": "Medium movement",
+    "summary": "Teach history, literacy or study skills",
+    "typicalQualifications": "Subject proficiency and structured instruction",
+    "query": "Adult education tutor",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-16",
+    "title": "Learning program coordinator",
+    "category": "Books & education",
+    "movement": "Medium movement",
+    "summary": "Organize talks, tours and classes",
+    "typicalQualifications": "Scheduling, teaching support, public speaking",
+    "query": "Learning program coordinator",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-17",
+    "title": "Rare-book cataloger",
+    "category": "Books & education",
+    "movement": "Medium movement",
+    "summary": "Describe editions, condition and provenance",
+    "typicalQualifications": "Bibliography, careful research and catalog standards",
+    "query": "Rare-book cataloger",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-18",
+    "title": "Coin shop associate",
+    "category": "Collectibles & trade",
+    "movement": "Medium movement",
+    "summary": "Handle silver, gold and collectible coins",
+    "typicalQualifications": "Customer service, authenticity and inventory control",
+    "query": "Coin shop associate",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-19",
+    "title": "Bullion inventory coordinator",
+    "category": "Collectibles & trade",
+    "movement": "Medium movement",
+    "summary": "Inventory gold/silver products and shipping",
+    "typicalQualifications": "Accuracy, secure handling and reconciliation",
+    "query": "Bullion inventory coordinator",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-20",
+    "title": "Numismatic auction cataloger",
+    "category": "Collectibles & trade",
+    "movement": "Medium movement",
+    "summary": "Describe collectible coins and consignments",
+    "typicalQualifications": "Grading familiarity, photography and provenance",
+    "query": "Numismatic auction cataloger",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-21",
+    "title": "Estate sale / auction associate",
+    "category": "Collectibles & trade",
+    "movement": "High movement",
+    "summary": "Sort, photograph, stage and sell estates",
+    "typicalQualifications": "Object handling, pricing and customer service",
+    "query": "Estate sale / auction associate",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-22",
+    "title": "Antiques appraisal trainee",
+    "category": "Collectibles & trade",
+    "movement": "Medium movement",
+    "summary": "Research object values and condition",
+    "typicalQualifications": "Market research and supervised experience",
+    "query": "Antiques appraisal trainee",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-23",
+    "title": "E-commerce operations coordinator",
+    "category": "E-commerce & digital",
+    "movement": "Some movement",
+    "summary": "Manage orders, inventory, shipping and storefront",
+    "typicalQualifications": "Shopify or WooCommerce and spreadsheet familiarity",
+    "query": "E-commerce operations coordinator",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-24",
+    "title": "Shopify store administrator",
+    "category": "E-commerce & digital",
+    "movement": "Mostly desk",
+    "summary": "Manage products, discounts and merchandising",
+    "typicalQualifications": "Hands-on Shopify admin and merchandising",
+    "query": "Shopify store administrator",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-25",
+    "title": "WordPress content manager",
+    "category": "E-commerce & digital",
+    "movement": "Mostly desk",
+    "summary": "Maintain pages, posts, listings and media",
+    "typicalQualifications": "WordPress editor and basic SEO; no heavy coding needed",
+    "query": "WordPress content manager",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-26",
+    "title": "E-commerce merchandising specialist",
+    "category": "E-commerce & digital",
+    "movement": "Some movement",
+    "summary": "Improve category pages, photography and catalogs",
+    "typicalQualifications": "Product listings, inventory and analytics",
+    "query": "E-commerce merchandising specialist",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-27",
+    "title": "Marketplace listings specialist",
+    "category": "E-commerce & digital",
+    "movement": "Medium movement",
+    "summary": "Photograph and sell across eBay, Etsy and shops",
+    "typicalQualifications": "Marketplaces, photo workflow and order processing",
+    "query": "Marketplace listings specialist",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-28",
+    "title": "E-commerce fulfillment lead",
+    "category": "E-commerce & digital",
+    "movement": "High movement",
+    "summary": "Coordinate pick/pack, receiving and returns",
+    "typicalQualifications": "Shipping software, people and warehouse organization",
+    "query": "E-commerce fulfillment lead",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-29",
+    "title": "Retail technology trainer",
+    "category": "Technical & IT",
+    "movement": "Medium movement",
+    "summary": "Teach staff how to use POS and office systems",
+    "typicalQualifications": "Patient tech instruction and customer service",
+    "query": "Retail technology trainer",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-30",
+    "title": "On-site IT support technician",
+    "category": "Technical & IT",
+    "movement": "High movement",
+    "summary": "Walk between offices to troubleshoot computers",
+    "typicalQualifications": "PC troubleshooting, tickets; A+ often useful",
+    "query": "On-site IT support technician",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-31",
+    "title": "Help desk analyst",
+    "category": "Technical & IT",
+    "movement": "Mostly desk",
+    "summary": "Resolve requests and onboard users",
+    "typicalQualifications": "Customer-facing support and basic Windows/macOS",
+    "query": "Help desk analyst",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-32",
+    "title": "IT equipment / asset coordinator",
+    "category": "Technical & IT",
+    "movement": "High movement",
+    "summary": "Track, deploy and replace hardware",
+    "typicalQualifications": "Inventory systems, careful asset records",
+    "query": "IT equipment / asset coordinator",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-33",
+    "title": "CMS implementation specialist",
+    "category": "Technical & IT",
+    "movement": "Some movement",
+    "summary": "Configure content systems and train users",
+    "typicalQualifications": "WordPress/Shopify CMS workflow and documentation",
+    "query": "CMS implementation specialist",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-34",
+    "title": "Web accessibility QA assistant",
+    "category": "Technical & IT",
+    "movement": "Mostly desk",
+    "summary": "Check websites for usability and accessibility",
+    "typicalQualifications": "Manual QA, HTML basics and WCAG knowledge",
+    "query": "Web accessibility QA assistant",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-35",
+    "title": "Technical writer / documentation specialist",
+    "category": "Technical & IT",
+    "movement": "Mostly desk",
+    "summary": "Write tutorials, user guides and help articles",
+    "typicalQualifications": "Clear writing, screenshots and product understanding",
+    "query": "Technical writer / documentation specialist",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-36",
+    "title": "Digital customer success specialist",
+    "category": "Technical & IT",
+    "movement": "Mostly desk",
+    "summary": "Help small businesses use software tools",
+    "typicalQualifications": "Account support, CMS and customer onboarding",
+    "query": "Digital customer success specialist",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-37",
+    "title": "No-code automation specialist",
+    "category": "Technical & IT",
+    "movement": "Mostly desk",
+    "summary": "Connect apps and automate repetitive business tasks",
+    "typicalQualifications": "Workflow mapping, Zapier/Make and QA testing",
+    "query": "No-code automation specialist",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-38",
+    "title": "Retail field systems technician",
+    "category": "Technical & IT",
+    "movement": "High movement",
+    "summary": "Service POS devices at stores and venues",
+    "typicalQualifications": "Drivers license, hardware troubleshooting and travel",
+    "query": "Retail field systems technician",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-39",
+    "title": "Community workshop instructor",
+    "category": "Independent & teaching",
+    "movement": "High movement",
+    "summary": "Teach in-person history, books or practical skills",
+    "typicalQualifications": "Subject depth, public speaking, workshop prep",
+    "query": "Community workshop instructor",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-40",
+    "title": "Historical walking tour operator",
+    "category": "Independent & teaching",
+    "movement": "High movement",
+    "summary": "Run small guided walks and local history tours",
+    "typicalQualifications": "Research, route planning and liability considerations",
+    "query": "Historical walking tour operator",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-41",
+    "title": "Specialty book / coin reseller",
+    "category": "Independent & teaching",
+    "movement": "Medium movement",
+    "summary": "Source, inspect and sell tangible collectibles",
+    "typicalQualifications": "Working capital discipline, authentication, margins",
+    "query": "Specialty book / coin reseller",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-42",
+    "title": "Freelance Shopify/WordPress consultant",
+    "category": "Independent & teaching",
+    "movement": "Mostly desk",
+    "summary": "Keep digital skills as financial bridge",
+    "typicalQualifications": "Client management, CMS proficiency and sales",
+    "query": "Freelance Shopify/WordPress consultant",
+    "type": "role-idea"
+  },
+  {
+    "id": "role-43",
+    "title": "Combat-sports class assistant",
+    "category": "Independent & teaching",
+    "movement": "High movement",
+    "summary": "Support drills, classes and beginners",
+    "typicalQualifications": "Experience, gym supervision and safety culture",
+    "query": "Combat-sports class assistant",
+    "type": "role-idea"
+  }
+]

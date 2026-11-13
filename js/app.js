@@ -1,185 +1,210 @@
-import {esc,safeURL,todayLA,prettyDate,postedAge,deadlineStatus,jobMiles,distanceBand,bandNames,hourlyFloor,matchJob,sortJobs} from './logic.js';
+import {esc,safeURL,todayLA,prettyDate,postedAge,deadlineStatus,jobMiles,distanceBand,bandNames,hourlyFloor,digitalCategories,categoryTone,matchJob,sortJobs} from './logic.js';
 
+/* One stateful screen, one secondary guide, and no client dependencies. */
 const root=document.querySelector('#app');
-const STORAGE='fieldnotes-jobwatch-v2';
-const defaults={query:'',center:'El Monte',radius:'30',category:'all',sort:'closest',age:'all',minPay:'all',archived:false,saved:false};
-let filter={...defaults};
-let db=null;
-let state=readState();
-let current='jobs';
+const STORAGE='fieldnotes-jobwatch-v3';
+const defaults={query:'',center:'El Monte',radius:'30',category:'all',track:'all',sort:'closest',age:'all',minPay:'all',archived:false,saved:false};
+let filter={...defaults},db=null,current='jobs',ideasQuery='',ideasCategory='all',ideasExpanded=false;
+const state=loadState();
 
-function readState(){
+function loadState(){
+  const empty={favorites:{},completed:{},center:'El Monte'};
   try {
-    const existing=JSON.parse(localStorage.getItem(STORAGE)||'null');
-    if(existing&&typeof existing==='object'&&!Array.isArray(existing))return {favorites:existing.favorites||{},completed:existing.completed||{},center:existing.center||'El Monte'};
-    const old=JSON.parse(localStorage.getItem('fieldnotes-career-atlas-v1')||'null');
-    return {favorites:old?.favorites||{},completed:old?.completed||{},center:'El Monte'};
-  }catch{return {favorites:{},completed:{},center:'El Monte'};}
+    for(const key of [STORAGE,'fieldnotes-jobwatch-v2','fieldnotes-career-atlas-v1']) {
+      const item=JSON.parse(localStorage.getItem(key)||'null');
+      if(item&&typeof item==='object'&&!Array.isArray(item))return {...empty,favorites:item.favorites||{},completed:item.completed||{},center:item.center||'El Monte'};
+    }
+  }catch{/* Browsers may prohibit local storage. */}
+  return empty;
 }
-function persist(){try{localStorage.setItem(STORAGE,JSON.stringify(state));}catch{/* Private browsing may disable storage. */}}
-const link=(url,label,cls='')=>`<a class="${cls}" href="${esc(safeURL(url))}" target="_blank" rel="noopener noreferrer">${esc(label)} <span aria-hidden="true">↗</span></a>`;
-const tag=(label,kind='')=>`<span class="tag ${kind?'tag-'+kind:''}">${esc(label)}</span>`;
-const options=(items,selected)=>items.map(([value,text])=>`<option value="${esc(value)}" ${selected===value?'selected':''}>${esc(text)}</option>`).join('');
-const safeText=value=>esc(String(value??''));
-const checked=(value)=>value?'checked':'';
-
+function persist(){try{localStorage.setItem(STORAGE,JSON.stringify(state));}catch{/* No tracking or remote storage. */}}
+const text=x=>esc(String(x??''));
+const link=(url,label,cls='')=>`<a class="${cls}" href="${esc(safeURL(url))}" target="_blank" rel="noopener noreferrer">${text(label)} <span aria-hidden="true">↗</span></a>`;
+const opts=(items,value)=>items.map(([a,b])=>`<option value="${text(a)}" ${a===value?'selected':''}>${text(b)}</option>`).join('');
+const isChecked=x=>x?'checked':'';
+const health=j=>{
+  if(j.liveFeed)return 'Third-party result. Verify details with the employer before applying.';
+  const res=db.snapshot?.links?.[j.id]?.result;
+  if(res==='reachable')return 'Source URL responded at last check. This does not confirm the job remains open.';
+  if(res==='blocked')return 'Source blocked the automated request. Open it in your browser.';
+  if(res==='unreachable')return 'Source URL may be unavailable; verify through the employer’s careers page.';
+  return 'Source has not been checked recently. Confirm status with the employer.';
+};
 function normalizeJobs(){
-  const curated=db.opportunities.map(job=>({...job,liveFeed:false}));
-  const feed=(db.live?.jobs||[]).map(j=>({
-    ...j,liveFeed:true,category:j.category||'Other',sourceType:'Adzuna feed',observedAt:j.seenAt||null,
-    postedAt:j.postedAt||null,deadline:j.deadline||null,requirements:j.requirements||'See employer listing for minimum qualifications.',
-    note:j.note||j.description||'Third-party job lead. Verify details with the employer.',
-    salary:j.salary||'Pay not provided',schedule:j.schedule||'See job listing'
-  }));
-  return [...curated,...feed];
-}
-function getJobs(){return normalizeJobs().filter(j=>matchJob(j,filter,filter.center,db.geo,state.favorites));}
-function travelLabel(job){const miles=jobMiles(job,filter.center,db.geo);return miles===null?'Distance unavailable':`≈${miles} mi from ${filter.center}`;}
-function postingText(job){
-  const p=postedAge(job.postedAt);
-  const type=job.liveFeed?'Feed-reported posting date':'Employer opening date';
-  const detail=p.known?`${type}: ${prettyDate(job.postedAt)}`:`Posting date unavailable; first tracked ${prettyDate(job.observedAt||job.seenAt)}`;
-  return {short:p.text,detail};
-}
-function sourceHealth(job){
-  if(job.liveFeed)return 'External feed; status not independently verified.';
-  const val=db.snapshot?.links?.[job.id];
-  if(!val||val.result==='not-checked')return 'Source link not yet checked.';
-  if(val.result==='reachable')return 'Source URL responded at last check; this does not prove hiring is active.';
-  if(val.result==='blocked')return 'The source blocked automated verification.';
-  if(val.result==='unreachable')return 'Source URL did not respond as expected at last check.';
-  return 'Source status needs manual verification.';
-}
-function jobCard(j){
-  const p=postingText(j),d=deadlineStatus(j.deadline);
-  const archived=d.key==='passed';
-  const freshness=postedAge(j.postedAt).days;
-  const timeTone=freshness!==null&&freshness<=7?'green':'';
-  const deadlineTone=archived?'red':d.key==='today'||d.key==='soon'?'yellow':'';
-  const booked=Boolean(state.favorites[j.id]);
-  return `<article class="job-card">
-    <div class="job-top"><div class="job-tags">${tag(j.category||'Other','blue')}${tag(travelLabel(j),'green')}${j.liveFeed?tag('Third-party feed'):''}</div>
-      <button class="bookmark" type="button" data-save-id="${esc(j.id)}" aria-label="${booked?'Remove saved job':'Save job'}: ${esc(j.title)}" aria-pressed="${booked}">${booked?'★':'☆'}</button></div>
-    <div><h3 class="job-title">${link(j.sourceUrl,j.title)}</h3><p class="employer">${safeText(j.employer)} · ${safeText(j.city)}</p></div>
-    <div class="pay-box"><strong>${safeText(j.salary||'Pay not provided')}</strong><small>${safeText(j.payType|| (j.liveFeed?'Pay not independently verified':'Published pay; verify with employer'))}</small></div>
-    <div class="job-facts">
-      <div class="fact"><label>Posted</label><span class="${timeTone?'highlight':''}">${safeText(p.short)}</span></div>
-      <div class="fact"><label>Closing</label><span class="${deadlineTone==='yellow'?'urgent':deadlineTone==='red'?'expired':''}">${safeText(d.text)}</span></div>
-      <div class="fact"><label>Schedule</label><span>${safeText(j.schedule||'Not specified')}</span></div>
-      <div class="fact"><label>Work location</label><span>${safeText(j.city)} · ${safeText(travelLabel(j))}</span></div>
-    </div>
-    <p class="job-description">${safeText(j.note||'Read the employer posting for responsibilities.')}</p>
-    <details class="job-details"><summary>Requirements and source details</summary>
-      <p><strong>Qualifications:</strong> ${safeText(j.requirements||'Check the posting for minimum qualifications.')}</p>
-      <p><strong>Posting information:</strong> ${safeText(p.detail)}. ${j.deadline?'Filing deadline: '+safeText(prettyDate(j.deadline))+'.':'No fixed closing date supplied.'}</p>
-      ${j.jobNumber?`<p><strong>Job number:</strong> ${safeText(j.jobNumber)}</p>`:''}
-      <p><strong>Source:</strong> ${safeText(j.sourceType||'Employer listing')} · ${safeText(sourceHealth(j))}</p>
-    </details>
-    <div class="job-actions">${link(j.sourceUrl,'View original listing','btn btn-primary')}<small>${safeText(j.liveFeed?'Unverified feed lead':'Curated employer source')}</small></div>
-  </article>`;
-}
-function setActiveNav(view){
-  document.querySelectorAll('[data-view]').forEach(a=>{
-    if(a.dataset.view===view)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');
+  const curated=db.opportunities.map(j=>({...j,liveFeed:false}));
+  const feed=(db.live?.jobs||[]).map(j=>({...j,liveFeed:true,category:j.category||'Operations & services',sourceType:'Adzuna feed',observedAt:j.seenAt||null,postedAt:j.postedAt||null,deadline:j.deadline||null,requirements:j.requirements||'See the original employer listing for education, experience and certifications.',note:j.note||j.description||'Verify with employer.',salary:j.salary||'Pay not provided',schedule:j.schedule||'Schedule not listed'}));
+  // De-duplicate by employer, role, city even when different feeds reuse a posting.
+  const ids=new Set(),fingerprints=new Set();
+  return [...curated,...feed].filter(j=>{
+    const fingerprint=[j.title,j.employer,j.city].map(x=>String(x||'').trim().toLowerCase().replace(/[^a-z0-9]+/g,'')).join('|');
+    if(ids.has(j.id)||fingerprints.has(fingerprint))return false;
+    ids.add(j.id);fingerprints.add(fingerprint);return true;
   });
 }
-function jobShell(){
-  const choices=[['all','All kinds'],...[...new Set(normalizeJobs().map(j=>j.category))].sort().map(x=>[x,x])];
-  const currentCount=normalizeJobs().length;
-  const fresh=normalizeJobs().filter(j=>{const n=postedAge(j.postedAt).days;return n!==null&&n<=7&&deadlineStatus(j.deadline).key!=='passed';}).length;
-  const nearby=normalizeJobs().filter(j=>{const n=jobMiles(j,filter.center,db.geo);return n!==null&&n<=15&&deadlineStatus(j.deadline).key!=='passed';}).length;
-  const savedCount=Object.values(state.favorites).filter(Boolean).length;
-  const updated=db.snapshot?.generatedAt ? prettyDate(db.snapshot.generatedAt.slice(0,10)):'Pending first refresh';
-  return `<div class="hero">
-    <div><span class="eyebrow">Job watch · Southern California</span><h1>Find work <span>closer to home.</span></h1>
-      <p>Start in the San Gabriel Valley, then widen the search. Museum work, parks, education, books, collectibles and hands-on roles—with pay, posting age and practical requirements on each card.</p></div>
-    <div class="hero-aside"><strong>San Gabriel Valley first</strong><p>Choose any of eight valley starting points. Distances are approximate straight-line miles between city centers, not driving times.</p><p>Last data check: ${safeText(updated)}</p></div>
-  </div>
-  <div class="stat-row">
-    <div class="stat"><strong>${currentCount}</strong><span>Tracked jobs</span></div>
-    <div class="stat"><strong>${nearby}</strong><span>Within 15 miles, not past deadline</span></div>
-    <div class="stat"><strong>${fresh}</strong><span>Posted in the last 7 days</span></div>
-    <div class="stat"><strong id="saved-count">${savedCount}</strong><span>Saved jobs</span></div>
-  </div>
-  ${db.live?.status==='not-configured'?`<div class="feed-note">New-job discovery is not connected yet. The curated listings still appear, and the scheduled check can monitor their links and deadlines. To find additional jobs daily, configure the optional Adzuna API keys in GitHub Actions. ${link('https://github.com/VectorLe/jobsearch#daily-updates','Setup details')}</div>`:''}
-  ${['error','partial'].includes(db.live?.status)?`<div class="feed-note">The third-party job feed had some errors at its last update. Existing employer listings remain available; verify each feed result independently.</div>`:''}
-  <section class="filters" aria-label="Job filters">
-    <div class="filters-heading"><h2>Search jobs</h2><p>Search local first; increase the radius as needed.</p></div>
-    <div class="filter-grid">
-      <div class="filter"><label for="query">Keyword or employer</label><input id="query" data-search type="search" placeholder="Museum, park, bookshop…" value="${esc(filter.query)}"></div>
-      <div class="filter"><label for="center">Start from</label><select id="center" data-control="center">${options(db.geo.centers.map(c=>[c,c]),filter.center)}</select></div>
-      <div class="filter"><label for="radius">Search radius</label><select id="radius" data-control="radius">${options([['15','Within 15 miles'],['30','Within 30 miles'],['50','Within 50 miles'],['75','Within 75 miles'],['all','All distances']],filter.radius)}</select></div>
-      <div class="filter"><label for="category">Field</label><select id="category" data-control="category">${options(choices,filter.category)}</select></div>
+function jobs(){return normalizeJobs().filter(j=>matchJob(j,filter,filter.center,db.geo,state.favorites));}
+function milesLabel(j){
+  if(String(j.workMode||'').toLowerCase()==='remote'||String(j.city||'').toLowerCase()==='remote')return 'Remote';
+  const m=jobMiles(j,filter.center,db.geo);
+  return m===null?'Location to verify':`≈ ${m} mi from ${filter.center}`;
+}
+function card(j){
+  const category=j.category||'Operations & services',tone=categoryTone(category);
+  const age=postedAge(j.postedAt),closing=deadlineStatus(j.deadline),saved=Boolean(state.favorites[j.id]);
+  const caution=closing.key==='passed',thirdParty=j.liveFeed||String(j.sourceType||'').toLowerCase().includes('third-party');
+  const badge=(caption,t='')=>`<span class="pill ${t}">${text(caption)}</span>`;
+  return `<article class="job-card tone-${tone}" data-job-id="${text(j.id)}">
+    <div class="job-card-head"><div class="pills">${badge(category,'category-badge')}${badge(milesLabel(j),'distance-badge')}${thirdParty?badge('Third-party source','source-badge'):''}${j.experienceLevel?badge(j.experienceLevel,'level-badge'):''}</div>
+      <button class="bookmark" type="button" data-save-id="${text(j.id)}" aria-label="${saved?'Unsave':'Save'} ${text(j.title)}" aria-pressed="${saved}">${saved?'★':'☆'}</button></div>
+    <div><h3>${link(j.sourceUrl,j.title,'job-title-link')}</h3><p class="company">${text(j.employer)} <span>·</span> ${text(j.city)}</p></div>
+    <div class="pay"><span>Pay</span><strong>${text(j.salary||'Not provided')}</strong><small>${text(j.payType||'Check pay in original posting')}</small></div>
+    <div class="job-metadata">
+      <div class="field"><span>Posted</span><strong class="${age.days!==null&&age.days<=7?'good-text':''}">${text(age.text)}</strong></div>
+      <div class="field"><span>Closing</span><strong class="${caution?'danger-text':closing.key==='soon'||closing.key==='today'?'attention-text':''}">${text(closing.text)}</strong></div>
+      <div class="field"><span>Schedule</span><strong>${text(j.schedule||'See listing')}</strong></div>
+      <div class="field"><span>Work setup</span><strong>${text(j.workMode||'Not specified')}</strong></div>
     </div>
-    <div class="filter-bottom"><p class="filter-help">Center: <strong id="center-label">${safeText(filter.center)}</strong> · city-to-city distances · roles in Los Angeles city are not prioritized.</p>
-      <button class="btn btn-quiet btn-small" id="reset-filters" type="button">Clear filters</button></div>
-    <details class="advanced"><summary>More filters</summary>
-      <div class="advanced-fields">
-        <div class="filter"><label for="sort">Sort by</label><select id="sort" data-control="sort">${options([['closest','Closest first'],['newest','Newest posting'],['deadline','Closing soon'],['pay','Highest listed pay']],filter.sort)}</select></div>
-        <div class="filter"><label for="age">Posted within</label><select id="age" data-control="age">${options([['all','Any date'],['7','7 days'],['14','14 days'],['30','30 days'],['unknown','Unknown dates only']],filter.age)}</select></div>
-        <div class="filter"><label for="minPay">Minimum pay</label><select id="minPay" data-control="minPay">${options([['all','Any or undisclosed'],['20','At least $20/hr'],['25','At least $25/hr'],['30','At least $30/hr'],['40','At least $40/hr']],filter.minPay)}</select></div>
-      </div>
-      <div class="checks"><label class="check"><input type="checkbox" data-control="saved" ${checked(filter.saved)}> Saved jobs only</label>
-      <label class="check"><input type="checkbox" data-control="archived" ${checked(filter.archived)}> Include passed deadlines</label></div>
-    </details>
-  </section>
-  <div id="results-count" class="results-bar" aria-live="polite"></div>
-  <div id="job-results"></div>`;
+    <div class="qualifications"><h4>Qualifications</h4><p>${text(j.requirements||'The employer has not supplied requirements in this record; inspect the original listing.')}</p></div>
+    <p class="job-summary">${text(j.note||'Review the original listing for responsibilities and current status.')}</p>
+    <details class="job-more"><summary>Dates, source and other details</summary><div>
+      <p><strong>Posting date:</strong> ${age.known?text(prettyDate(j.postedAt)):'Not provided'}${!age.known?` · first researched ${text(prettyDate(j.observedAt||j.seenAt))}`:''}.</p>
+      <p><strong>Deadline:</strong> ${j.deadline?text(prettyDate(j.deadline)):'None published / continuous; may close early'}.</p>
+      ${j.jobNumber?`<p><strong>Job number:</strong> ${text(j.jobNumber)}</p>`:''}
+      <p><strong>Source:</strong> ${text(j.sourceType||'Employer listing')}. ${text(health(j))}</p>
+    </div></details>
+    <div class="card-actions">${link(j.sourceUrl,'View job posting','button button-primary')}<span>${thirdParty?'Independent verification needed':'Employer information may change'}</span></div>
+  </article>`;
+}
+function startOptions(){
+  const cities=db.geo.centers.map(x=>[x,x==='Industry'?'City of Industry':x]);
+  const communities=(db.geo.communities||[]).map(x=>[x,x]);
+  return `<optgroup label="All 31 SGV cities">${opts(cities,filter.center)}</optgroup><optgroup label="Nearby unincorporated communities">${opts(communities,filter.center)}</optgroup>`;
+}
+function sectionStats(){
+  const all=normalizeJobs();
+  const local=all.filter(j=>{const n=jobMiles(j,filter.center,db.geo);return n!==null&&n<=15&&deadlineStatus(j.deadline).key!=='passed';}).length;
+  const digital=all.filter(j=>digitalCategories.has(j.category)&&deadlineStatus(j.deadline).key!=='passed').length;
+  const fresh=all.filter(j=>{const n=postedAge(j.postedAt).days;return n!==null&&n<=7&&deadlineStatus(j.deadline).key!=='passed';}).length;
+  const snapshot=db.snapshot?.generatedAt?prettyDate(db.snapshot.generatedAt.slice(0,10)):'Pending scheduled check';
+  return `<div class="metrics">
+    <div class="metric accent-aqua"><strong>${all.length}</strong><span>Researched listings</span></div>
+    <div class="metric accent-green"><strong id="nearby-count">${local}</strong><span>Within 15 miles of your center</span></div>
+    <div class="metric accent-purple"><strong>${digital}</strong><span>Digital and technical roles</span></div>
+    <div class="metric accent-yellow"><strong>${fresh}</strong><span>Posted within 7 days</span></div>
+  </div><p class="snapshot-note">Research checked: ${text(snapshot)}. A working link does not prove applications remain open.</p>`;
+}
+function shell(){
+  const fields=[...new Set(normalizeJobs().map(j=>j.category||'Operations & services'))].sort();
+  const feed=db.live?.status==='not-configured'?`<div class="notice"><span class="notice-mark">i</span><div><strong>Daily discovery is optional</strong><p>Existing job sources are tracked, but finding newly published jobs automatically requires Adzuna API credentials. Meanwhile, use the ${db.role_ideas?.length||0} live job-title searches below for additional options.</p></div></div>`:'';
+  return `<section class="hero"><div><div class="eyebrow">San Gabriel Valley · career opportunities</div><h1>Work beyond <span>the screen.</span></h1>
+    <p>Local jobs in parks, history, books, collectibles, hands-on work and technology. Compare pay, qualifications and dates before you apply.</p>
+    <div class="hero-chips"><span>31 SGV cities</span><span>13 nearby communities</span><span>Outdoor + digital options</span></div></div>
+    <aside class="hero-aside"><small>Search center</small><strong id="current-center">${text(filter.center)}</strong><p>Choose any SGV city or nearby community, then expand outward by radius. Distances use city centers, not drive times.</p></aside></section>
+    ${sectionStats()}
+    <section class="search-panel" aria-label="Search and filter jobs"><div class="panel-title"><h2>Job watch</h2><p>Source-linked leads, not guaranteed vacancies.</p></div>
+    <div class="track-switch" role="group" aria-label="Job type">
+      <button type="button" data-track="all" class="track ${filter.track==='all'?'selected':''}" aria-pressed="${filter.track==='all'}">All opportunities</button>
+      <button type="button" data-track="physical" class="track ${filter.track==='physical'?'selected':''}" aria-pressed="${filter.track==='physical'}">Hands-on & local</button>
+      <button type="button" data-track="digital" class="track ${filter.track==='digital'?'selected':''}" aria-pressed="${filter.track==='digital'}">E-commerce & tech</button>
+    </div>
+    <div class="filter-grid">
+      <div class="filter filter-query"><label for="job-query">Search job title, skill or employer</label><input id="job-query" data-search type="search" value="${text(filter.query)}" placeholder="Shopify, museum, field technician…" autocomplete="off"></div>
+      <div class="filter"><label for="center">Start from</label><select id="center" data-control="center">${startOptions()}</select></div>
+      <div class="filter"><label for="radius">Search area</label><select id="radius" data-control="radius">${opts([['10','Within 10 mi'],['15','Within 15 mi'],['30','Within 30 mi'],['50','Within 50 mi'],['75','Within 75 mi'],['all','All locations']],filter.radius)}</select></div>
+      <div class="filter"><label for="category">Career field</label><select id="category" data-control="category">${opts([['all','All fields'],...fields.map(x=>[x,x])],filter.category)}</select></div>
+    </div>
+    <details class="advanced"><summary>More filters</summary><div class="advanced-grid">
+      <div class="filter"><label for="sort">Order jobs</label><select id="sort" data-control="sort">${opts([['closest','Closest first'],['newest','Most recently posted'],['deadline','Closing soon'],['pay','Highest published pay']],filter.sort)}</select></div>
+      <div class="filter"><label for="age">Posted within</label><select id="age" data-control="age">${opts([['all','All dates'],['7','7 days'],['14','14 days'],['30','30 days'],['unknown','Dates not supplied']],filter.age)}</select></div>
+      <div class="filter"><label for="minPay">Minimum pay (hourly equivalent)</label><select id="minPay" data-control="minPay">${opts([['all','Any / undisclosed'],['20','$20+ / hr'],['25','$25+ / hr'],['30','$30+ / hr'],['40','$40+ / hr']],filter.minPay)}</select></div>
+    </div><div class="checks"><label><input type="checkbox" data-control="saved" ${isChecked(filter.saved)}> Saved only</label>
+      <label><input type="checkbox" data-control="archived" ${isChecked(filter.archived)}> Include listings past their published deadline</label></div></details>
+    <div class="panel-foot"><span id="center-label">Starting in ${text(filter.center)}. Straight-line city-center distances.</span><button class="button button-light" id="reset-filters" type="button">Reset filters</button></div>
+    </section>${feed}
+    <div id="results-count" class="results-bar" aria-live="polite"></div>
+    <div id="job-results"></div>
+    ${roleExplorer()}
+    <div class="method-note"><strong>About this research</strong><p>Published pay and opening dates are shown only when supplied by the source. Unknown dates are never treated as recent. Qualifications are short summaries, not promises of eligibility; check the employer posting for the complete requirements. Jobs with past application deadlines are hidden by default.</p></div>`;
 }
 function renderJobResults(){
-  const jobs=sortJobs(getJobs(),filter.sort,filter.center,db.geo);
-  const countEl=document.querySelector('#results-count');
-  const listEl=document.querySelector('#job-results');
-  if(!countEl||!listEl)return;
-  countEl.innerHTML=`<div><strong>${jobs.length} matching ${jobs.length===1?'job':'jobs'}</strong><p>Sorted ${filter.sort==='closest'?'by proximity from '+safeText(filter.center):safeText({newest:'by most recent posting',deadline:'by filing deadline',pay:'by minimum listed hourly pay'}[filter.sort]||'by proximity')}. Unknown posting dates are never treated as recent.</p></div>`;
-  if(!jobs.length){listEl.innerHTML=`<div class="empty"><h3>No jobs match these filters</h3><p>Try a wider radius, another category, or include listings with passed deadlines.</p><button id="reset-filters" class="btn" type="button" style="margin-top:16px">Clear filters</button></div>`;return;}
-  if(filter.sort==='closest'){
-    const groups=new Map();for(const job of jobs){const group=distanceBand(jobMiles(job,filter.center,db.geo));if(!groups.has(group))groups.set(group,[]);groups.get(group).push(job);}
-    listEl.innerHTML=[...groups.entries()].sort((a,b)=>a[0]-b[0]).map(([band,rows])=>`<section class="job-section"><h2 class="band-title">${safeText(bandNames[band])} <span>${rows.length} ${rows.length===1?'listing':'listings'}</span></h2><div class="job-grid">${rows.map(jobCard).join('')}</div></section>`).join('');
-  }else listEl.innerHTML=`<div class="job-grid">${jobs.map(jobCard).join('')}</div>`;
-  const badge=document.querySelector('#saved-count');if(badge)badge.textContent=Object.values(state.favorites).filter(Boolean).length;
+  const filtered=sortJobs(jobs(),filter.sort,filter.center,db.geo),counter=document.querySelector('#results-count'),container=document.querySelector('#job-results');
+  if(!counter||!container)return;
+  const nearby=normalizeJobs().filter(j=>{const n=jobMiles(j,filter.center,db.geo);return n!==null&&n<=15&&deadlineStatus(j.deadline).key!=='passed';}).length;
+  const nearbyNode=document.querySelector('#nearby-count');if(nearbyNode)nearbyNode.textContent=String(nearby);
+  counter.innerHTML=`<div><h2>${filtered.length} matching ${filtered.length===1?'job':'jobs'}</h2><p>${text(filter.sort==='closest'?`Closest to ${filter.center} first`:{newest:'Newest posting dates first',deadline:'Upcoming deadlines first',pay:'Highest comparable pay first'}[filter.sort]||'Closest first')}. Dated openings may have closed earlier.</p></div><span class="count-label">${normalizeJobs().length} researched · ${db.role_ideas?.length||0} more job-title searches</span>`;
+  if(!filtered.length){container.innerHTML='<div class="empty"><h3>No jobs matched</h3><p>Try a larger radius, a different field, or enable previously closed listings.</p><button class="button button-primary" type="button" id="reset-filters">Reset filters</button></div>';return;}
+  if(filter.sort!=='closest'){container.innerHTML=`<div class="job-grid">${filtered.map(card).join('')}</div>`;return;}
+  const groups=new Map();for(const j of filtered){const k=distanceBand(jobMiles(j,filter.center,db.geo));if(!groups.has(k))groups.set(k,[]);groups.get(k).push(j);}
+  container.innerHTML=[...groups.entries()].sort((a,b)=>a[0]-b[0]).map(([k,rows])=>`<section class="group"><div class="group-head"><h3>${text(bandNames[k])}</h3><span>${rows.length} ${rows.length===1?'role':'roles'}</span></div><div class="job-grid">${rows.map(card).join('')}</div></section>`).join('');
 }
-function renderJobs(){root.innerHTML=jobShell();renderJobResults();}
+function roleExplorer(){return `<details id="role-explorer" class="idea-section"><summary><span><small>Broaden the search</small><strong>${db.role_ideas?.length||0} more job titles worth exploring</strong><span class="idea-note">These are search ideas, not verified job openings. Open live search results in another tab.</span></span><span class="idea-arrow" aria-hidden="true">+</span></summary>
+    <div class="idea-body"><div class="idea-controls"><div class="filter"><label for="idea-query">Role keyword</label><input id="idea-query" data-idea-search type="search" value="${text(ideasQuery)}" placeholder="Coin, Shopify, garden…"></div>
+    <div class="filter"><label for="idea-category">Focus area</label><select id="idea-category" data-idea-category>${opts([['all','All interests'],...new Set((db.role_ideas||[]).map(x=>x.category))].map(x=>Array.isArray(x)?x:[x,x]),ideasCategory)}</select></div></div>
+    <div id="idea-results" aria-live="polite"></div></div></details>`;}
+function renderRoleResults(){
+  const node=document.querySelector('#idea-results');if(!node)return;
+  const q=ideasQuery.toLowerCase().trim();
+  const filtered=(db.role_ideas||[]).filter(r=>(ideasCategory==='all'||r.category===ideasCategory)&&(!q||[r.title,r.summary,r.typicalQualifications,r.category].join(' ').toLowerCase().includes(q)));
+  const prioritized=[...filtered].sort((a,b)=>filter.track==='digital'?Number(digitalCategories.has(b.category))-Number(digitalCategories.has(a.category)):filter.track==='physical'?Number(digitalCategories.has(a.category))-Number(digitalCategories.has(b.category)):0);
+  const shown=ideasExpanded?prioritized:prioritized.slice(0,12);
+  node.innerHTML=`<p class="ideas-intro">${filtered.length} role ideas. Salary and availability are intentionally not invented. Searches use ${text(filter.center)} as the starting location.</p>
+    <div class="idea-grid">${shown.map(r=>{
+      const q=encodeURIComponent(r.query||r.title),loc=encodeURIComponent(filter.center+', CA');
+      const indeed=`https://www.indeed.com/jobs?q=${q}&l=${loc}&sort=date`;
+      const gov=`https://www.governmentjobs.com/jobs?keyword=${q}&location=${loc}`;
+      return `<article class="idea-card tone-${categoryTone(r.category)}"><span>${text(r.category)}</span><h4>${text(r.title)}</h4><p>${text(r.summary)}</p><p class="idea-qual"><strong>Typical qualifications:</strong> ${text(r.typicalQualifications)}</p><small>${text(r.movement)}</small><div class="idea-links">${link(indeed,'Search jobs')}${link(gov,'Public-sector search')}</div></article>`;}).join('')}</div>
+    ${filtered.length>12?`<button class="button button-light show-ideas" type="button" data-show-ideas>${ideasExpanded?'Show fewer roles':`Show all ${filtered.length} roles`}</button>`:''}`;
+}
+function renderJobs(){root.innerHTML=shell();renderJobResults();renderRoleResults();}
 function renderExplore(){
-  const shortlist=['heritage','museum-ed','auction','numismatic','garden','recreation','tutoring','rare-books'];
-  const careers=shortlist.map(id=>db.careers.find(j=>j.id===id)).filter(Boolean);
-  const places=[...db.places].sort((a,b)=>(jobMiles(a,state.center,db.geo)??999)-(jobMiles(b,state.center,db.geo)??999));
-  const complete=db.tasks.filter(t=>state.completed[t.id]).length;
-  const total=db.tasks.length,pct=total?Math.round(100*complete/total):0;
-  const taskList=tasks=>tasks.map(t=>`<div class="task ${state.completed[t.id]?'is-done':''}"><input id="task-${esc(t.id)}" data-task="${esc(t.id)}" type="checkbox" ${checked(state.completed[t.id])}><label for="task-${esc(t.id)}"><strong>${safeText(t.title)}</strong><small>${safeText(t.detail)}</small></label></div>`).join('');
-  root.innerHTML=`<div class="explore-head"><span class="eyebrow">Paths, places and next steps</span><h1>Explore what comes next.</h1><p>The job listings are the priority. Use this page to compare work styles, visit organizations in person and test a career before committing to retraining.</p></div>
-    <div class="section-head"><div><h2>Potential career paths</h2><p>A short list based on the original research, not a psychological diagnosis.</p></div></div>
-    <div class="explore-grid">${careers.map(c=>`<article class="explore-card"><small>${safeText(c.category)}</small><h3>${safeText(c.title)}</h3><p>${safeText(c.summary)}</p><div class="first"><strong>First step:</strong> ${safeText(c.firstSteps?.[0]||'Explore a relevant organization.')}</div></article>`).join('')}</div>
-    <div class="section-head"><div><h2>Places to contact or visit</h2><p>Local museums, gardens, historic sites and organizations for hands-on observation.</p></div></div>
-    <div class="places-grid">${places.map(p=>`<article class="place-card"><h3>${safeText(p.name)}</h3><div class="city">${safeText(p.city)} · ≈${jobMiles(p,state.center,db.geo)??'?'} miles from ${safeText(state.center)}</div><p>${safeText(p.bestFor)}</p>${link(p.url,'Official website')}</article>`).join('')}</div>
-    <div class="section-head"><div><h2>Personal action checklist</h2><p>Small experiments before a complete career switch.</p></div></div>
-    <div class="plan"><div class="plan-progress"><span>${complete} of ${total} tasks complete</span><strong>${pct}%</strong></div><div class="progress-track"><span style="width:${pct}%"></span></div>${taskList(db.tasks.slice(0,8))}${db.tasks.length>8?`<details class="job-details"><summary>Show ${db.tasks.length-8} additional steps</summary>${taskList(db.tasks.slice(8))}</details>`:''}</div>
-    <div class="research-note"><h3>A note on evidence</h3><p>Career fit is a working hypothesis based on interests and activities described on ${link('https://vectorle.xyz/','the source website')}. It is not a clinical personality assessment. Pay and eligibility vary by employer; confirm directly before applying. Job distance is approximate and does not represent commute time.</p></div>`;
+  const careers=db.careers||[],sites=[...db.places].sort((a,b)=>(jobMiles(a,state.center,db.geo)??9999)-(jobMiles(b,state.center,db.geo)??9999));
+  const tasks=db.tasks||[],done=tasks.filter(x=>state.completed[x.id]).length;
+  const careerCards=careers.map(c=>`<article class="career-card tone-${categoryTone(c.category)}"><small>${text(c.category)}</small><h3>${text(c.title)}</h3><p>${text(c.summary)}</p><p class="career-step"><strong>First experiment:</strong> ${text(c.firstSteps?.[0]||'Talk with someone doing this work.')}</p></article>`).join('');
+  root.innerHTML=`<section class="explore-intro"><div class="eyebrow">Practical next steps</div><h1>Explore the work, <span>not just the title.</span></h1><p>Career ideas include field-based work, tangible goods and a practical digital fallback. Sample the daily duties before committing to retraining.</p></section>
+    <div class="section-title"><h2>Career directions</h2><p>${careers.length} focused options from the original research, including digital and technical bridge work.</p></div><div class="career-grid">${careerCards}</div>
+    <div class="section-title"><h2>Places to visit</h2><p>Field visits and conversations often reveal more than a job description.</p></div>
+    <div class="places-grid">${sites.map(s=>`<article class="place-card"><h3>${text(s.name)}</h3><span>${text(s.city)} · ${text(jobMiles(s,state.center,db.geo)??'—')} mi from ${text(state.center)}</span><p>${text(s.bestFor)}</p>${link(s.url,'Official website')}</article>`).join('')}</div>
+    <div class="section-title"><h2>Transition checklist</h2><p>One sequence of small experiments, not a long personality assessment.</p></div><div class="checklist"><div class="plan-count"><strong>${done} of ${tasks.length} completed</strong><span>${tasks.length?Math.round(done/tasks.length*100):0}%</span></div><div class="progress"><span style="width:${tasks.length?done/tasks.length*100:0}%"></span></div>
+      ${tasks.map(t=>`<label class="task ${state.completed[t.id]?'completed':''}"><input type="checkbox" data-task="${text(t.id)}" ${isChecked(state.completed[t.id])}><span><strong>${text(t.title)}</strong><small>${text(t.detail)}</small></span></label>`).join('')}
+    </div><div class="method-note"><strong>Limitations</strong><p>These are occupational hypotheses grounded in interests and activities, not a psychological assessment. Employer qualifications, pay, scheduling and commuting requirements can change. ${link('https://vectorle.xyz/','Original context website')}.</p></div>`;
 }
-function render(){current=location.hash==='#explore'?'explore':'jobs';setActiveNav(current);if(!db)return;if(current==='explore')renderExplore();else renderJobs();}
+function render(){current=location.hash==='#explore'?'explore':'jobs';document.querySelectorAll('[data-view]').forEach(a=>{if(a.dataset.view===current)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});if(!db)return;current==='explore'?renderExplore():renderJobs();}
 
-root.addEventListener('input',e=>{if(e.target.matches('[data-search]')){filter.query=e.target.value;renderJobResults();}});
-root.addEventListener('change',e=>{
-  const control=e.target.dataset.control;
-  if(control){filter[control]=e.target.type==='checkbox'?e.target.checked:e.target.value;if(control==='center'){state.center=filter.center;persist();const label=document.querySelector('#center-label');if(label)label.textContent=filter.center;}renderJobResults();}
-  const task=e.target.dataset.task;
-  if(task){state.completed[task]=e.target.checked;persist();renderExplore();}
+root.addEventListener('input',event=>{
+  if(event.target.matches('[data-search]')){filter.query=event.target.value;renderJobResults();}
+  if(event.target.matches('[data-idea-search]')){ideasQuery=event.target.value;ideasExpanded=false;renderRoleResults();}
 });
-root.addEventListener('click',e=>{
-  const save=e.target.closest('[data-save-id]');
-  if(save){const id=save.dataset.saveId;state.favorites[id]=!state.favorites[id];persist();renderJobResults();return;}
-  if(e.target.closest('#reset-filters')){filter={...defaults,center:state.center};renderJobs();}
+root.addEventListener('change',event=>{
+  const control=event.target.dataset.control;
+  if(control){filter[control]=event.target.type==='checkbox'?event.target.checked:event.target.value;
+    if(control==='center'){state.center=filter.center;persist();const node=document.querySelector('#center-label');if(node)node.textContent=`Starting in ${filter.center}. Straight-line city-center distances.`;const here=document.querySelector('#current-center');if(here)here.textContent=filter.center;}
+    renderJobResults();renderRoleResults();
+  }
+  if(event.target.matches('[data-idea-category]')){ideasCategory=event.target.value;ideasExpanded=false;renderRoleResults();}
+  const task=event.target.dataset.task;if(task){state.completed[task]=event.target.checked;persist();renderExplore();}
+});
+root.addEventListener('click',event=>{
+  const save=event.target.closest('[data-save-id]');
+  if(save){state.favorites[save.dataset.saveId]=!state.favorites[save.dataset.saveId];persist();renderJobResults();return;}
+  const pick=event.target.closest('[data-track]');
+  if(pick){filter.track=pick.dataset.track;document.querySelectorAll('[data-track]').forEach(el=>{const yes=el.dataset.track===filter.track;el.classList.toggle('selected',yes);el.setAttribute('aria-pressed',String(yes));});renderJobResults();renderRoleResults();return;}
+  if(event.target.closest('#reset-filters')){filter={...defaults,center:state.center};ideasQuery='';ideasCategory='all';renderJobs();return;}
+  if(event.target.closest('[data-show-ideas]')){ideasExpanded=!ideasExpanded;renderRoleResults();}
 });
 window.addEventListener('hashchange',render);
 
 async function start(){
   try{
-    const keys=['opportunities','live_jobs','careers','places','tasks','geo','snapshot'];
+    const keys=['opportunities','live_jobs','careers','places','tasks','geo','snapshot','role_ideas'];
     const data=await Promise.all(keys.map(async key=>{const r=await fetch('./data/'+key+'.json');if(!r.ok)throw new Error(key+': HTTP '+r.status);return r.json();}));
     db=Object.fromEntries(keys.map((key,i)=>[key==='live_jobs'?'live':key,data[i]]));
-    if(!db.geo.centers.includes(state.center))state.center=db.geo.reference;
+    if(![...db.geo.centers,...(db.geo.communities||[])].includes(state.center))state.center=db.geo.reference;
     filter.center=state.center;
     render();
-  }catch(error){root.innerHTML=`<div class="empty" style="margin-top:90px"><h3>Unable to load job research</h3><p>${safeText(error.message)}. Try refreshing the page, or check the deployment settings.</p></div>`;}
+  }catch(error){
+    // Preserve the static job listings shipped in index.html. Never blank the page on error.
+    const warning=document.createElement('p');warning.className='load-warning';warning.textContent='Interactive filters are unavailable. Browse the job links below, then refresh or check deployment settings.';
+    root.prepend(warning);
+    console.error('Failed to initialize job watch:',error);
+  }
 }
 start();

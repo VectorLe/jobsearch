@@ -45,4 +45,26 @@ class RefreshTests(unittest.TestCase):
         self.assertEqual(feed['status'],'not-configured')
         self.assertEqual(feed['jobs'],[])
 
+    def test_entire_sgv_cities_and_suggestions(self):
+        self.assertEqual(len(self.geo['centers']),31)
+        self.assertEqual(len(self.geo['communities']),13)
+        self.assertTrue(all(city in self.geo['cities'] for city in self.geo['centers']))
+        roles=refresh.read_json(ROOT/'data/role_ideas.json')
+        self.assertGreaterEqual(len(roles),40)
+        self.assertGreaterEqual(len([r for r in roles if r['category'] in ('E-commerce & digital','Technical & IT')]),10)
+        self.assertTrue(all(r['typicalQualifications'] for r in roles))
+    def test_technical_and_shopify_matching(self):
+        self.assertTrue(refresh.relevant_title('Shopify merchandising specialist'))
+        self.assertTrue(refresh.relevant_title('Computer support specialist'))
+        self.assertTrue(refresh.relevant_title('Field service technician'))
+        self.assertFalse(refresh.relevant_title('Senior cloud architect'))
+        self.assertEqual(refresh.group_for('E-commerce Operations Coordinator'),'E-commerce & digital')
+        self.assertEqual(refresh.group_for('IT Support Specialist'),'Technical & IT')
+        self.assertEqual(refresh.identify_city('La Canada Flintridge, California',self.geo),'La Cañada Flintridge')
+    def test_qualifications_from_external_excerpt_are_marked_as_unverified(self):
+        result=refresh.extract_qualifications('<p>Minimum Qualifications: Two years of experience in technical support and basic communication skills.</p>')
+        self.assertIn('Provider excerpt',result)
+        self.assertIn('Two years',result)
+        self.assertIn('not supplied',refresh.extract_qualifications('Small introduction without any job qualifications.'))
+
 if __name__=='__main__':unittest.main()

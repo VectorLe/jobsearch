@@ -2,7 +2,7 @@
   {
     "id": "heritage",
     "title": "Historic-site / park interpreter",
-    "category": "Heritage",
+    "category": "Museums & heritage",
     "summary": "Lead walks, explain historic places and artifacts, develop interpretive experiences for visitors.",
     "firstSteps": [
       "Request a volunteer docent shift at Pío Pico",
@@ -13,7 +13,7 @@
   {
     "id": "museum-ed",
     "title": "Museum educator / public programs",
-    "category": "Heritage",
+    "category": "Museums & heritage",
     "summary": "Create tours, workshops, school visits and public events, sometimes with on-site demonstration.",
     "firstSteps": [
       "Volunteer with Gilb Museum or another small institution",
@@ -46,7 +46,7 @@
   {
     "id": "garden",
     "title": "Botanical garden guide / horticultural assistant",
-    "category": "Outdoors & movement",
+    "category": "Parks & outdoors",
     "summary": "Work with plants, visitors, garden tours, grounds or nursery collections.",
     "firstSteps": [
       "Try California Botanic Garden volunteering",
@@ -57,7 +57,7 @@
   {
     "id": "recreation",
     "title": "Parks & recreation coordinator",
-    "category": "Outdoors & movement",
+    "category": "Parks & outdoors",
     "summary": "Deliver youth, senior, community and outdoor programs through a city or park department.",
     "firstSteps": [
       "Apply to recreation leader roles",
@@ -68,7 +68,7 @@
   {
     "id": "tutoring",
     "title": "Private tutoring / adult instruction",
-    "category": "Education & books",
+    "category": "Books & education",
     "summary": "Teach an existing area of real competence in-person or in small groups.",
     "firstSteps": [
       "Offer two supervised or low-stakes practice sessions",
@@ -86,5 +86,85 @@
       "Study and document five editions of one title",
       "Seek mentorship or entry-level cataloging work"
     ]
+  },
+  {
+    "id": "ecommerce-ops",
+    "title": "E-commerce operations and fulfillment",
+    "category": "E-commerce & digital",
+    "summary": "Keep Shopify/WordPress experience in play through inventory, digital merchandising, physical goods and team operations.",
+    "firstSteps": [
+      "Visit a local fulfillment operation and search for on-site operations coordinator roles"
+    ],
+    "movement": "Medium to high depending on location"
+  },
+  {
+    "id": "shopify-admin",
+    "title": "Shopify / WordPress site administration",
+    "category": "E-commerce & digital",
+    "summary": "Manage listings, merchandising, product content and customer processes without complex software engineering.",
+    "firstSteps": [
+      "Prepare two storefront improvements as portfolio examples"
+    ],
+    "movement": "Mostly desk"
+  },
+  {
+    "id": "it-field",
+    "title": "Field IT support and technical training",
+    "category": "Technical & IT",
+    "summary": "Hands-on PC troubleshooting, installing devices and training people at real workplaces rather than extensive programming.",
+    "firstSteps": [
+      "Explore IT field support roles and compare actual walking and travel duties"
+    ],
+    "movement": "Medium to high"
+  },
+  {
+    "id": "no-code",
+    "title": "No-code / CMS implementation consulting",
+    "category": "Technical & IT",
+    "summary": "Configure systems and train customers with practical tools, keeping coding demands light.",
+    "firstSteps": [
+      "Deliver a small real-world automation or documentation sample"
+    ],
+    "movement": "Mostly desk"
+  },
+  {
+    "id": "historic-tour",
+    "title": "Local history walking-tour business",
+    "category": "Independent & teaching",
+    "summary": "Build a research-led route and pilot a small paid historical tour outside central Los Angeles.",
+    "firstSteps": [
+      "Run one free practice walk with feedback before attempting paid sales"
+    ],
+    "movement": "High"
+  },
+  {
+    "id": "preservation",
+    "title": "Historic preservation / restoration trades",
+    "category": "Parks & outdoors",
+    "summary": "Practical carpentry and site maintenance with heritage settings and tangible results.",
+    "firstSteps": [
+      "Try a supervised woodworking or preservation volunteer day"
+    ],
+    "movement": "High"
+  },
+  {
+    "id": "coin-dealer",
+    "title": "Precious-metals and numismatic retail",
+    "category": "Collectibles & trade",
+    "summary": "Work with gold, silver and coins through client service, valuation basics, controlled inventory and estate buying.",
+    "firstSteps": [
+      "Interview a numismatic dealer and inspect typical daily duties"
+    ],
+    "movement": "Some"
+  },
+  {
+    "id": "tech-writer",
+    "title": "Technical documentation and training",
+    "category": "Technical & IT",
+    "summary": "Turn existing technology understanding into clear instructions, support articles and guided training.",
+    "firstSteps": [
+      "Write a concise troubleshooting guide for a real service process"
+    ],
+    "movement": "Mostly desk"
   }
 ]

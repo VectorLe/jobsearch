@@ -5,7 +5,8 @@
   "type": "module",
   "description": "Simple static job search centered on the San Gabriel Valley",
   "scripts": {
-    "test": "node --test tests/logic.test.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "build": "python3 scripts/build.py",
     "serve": "python3 -m http.server 8000",
     "refresh": "python3 scripts/refresh.py",
     "refresh:offline": "python3 scripts/refresh.py --offline"

@@ -1,14 +1,37 @@
 {
   "reference": "El Monte",
   "centers": [
-    "El Monte",
+    "Alhambra",
     "Arcadia",
-    "Pasadena",
-    "San Gabriel",
-    "West Covina",
+    "Azusa",
+    "Baldwin Park",
+    "Bradbury",
+    "Claremont",
     "Covina",
+    "Diamond Bar",
+    "Duarte",
+    "El Monte",
+    "Glendora",
+    "Industry",
+    "Irwindale",
+    "La Cañada Flintridge",
+    "La Puente",
+    "La Verne",
     "Monrovia",
-    "Glendora"
+    "Montebello",
+    "Monterey Park",
+    "Pasadena",
+    "Pomona",
+    "Rosemead",
+    "San Dimas",
+    "San Gabriel",
+    "San Marino",
+    "Sierra Madre",
+    "South El Monte",
+    "South Pasadena",
+    "Temple City",
+    "Walnut",
+    "West Covina"
   ],
   "cities": {
     "El Monte": [
@@ -94,10 +117,6 @@
     "Walnut": [
       34.0203,
       -117.8653
-    ],
-    "City of Industry": [
-      34.0197,
-      -117.9587
     ],
     "Duarte": [
       34.1395,
@@ -195,10 +214,6 @@
       34.0519,
       -118.0467
     ],
-    "La Canada Flintridge": [
-      34.1992,
-      -118.1879
-    ],
     "Altadena": [
       34.1897,
       -118.1312
@@ -206,6 +221,83 @@
     "Monterey Park": [
       34.0625,
       -118.1228
+    ],
+    "Bradbury": [
+      34.1507,
+      -117.9731
+    ],
+    "Montebello": [
+      34.0159,
+      -118.1117
+    ],
+    "La Cañada Flintridge": [
+      34.1992,
+      -118.1879
+    ],
+    "Avocado Heights": [
+      34.0367,
+      -117.9911
+    ],
+    "Bassett": [
+      34.0628,
+      -117.9995
+    ],
+    "Charter Oak": [
+      34.1039,
+      -117.8498
+    ],
+    "East Pasadena": [
+      34.1473,
+      -118.079
+    ],
+    "East San Gabriel": [
+      34.1206,
+      -118.0814
+    ],
+    "Mayflower Village": [
+      34.1162,
+      -118.0092
+    ],
+    "South San Jose Hills": [
+      34.0155,
+      -117.9065
+    ],
+    "Valinda": [
+      34.0466,
+      -117.9392
+    ],
+    "West Puente Valley": [
+      34.0475,
+      -117.967
+    ],
+    "North El Monte": [
+      34.1039,
+      -118.0227
+    ],
+    "Industry": [
+      34.0197,
+      -117.9587
+    ],
+    "South Gate": [
+      33.9547,
+      -118.212
     ]
-  }
+  },
+  "communities": [
+    "Altadena",
+    "Avocado Heights",
+    "Bassett",
+    "Charter Oak",
+    "East Pasadena",
+    "East San Gabriel",
+    "Hacienda Heights",
+    "Mayflower Village",
+    "North El Monte",
+    "Rowland Heights",
+    "South San Jose Hills",
+    "Valinda",
+    "West Puente Valley"
+  ],
+  "regionSource": "https://www.sgvcog.org/about/memberagencies-affiliates",
+  "locationNote": "31 SGVCOG member cities and 13 nearby unincorporated communities; distance is city-center straight-line only."
 }

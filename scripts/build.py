@@ -15,45 +15,51 @@ import re
 from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ('opportunities', 'live_jobs', 'careers', 'places', 'tasks', 'geo', 'snapshot')
+DATA = ('opportunities', 'live_jobs', 'careers', 'places', 'tasks', 'geo', 'snapshot', 'role_ideas')
 
 
 def fallback(data: dict) -> str:
-    """Useful accessible job listings even if a browser blocks JavaScript."""
+    """Accessible, styled fallback when browser JavaScript cannot execute."""
     now = datetime.now(ZoneInfo('America/Los_Angeles')).date()
     jobs = data['opportunities']
-    visible = [j for j in jobs if not j.get('deadline') or j['deadline'] >= str(now)]
+    visible = [job for job in jobs if not job.get('deadline') or job['deadline'] >= now.isoformat()]
     if not visible:
-        visible = jobs[:6]
-    parts = [
-        '<section class="hero"><div><span class="eyebrow">Job watch · Southern California</span>',
-        '<h1>Find work <span>closer to home.</span></h1>',
-        '<p>Job opportunities in and around the San Gabriel Valley, with published pay, location, posting dates and source links.</p>',
-        '</div><div class="hero-aside"><strong>San Gabriel Valley first</strong>',
-        '<p>Start in the valley and expand outward. Details are checked daily; verify open positions with each employer.</p></div></section>',
-        '<section class="job-section"><h2 class="band-title">Job listings</h2><div class="job-grid">',
+        visible = jobs[:8]
+    chunks = [
+        '<section class="hero"><div><div class="eyebrow">San Gabriel Valley · job watch</div>',
+        '<h1>Work beyond <span>the screen.</span></h1>',
+        '<p>A source-linked list of local careers. The interactive filters are optional; original job links work without JavaScript.</p>',
+        '</div><aside class="hero-aside"><small>Search center</small><strong>El Monte</strong>',
+        '<p>Explore the San Gabriel Valley first. This fallback shows recorded jobs without interactive filters.</p></aside></section>',
+        '<section class="group"><div class="group-head"><h3>Researched job listings</h3>',
+        '<span>Verify current availability with employers</span></div><div class="job-grid">',
     ]
-    for j in visible:
-        source = escape(j.get('sourceUrl') or '#', quote=True)
-        title = escape(j.get('title') or 'Job listing')
-        city = escape(j.get('city') or 'Location unavailable')
-        employer = escape(j.get('employer') or 'Employer unavailable')
-        salary = escape(j.get('salary') or 'Pay not provided')
-        schedule = escape(j.get('schedule') or 'Not specified')
-        posted = escape(j.get('postedAt') or 'Date not provided')
-        deadline = escape(j.get('deadline') or 'Not specified')
-        note = escape(j.get('note') or 'Confirm details with the employer.')
-        parts.append(
-            f'<article class="job-card"><h3 class="job-title"><a href="{source}" target="_blank" rel="noopener noreferrer">{title}</a></h3>'
-            f'<p class="employer">{employer} · {city}</p><div class="pay-box"><strong>{salary}</strong></div>'
-            '<div class="job-facts">'
-            f'<div class="fact"><label>Posted</label><span>{posted}</span></div>'
-            f'<div class="fact"><label>Closing</label><span>{deadline}</span></div>'
-            f'<div class="fact"><label>Schedule</label><span>{schedule}</span></div></div>'
-            f'<p class="job-description">{note}</p><div class="job-actions"><a class="btn btn-primary" href="{source}" target="_blank" rel="noopener noreferrer">View listing ↗</a></div></article>'
+    for job in visible:
+        url = escape(job.get('sourceUrl') or '#', quote=True)
+        title = escape(job.get('title') or 'Job listing')
+        employer = escape(job.get('employer') or 'Employer not supplied')
+        city = escape(job.get('city') or 'Location not supplied')
+        salary = escape(job.get('salary') or 'Pay not published')
+        schedule = escape(job.get('schedule') or 'Not specified')
+        posted = escape(job.get('postedAt') or 'Not published')
+        deadline = escape(job.get('deadline') or 'Not specified')
+        note = escape(job.get('note') or 'Review source for responsibilities')
+        requirements = escape(job.get('requirements') or 'Confirm minimum qualifications with employer')
+        chunks.append(
+            f'<article class="job-card"><div><h3><a class="job-title-link" href="{url}" target="_blank" rel="noopener noreferrer">{title}</a></h3>'
+            f'<p class="company">{employer} · {city}</p></div>'
+            f'<div class="pay"><span>Pay</span><strong>{salary}</strong></div>'
+            '<div class="job-metadata">'
+            f'<div class="field"><span>Posted</span><strong>{posted}</strong></div>'
+            f'<div class="field"><span>Closing</span><strong>{deadline}</strong></div>'
+            f'<div class="field"><span>Schedule</span><strong>{schedule}</strong></div></div>'
+            f'<div class="qualifications"><h4>Qualifications</h4><p>{requirements}</p></div>'
+            f'<p class="job-summary">{note}</p><div class="card-actions">'
+            f'<a class="button button-primary" href="{url}" target="_blank" rel="noopener noreferrer">View job posting ↗</a>'
+            '</div></article>'
         )
-    parts.append('</div></section>')
-    return ''.join(parts)
+    chunks.append('</div></section>')
+    return ''.join(chunks)
 
 
 def build(root: Path = ROOT) -> tuple[str, str]:
