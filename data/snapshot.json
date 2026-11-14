@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-11-13T21:59:06Z",
+  "generatedAt": "2026-11-14T20:43:58Z",
   "timezone": "America/Los_Angeles",
   "center": "El Monte",
   "method": "Deadline date checks and source URL reachability; reachable does not mean accepting applications.",
   "deadlines": {
     "crestmore": {
       "state": "passed",
-      "daysRemaining": -2
+      "daysRemaining": -3
     },
     "la-verne": {
       "state": "passed",
-      "daysRemaining": -1
+      "daysRemaining": -2
     },
     "pomona": {
       "state": "future",
-      "daysRemaining": 9
+      "daysRemaining": 8
     },
     "arcadia-museum": {
       "state": "future",
-      "daysRemaining": 17
+      "daysRemaining": 16
     },
     "arcadia-rec": {
       "state": "future",
-      "daysRemaining": 17
+      "daysRemaining": 16
     },
     "arcadia-leader": {
       "state": "unknown",
@@ -30,31 +30,31 @@
     },
     "arcadia-library": {
       "state": "future",
-      "daysRemaining": 17
+      "daysRemaining": 16
     },
     "pomona-inclusion": {
       "state": "future",
-      "daysRemaining": 12
+      "daysRemaining": 11
     },
     "pasadena-librarian": {
       "state": "soon",
-      "daysRemaining": 6
+      "daysRemaining": 5
     },
     "arcadia-librarian": {
       "state": "future",
-      "daysRemaining": 17
+      "daysRemaining": 16
     },
     "pasadena-it-support": {
       "state": "passed",
-      "daysRemaining": -1
+      "daysRemaining": -2
     },
     "covina-it-manager": {
       "state": "future",
-      "daysRemaining": 12
+      "daysRemaining": 11
     },
     "west-covina-admin": {
       "state": "soon",
-      "daysRemaining": 4
+      "daysRemaining": 3
     },
     "cgu-tech-support": {
       "state": "unknown",
@@ -62,7 +62,7 @@
     },
     "south-gate-rec-leader": {
       "state": "soon",
-      "daysRemaining": 3
+      "daysRemaining": 2
     },
     "pasadena-senior-erp-2026": {
       "state": "unknown",
@@ -79,76 +79,93 @@
   },
   "links": {
     "crestmore": {
-      "result": "reachable",
-      "httpStatus": 200
+      "result": "unknown",
+      "httpStatus": null,
+      "error": "URLError"
     },
     "la-verne": {
-      "result": "reachable",
-      "httpStatus": 200
+      "result": "unknown",
+      "httpStatus": null,
+      "error": "URLError"
     },
     "pomona": {
-      "result": "reachable",
-      "httpStatus": 200
+      "result": "unknown",
+      "httpStatus": null,
+      "error": "URLError"
     },
     "arcadia-museum": {
-      "result": "reachable",
-      "httpStatus": 200
+      "result": "unknown",
+      "httpStatus": null,
+      "error": "URLError"
     },
     "arcadia-rec": {
-      "result": "reachable",
-      "httpStatus": 200
+      "result": "unknown",
+      "httpStatus": null,
+      "error": "URLError"
     },
     "arcadia-leader": {
-      "result": "reachable",
-      "httpStatus": 200
+      "result": "unknown",
+      "httpStatus": null,
+      "error": "URLError"
     },
     "arcadia-library": {
-      "result": "reachable",
-      "httpStatus": 200
+      "result": "unknown",
+      "httpStatus": null,
+      "error": "URLError"
     },
     "pomona-inclusion": {
-      "result": "reachable",
-      "httpStatus": 200
+      "result": "unknown",
+      "httpStatus": null,
+      "error": "URLError"
     },
     "pasadena-librarian": {
-      "result": "reachable",
-      "httpStatus": 200
+      "result": "unknown",
+      "httpStatus": null,
+      "error": "URLError"
     },
     "arcadia-librarian": {
-      "result": "reachable",
-      "httpStatus": 200
+      "result": "unknown",
+      "httpStatus": null,
+      "error": "URLError"
     },
     "pasadena-it-support": {
-      "result": "reachable",
-      "httpStatus": 200
+      "result": "unknown",
+      "httpStatus": null,
+      "error": "URLError"
     },
     "covina-it-manager": {
-      "result": "reachable",
-      "httpStatus": 200
+      "result": "unknown",
+      "httpStatus": null,
+      "error": "URLError"
     },
     "west-covina-admin": {
-      "result": "reachable",
-      "httpStatus": 200
+      "result": "unknown",
+      "httpStatus": null,
+      "error": "URLError"
     },
     "cgu-tech-support": {
       "result": "reachable",
       "httpStatus": 200
     },
     "south-gate-rec-leader": {
-      "result": "reachable",
-      "httpStatus": 200
+      "result": "unknown",
+      "httpStatus": null,
+      "error": "URLError"
     },
     "pasadena-senior-erp-2026": {
-      "result": "reachable",
-      "httpStatus": 200
+      "result": "unknown",
+      "httpStatus": null,
+      "error": "URLError"
     },
     "downey-activity-specialist-2026": {
-      "result": "reachable",
-      "httpStatus": 200
+      "result": "unknown",
+      "httpStatus": null,
+      "error": "URLError"
     },
     "downey-senior-activity-specialist-2026": {
-      "result": "reachable",
-      "httpStatus": 200
+      "result": "unknown",
+      "httpStatus": null,
+      "error": "URLError"
     }
   }
 }
