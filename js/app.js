@@ -1,4 +1,4 @@
-import {esc,safeURL,jobURLKey,todayLA,prettyDate,isRecentPosting,postedAge,deadlineStatus,jobMiles,distanceBand,bandNames,hourlyFloor,digitalCategories,categoryTone,matchJob,sortJobs} from './logic.js';
+import {esc,safeURL,jobURLKey,todayLA,prettyDate,isRecentPosting,postedAge,deadlineStatus,jobMiles,distanceBand,bandNames,hourlyFloor,digitalCategories,categoryTone,isCncRole,matchJob,sortJobs} from './logic.js';
 
 /* One stateful screen, one secondary guide, and no client dependencies. */
 const root=document.querySelector('#app');
@@ -57,11 +57,11 @@ function milesLabel(j){
   return m===null?'Location to verify':`≈ ${m} mi from ${filter.center}`;
 }
 function card(j){
-  const category=j.category||'Operations & services',tone=categoryTone(category);
+  const category=j.category||'Operations & services',tone=isCncRole(j)?'cnc':categoryTone(category);
   const age=postedAge(j.postedAt),closing=deadlineStatus(j.deadline),saved=Boolean(state.favorites[j.id]);
   const caution=closing.key==='passed',thirdParty=['jobicy','adzuna'].includes(j.provider)||String(j.sourceType||'').toLowerCase().includes('third-party');
   const badge=(caption,t='')=>`<span class="pill ${t}">${text(caption)}</span>`;
-  const action=closing.key==='passed'?'View archived posting':j.provider==='jobicy'?'View on Jobicy':j.provider==='adzuna'?'View on Adzuna':'View employer posting';
+  const action=closing.key==='passed'?'View archived posting':j.provider==='jobicy'?'View on Jobicy':j.provider==='adzuna'?'View on Adzuna':thirdParty?'View source listing':'View employer posting';
   return `<article class="job-card tone-${tone}" data-job-id="${text(j.id)}">
     <div class="job-card-head"><div class="pills">${badge(category,'category-badge')}${badge(milesLabel(j),'distance-badge')}${thirdParty?badge(j.provider==='jobicy'?'Jobicy source':j.provider==='adzuna'?'Adzuna source':'Third-party source','source-badge'):''}${j.feedStale?badge('Source refresh delayed','source-badge'):''}${j.experienceLevel?badge(j.experienceLevel,'level-badge'):''}</div>
       <button class="bookmark" type="button" data-save-id="${text(j.id)}" aria-label="${saved?'Unsave':'Save'} ${text(j.title)}" aria-pressed="${saved}">${saved?'★':'☆'}</button></div>
@@ -121,6 +121,7 @@ function shell(){
       <button type="button" data-track="collectibles" class="track ${filter.track==='collectibles'?'selected':''}" aria-pressed="${filter.track==='collectibles'}">Coins and auctions</button>
       <button type="button" data-track="digital" class="track ${filter.track==='digital'?'selected':''}" aria-pressed="${filter.track==='digital'}">Shopify and tech</button>
       <button type="button" data-track="trades" class="track ${filter.track==='trades'?'selected':''}" aria-pressed="${filter.track==='trades'}">Skilled trades</button>
+      <button type="button" data-track="cnc" class="track ${filter.track==='cnc'?'selected':''}" aria-pressed="${filter.track==='cnc'}">CNC machining</button>
     </div>
     <div class="filter-grid">
       <div class="filter filter-query"><label for="job-query">Job title, skill or employer</label><input id="job-query" data-search type="search" value="${text(filter.query)}" placeholder="Try museum educator, Shopify, park ranger" autocomplete="off"></div>
@@ -149,7 +150,7 @@ function appliedFilters(){
     radius:filter.radius!==defaults.radius?`Radius: ${filter.radius==='all'?'all locations':filter.radius+' mi'}`:null,
     category:filter.category!=='all'?filter.category:null,
     track:filter.track!=='all'?{
-      physical:'More movement',heritage:'History and books',collectibles:'Coins and auctions',digital:'Shopify and tech',trades:'Skilled trades'
+      physical:'More movement',heritage:'History and books',collectibles:'Coins and auctions',digital:'Shopify and tech',trades:'Skilled trades',cnc:'CNC machining'
     }[filter.track]:null,
     age:filter.age!=='all'?`Published: ${filter.age==='unknown'?'date missing':filter.age+' days'}`:null,
     minPay:filter.minPay!=='all'?`At least $${filter.minPay}/hr`:null,
@@ -180,14 +181,15 @@ function renderJobResults(){
 /** Apprentice program references are not job postings and have no invented posting date. */
 function apprenticeshipSection(){
   return `<section id="apprenticeships" class="apprenticeship-section" aria-labelledby="apprenticeship-title">
-    <div class="section-title"><h2 id="apprenticeship-title">Union apprenticeships and skilled trades</h2>
-    <p>Compare paid training and hands-on work. These are standing programs or recruitment calendars, not jobs posted within 30 days. Verify each intake before applying.</p></div>
-    <div class="trade-quicklinks"><span>Explore:</span><a href="#apprenticeship-list">Electrical</a><a href="#apprenticeship-list">Sprinkler fitting</a><a href="#apprenticeship-list">Welding</a><a href="#apprenticeship-list">Elevators</a><a href="#apprenticeship-list">Piping and HVAC</a></div>
+    <div class="section-title"><h2 id="apprenticeship-title">Trade apprenticeships and CNC training</h2>
+    <p>Compare union apprenticeships, college certificates and hands-on training. These are training routes, not job vacancies. Check intake dates, costs and whether the program pays wages.</p></div>
+    <div class="trade-quicklinks"><span>Explore:</span><a href="#apprenticeship-list">Electrical</a><a href="#apprenticeship-list">Sprinkler fitting</a><a href="#apprenticeship-list">Welding</a><a href="#apprenticeship-list">Elevators</a><a href="#apprenticeship-list">Piping and HVAC</a><button type="button" class="trade-link" data-track="cnc">CNC machining</button></div>
     <div id="apprenticeship-list"></div></section>`;
 }
 function renderApprenticeships(){
   const dest=document.querySelector('#apprenticeship-list');if(!dest)return;
-  const programs=[...(db.apprenticeships||[])].sort((a,b)=>
+  const catalog=filter.track==='cnc'?(db.apprenticeships||[]).filter(p=>isCncRole(p)||/CNC/i.test(p.title)):db.apprenticeships||[];
+  const programs=[...catalog].sort((a,b)=>
     (jobMiles(a,filter.center,db.geo)??9999)-(jobMiles(b,filter.center,db.geo)??9999));
   const shown=apprenticeshipExpanded?programs:programs.slice(0,6);
   dest.innerHTML=`<div class="apprenticeship-grid">${shown.map(p=>{
@@ -201,7 +203,7 @@ function renderApprenticeships(){
       <p class="trade-action">${text(p.action)}</p>
       ${link(p.url,'Check official apprenticeship details','button button-light',`Official apprenticeship details for ${p.sponsor}`)}
     </article>`;}).join('')}</div>
-    ${programs.length>6?`<button class="button button-light" type="button" data-show-apprenticeships>${apprenticeshipExpanded?'Show fewer programs':`Show all ${programs.length} apprenticeship programs`}</button>`:''}`;
+    ${programs.length>6?`<button class="button button-light" type="button" data-show-apprenticeships>${apprenticeshipExpanded?'Show fewer programs':`Show all ${programs.length} training programs`}</button>`:''}`;
 }
 function roleExplorer(){return `<details id="role-explorer" class="idea-section"><summary><span><small>Broaden the search</small><strong>Explore ${db.role_ideas?.length||0} other job titles</strong><span class="idea-note">Take your search beyond the saved leads. These links open live searches, not verified vacancies.</span></span><span class="idea-arrow" aria-hidden="true">+</span></summary>
     <div class="idea-body"><div class="idea-controls"><div class="filter"><label for="idea-query">Search role ideas</label><input id="idea-query" data-idea-search type="search" value="${text(ideasQuery)}" placeholder="Coin, Shopify, garden…"></div>
@@ -210,7 +212,7 @@ function roleExplorer(){return `<details id="role-explorer" class="idea-section"
 function renderRoleResults(){
   const node=document.querySelector('#idea-results');if(!node)return;
   const q=ideasQuery.toLowerCase().trim();
-  const filtered=(db.role_ideas||[]).filter(r=>(ideasCategory==='all'||r.category===ideasCategory)&&(!q||[r.title,r.summary,r.typicalQualifications,r.category].join(' ').toLowerCase().includes(q)));
+  const filtered=(db.role_ideas||[]).filter(r=>(ideasCategory==='all'||r.category===ideasCategory)&&(!q||[r.title,r.summary,r.typicalQualifications,r.category].join(' ').toLowerCase().includes(q))&&(filter.track!=='cnc'||isCncRole(r)));
   const prioritized=[...filtered].sort((a,b)=>filter.track==='digital'?Number(digitalCategories.has(b.category))-Number(digitalCategories.has(a.category)):filter.track==='physical'?Number(digitalCategories.has(a.category))-Number(digitalCategories.has(b.category)):0);
   const shown=ideasExpanded?prioritized:prioritized.slice(0,12);
   node.innerHTML=`<p class="ideas-intro">${filtered.length} role ideas. Salary and availability are intentionally not invented. Searches use ${text(filter.center)} as the starting location.</p>
@@ -266,7 +268,7 @@ root.addEventListener('click',event=>{
   const save=event.target.closest('[data-save-id]');
   if(save){state.favorites[save.dataset.saveId]=!state.favorites[save.dataset.saveId];persist();renderJobResults();return;}
   const pick=event.target.closest('[data-track]');
-  if(pick){visibleCount=PAGE_SIZE;filter.track=pick.dataset.track;document.querySelectorAll('[data-track]').forEach(el=>{const yes=el.dataset.track===filter.track;el.classList.toggle('selected',yes);el.setAttribute('aria-pressed',String(yes));});renderJobResults();renderRoleResults();if(filter.track==='trades'){document.querySelector('#apprenticeships')?.scrollIntoView({behavior:'smooth',block:'start'});}return;}
+  if(pick){visibleCount=PAGE_SIZE;filter.track=pick.dataset.track;document.querySelectorAll('[data-track]').forEach(el=>{const yes=el.dataset.track===filter.track;el.classList.toggle('selected',yes);el.setAttribute('aria-pressed',String(yes));});renderJobResults();renderApprenticeships();renderRoleResults();if(filter.track==='trades'){document.querySelector('#apprenticeships')?.scrollIntoView({behavior:'smooth',block:'start'});}return;}
   const clear=event.target.closest('[data-clear-filter]');
   if(clear){visibleCount=PAGE_SIZE;filter[clear.dataset.clearFilter]=defaults[clear.dataset.clearFilter];renderJobs();return;}
   if(event.target.closest('#reset-filters')){visibleCount=PAGE_SIZE;filter={...defaults,center:state.center,includeRemote:state.includeRemote};ideasQuery='';ideasCategory='all';renderJobs();return;}

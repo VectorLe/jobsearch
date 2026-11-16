@@ -66,6 +66,21 @@ class RefreshTests(unittest.TestCase):
         self.assertGreaterEqual(len(roles),40)
         self.assertGreaterEqual(len([r for r in roles if r['category'] in ('E-commerce & digital','Technical & IT')]),10)
         self.assertTrue(all(r['typicalQualifications'] for r in roles))
+    def test_cnc_job_titles_and_training_not_mixed(self):
+        self.assertTrue(refresh.relevant_title('CNC operator trainee'))
+        self.assertTrue(refresh.relevant_title('CNC mill machinist'))
+        self.assertEqual(refresh.group_for('CNC setup machinist'),'Skilled trades')
+        self.assertEqual(refresh.group_for('CNC programmer'),'Skilled trades')
+        self.assertTrue(refresh._recent('2026-11-10',date(2026,11,16)))
+        self.assertFalse(refresh._recent('2026-10-15',date(2026,11,16)))
+        postings=refresh.read_json(ROOT/'data/opportunities.json')
+        cnc=[j for j in postings if 'cnc' in j['title'].lower()]
+        self.assertGreaterEqual(len(cnc),3)
+        self.assertTrue(all(j['category']=='Skilled trades' and j['requirements'] for j in cnc))
+        programs=refresh.read_json(ROOT/'data/apprenticeships.json')
+        self.assertGreaterEqual(len([p for p in programs if 'CNC' in p['title']]),3)
+        self.assertTrue(all('postedAt' not in p for p in programs))
+
     def test_technical_and_shopify_matching(self):
         self.assertTrue(refresh.relevant_title('Shopify merchandising specialist'))
         self.assertTrue(refresh.relevant_title('Computer support specialist'))

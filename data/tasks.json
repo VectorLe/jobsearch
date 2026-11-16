@@ -158,5 +158,29 @@
     "detail": "Compare physical demands, commute, paid training, hazards and long-term income with museum and commerce roles.",
     "careerId": "trade-electrical",
     "priority": "medium"
+  },
+  {
+    "id": "cnc-intro-course",
+    "phase": 1,
+    "title": "Compare Mt. SAC and PCC CNC training",
+    "detail": "Check cost, schedule, hands-on machine access, prerequisites and employer partnerships before registering.",
+    "careerId": "cnc",
+    "priority": "high"
+  },
+  {
+    "id": "cnc-apprenticeship-pcc",
+    "phase": 1,
+    "title": "Ask PCC whether the CNC apprenticeship is recruiting",
+    "detail": "Request the Fall 2026 program intake status, employer matching details and wages before assuming enrollment is open.",
+    "careerId": "cnc",
+    "priority": "high"
+  },
+  {
+    "id": "cnc-shadow",
+    "phase": 2,
+    "title": "Observe a CNC machining shift",
+    "detail": "Compare CNC operator, setup and programmer work; ask about standing, safety, noise, accuracy, and training requirements.",
+    "careerId": "cnc",
+    "priority": "medium"
   }
 ]

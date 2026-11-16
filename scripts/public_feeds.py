@@ -33,7 +33,8 @@ LOCAL_TITLES = (
     'systems analyst', 'business analyst', 'merchandis', 'training', 'trainer',
     'sales associate', 'jewelry', 'store manager', 'barista', 'recreation',
     'museum', 'park', 'library', 'visitor', 'customer', 'retail', 'field service',
-    'warehouse', 'inventory', 'parts', 'maintenance', 'marketing coordinator',
+    'warehouse', 'inventory', 'parts', 'maintenance', 'machinist', 'machining',
+    'cnc', 'lathe', 'machine shop', 'marketing coordinator',
     'community', 'events', 'outside sales', 'learning and development',
 )
 REMOTE_TITLES = (
@@ -132,6 +133,8 @@ def local_city(value, geo):
 
 def category_for(title):
     t = title.lower()
+    if any(x in t for x in ('cnc', 'machinist', 'machining', 'lathe', 'machine shop')):
+        return 'Skilled trades'
     if any(x in t for x in ('shopify', 'ecommerce', 'e-commerce', 'wordpress',
                              'merchandis', 'marketing', 'web content', 'copywrit', 'seo')):
         return 'E-commerce & digital'

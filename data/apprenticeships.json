@@ -232,5 +232,44 @@
     "action": "Search official programs by county and occupation to find additional openings not on commercial job boards.",
     "pay": "Compare official wage and benefit information",
     "work": "Use the official state database to expand beyond the curated union list."
+  },
+  {
+    "id": "pcc-cnc-apprentice",
+    "title": "CNC machinist apprenticeship",
+    "sponsor": "Pasadena City College",
+    "city": "Pasadena",
+    "kind": "College-sponsored apprenticeship",
+    "status": "Fall 2026 launch listed. DOL registered, California DAS pending. Verify current application intake.",
+    "url": "https://www.pasadena.edu/academics/apprenticeship/index.php",
+    "requirements": "Program lists DOL registration with California state registration pending. Enrollment, employer matching, wages and eligibility are not confirmed on the public page.",
+    "action": "Email apprenticeshippcc@pasadena.edu or call (626) 585-3377. Ask if new trainees are being accepted, how employer placement works and whether wages are paid during training.",
+    "pay": "Paid on-the-job training pathway advertised; exact pay and placement not guaranteed.",
+    "work": "Learn CNC machining through coursework and supervised work, including machine setup, measurement and safe operation."
+  },
+  {
+    "id": "mtsac-cnc-tech",
+    "title": "CNC Technician certificate (9 units)",
+    "sponsor": "Mt. San Antonio College",
+    "city": "Walnut",
+    "kind": "College certificate, not a paid apprenticeship",
+    "status": "Certificate listed in the college catalog. Confirm current class availability.",
+    "url": "https://catalog.mtsac.edu/programs/programsaz/manufacturing-technology/cnc-technician-certificate/",
+    "requirements": "Three 3-unit courses: Manufacturing Processes and Materials (MFG 130), Introduction to CNC Programming (MFG 250) and CNC Operation (MFG 260). Check prerequisites and course schedule.",
+    "action": "Review class schedules or contact Manufacturing Technology faculty about shop access, beginner suitability and completion time.",
+    "pay": "Unpaid coursework. Tuition and available assistance depend on enrollment.",
+    "work": "Hands-on CNC mills and lathes, basic programming, CAD/CAM concepts, precision measurement and materials."
+  },
+  {
+    "id": "pcc-cnc-certificate",
+    "title": "CNC Machinist Specialist certificate",
+    "sponsor": "Pasadena City College",
+    "city": "Pasadena",
+    "kind": "College certificate, not a paid apprenticeship",
+    "status": "Published in PCC 2026-27 catalog. Check course scheduling.",
+    "url": "https://curriculum.pasadena.edu/academic-programs/machine-shop-technology/computer-numerical-control-cnc-machinist-specialist-as-cert-achievement/",
+    "requirements": "Coursework includes blueprint reading, precision measurement, milling, turning, Mastercam, toolpaths and quality assurance. Certificate requires all required courses with a C or better.",
+    "action": "Compare the certificate with the PCC apprenticeship, then observe a lab or speak with the Machine Shop Technology program.",
+    "pay": "Unpaid coursework. No guaranteed employment or wage.",
+    "work": "CNC mill and lathe setup, operation, CAD/CAM programming, safety and inspection."
   }
 ]

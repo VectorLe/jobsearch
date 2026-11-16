@@ -202,5 +202,16 @@
     "firstSteps": [
       "Request NEIEP Local 18 recruiting alerts and ask IUOE Local 12 about training."
     ]
+  },
+  {
+    "id": "cnc",
+    "title": "CNC machinist, from operator to setup and programming",
+    "category": "Skilled trades",
+    "summary": "Work with computer-controlled mills and lathes to turn raw stock into precise parts. Operating and setup are primarily hands-on; CAD/CAM programming shifts more time toward screens. Requires measurement, shop safety, applied math and attention to tolerances.",
+    "firstSteps": [
+      "Visit the machine shop or speak with faculty at Mt. SAC or Pasadena City College before committing to training.",
+      "Ask about the nine-unit Mt. SAC CNC Technician certificate and PCC machining apprenticeship intake.",
+      "Compare a CNC operator trainee shift against a machinist setup and programmer shift to see which duties appeal."
+    ]
   }
 ]

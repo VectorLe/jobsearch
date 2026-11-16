@@ -438,5 +438,80 @@
     "careerIds": [
       "recreation"
     ]
+  },
+  {
+    "id": "lawrence-cnc-lathe-level1-2026",
+    "title": "Level 1 CNC lathe machinist operator",
+    "employer": "Lawrence Equipment, Inc.",
+    "city": "South El Monte",
+    "category": "Skilled trades",
+    "salary": "$23 to $28/hr",
+    "schedule": "Full-time; onsite, shift details in posting",
+    "deadline": null,
+    "sourceUrl": "https://jigup.co/jobs/level-1-cnc-lathe-machinist-operator-lawrence-equipment-south-el-monte-californi-afa214c6",
+    "observedAt": "2026-11-16",
+    "note": "Set up and run a HAAS TL-3 lathe, read drawings, adjust offsets, inspect finished parts and document quality. Hands-on shop-floor work, with some controller programming.",
+    "careerIds": [
+      "cnc"
+    ],
+    "priority": "high",
+    "postedAt": "2026-11-10",
+    "requirements": "At least one year of CNC lathe experience; blueprint and GD&T reading, micrometers/calipers, offsets and basic program editing. Not a zero-experience role.",
+    "jobNumber": "",
+    "sourceType": "Third-party listing, with employer job board cross-check",
+    "payType": "Published hourly range; verify with employer",
+    "workMode": "On site",
+    "experienceLevel": "Early-career: 1+ year required",
+    "qualificationSource": "Original listing mirrored on Jigup; see Lawrence Equipment careers"
+  },
+  {
+    "id": "lawrence-cnc-mill-2026",
+    "title": "CNC mill machinist, first shift",
+    "employer": "Lawrence Equipment, Inc.",
+    "city": "South El Monte",
+    "category": "Skilled trades",
+    "salary": "$25 to $30/hr",
+    "schedule": "Full-time; 6:00 am to 3:30 pm, Saturdays as needed",
+    "deadline": null,
+    "sourceUrl": "https://www.jobtarget.com/jobs/jt-z6jl9mt8ts/cnc-mill-machinist-south-el-monte-california",
+    "observedAt": "2026-11-16",
+    "note": "Machine precision parts on HAAS CNC mills, adjust programs and tooling, read prints, and inspect work. More advanced than an entry-level operator.",
+    "careerIds": [
+      "cnc"
+    ],
+    "priority": "high",
+    "postedAt": "2026-11-06",
+    "requirements": "Requires practical CNC mill setup and operation, print reading, program adjustments and precision measuring. Review exact experience requirements with the employer.",
+    "jobNumber": "",
+    "sourceType": "Dated third-party job posting; employer board cross-check",
+    "payType": "Reported range from employer-related listing; verify",
+    "workMode": "On site",
+    "experienceLevel": "Experienced machinist",
+    "qualificationSource": "JobTarget job listing and Lawrence Equipment employer board"
+  },
+  {
+    "id": "lawrence-cnc-mill-setup-2026",
+    "title": "CNC mill setup machinist",
+    "employer": "Lawrence Equipment, Inc.",
+    "city": "South El Monte",
+    "category": "Skilled trades",
+    "salary": "$30 to $35/hr",
+    "schedule": "Full-time; first shift, some Saturdays",
+    "deadline": null,
+    "sourceUrl": "https://www.jobtarget.com/jobs/jt-mcmtd96szr/cnc-mill-setup-machinist-south-el-monte-california",
+    "observedAt": "2026-11-16",
+    "note": "Independently set up horizontal CNC mills, edit machine programs and produce accurate components. Best treated as a later-career destination.",
+    "careerIds": [
+      "cnc"
+    ],
+    "priority": "medium",
+    "postedAt": "2026-10-29",
+    "requirements": "Advanced CNC mill setup, tool selection, program editing, blueprint and measurement skills. Expect substantial prior shop experience; verify the exact years required.",
+    "jobNumber": "",
+    "sourceType": "Dated third-party job posting; employer board cross-check",
+    "payType": "Reported published hourly range; verify",
+    "workMode": "On site",
+    "experienceLevel": "Experienced setup machinist",
+    "qualificationSource": "JobTarget, Lawrence Equipment careers and corresponding Indeed listing"
   }
 ]

@@ -72,6 +72,13 @@ SEARCHES=[
     ('ironworker apprentice','Whittier, California',40),
     ('glazier apprentice','Industry, California',40),
     ('millwright apprentice','Pomona, California',40),
+    ('CNC operator trainee','El Monte, California',25),
+    ('CNC machinist','South El Monte, California',30),
+    ('CNC lathe operator','Monrovia, California',30),
+    ('CNC mill machinist','El Monte, California',30),
+    ('CNC setup machinist','Pomona, California',35),
+    ('CNC programmer','Industry, California',35),
+    ('machine shop quality inspector','Baldwin Park, California',30),
     ('machinist apprentice','Ontario, California',40),
     ('industrial maintenance technician','El Monte, California',40),
     ('building maintenance technician','San Gabriel, California',40),
@@ -98,7 +105,8 @@ TERMS=('museum','historic','historical','heritage','interpreter','interpretive',
        'computer support','desktop support','technical support','it support',
        'computer technician','field service technician','technology support',
        'retail technology','website coordinator','web content','cms specialist',
-       'digital marketing coordinator','technical trainer','technical writer')
+       'digital marketing coordinator','technical trainer','technical writer',
+       'cnc','machinist','machining','lathe','machine shop','milling machine')
 
 
 
@@ -171,7 +179,7 @@ def group_for(title):
     t=title.lower()
     if any(w in t for w in ('electrician','sprinkler fitter','sprinkler apprentice','pipefitter','steamfitter','weld','sheet metal',
                             'hvac','refrigeration','elevator','heavy equipment','carpenter','ironworker','glazier','millwright',
-                            'machinist','building maintenance','facilities maintenance','water treatment',
+                            'cnc','lathe','machine shop','machining','machinist','building maintenance','facilities maintenance','water treatment',
                             'utility operator','fire alarm','solar install','construction inspector','apprentice','apprenticeship')):
         return 'Skilled trades'
     if any(w in t for w in ('shopify','woocommerce','wordpress','ecommerce','e-commerce','fulfillment','merchandising','marketplace','product listing')):

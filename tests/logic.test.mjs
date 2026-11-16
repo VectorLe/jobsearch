@@ -73,3 +73,15 @@ test('30-day age limit is inclusive and overrides archived/unknown date filters'
   assert.equal(isRecentPosting('2026-11-14','2026-11-13'),false);
   assert.equal(categoryTone('Skilled trades'),'trades');
 });
+
+import {isCncRole} from '../js/logic.js';
+test('CNC filter separates machinists from other skilled trades and digital roles',()=>{
+  const f={query:'',radius:'30',archived:true,saved:false,category:'all',age:'all',minPay:'all',track:'cnc'};
+  const job={...base,id:'cnc',title:'CNC operator trainee',category:'Skilled trades',city:'El Monte',postedAt:'2026-11-10'};
+  assert.equal(isCncRole(job),true);
+  assert.equal(isCncRole('CNC programmer CAD/CAM'),true);
+  assert.equal(isCncRole('Electrical apprentice'),false);
+  assert.equal(matchJob(job,f,'El Monte',geo),true);
+  assert.equal(matchJob({...job,title:'Electrician apprentice'},f,'El Monte',geo),false);
+  assert.equal(matchJob({...job,postedAt:'2026-09-01'},f,'El Monte',geo),false);
+});

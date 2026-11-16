@@ -86,6 +86,10 @@ export function hourlyFloor(pay) {
   if(/\/hr|hourly|per hour/i.test(raw))return n;
   return null;
 }
+export function isCncRole(job) {
+  const title=typeof job==='string'?job:String(job?.title||'');
+  return /\b(?:cnc|machinist|machining|lathe|machine shop|milling machine|cad\/cam)\b/i.test(title);
+}
 export const digitalCategories=new Set(['E-commerce & digital','Technical & IT']);
 export function categoryTone(category) {
   if(category==='Museums & heritage')return 'heritage';
@@ -111,6 +115,7 @@ export function matchJob(job, f, center, geo, saved={}) {
   if(f.track==='heritage'&&!['Museums & heritage','Books & education'].includes(job.category))return false;
   if(f.track==='collectibles'&&job.category!=='Collectibles & trade')return false;
   if(f.track==='trades'&&job.category!=='Skilled trades')return false;
+  if(f.track==='cnc'&&!isCncRole(job))return false;
   if(f.age!=='all') {
     const age=postedAge(job.postedAt).days;
     if(f.age==='unknown' ? age!==null : age===null||age>Number(f.age))return false;

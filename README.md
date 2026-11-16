@@ -95,3 +95,9 @@ Job cards only display genuine, known publication dates within the past **30 cal
 The `data/apprenticeships.json` file holds standing union and registered apprenticeship program references. These **are not job vacancies**, have no fabricated publication dates, and are never included in job counts. Recruitment status and wage scales must be verified with each sponsor. Browse via the `Skilled trades` filter or the apprenticeship section.
 
 The no-key public job feeds include Greenhouse employer boards, Jobicy and Remotive, with direct source attribution and publication-date filtering. Optional Adzuna queries search hands-on trades, museums, parks, books, collectibles, IT and e-commerce across the San Gabriel Valley and nearby communities. External APIs are subject to provider rate limits and terms. The number of suitable recent jobs varies daily and is not guaranteed.
+
+## CNC machining pathway
+
+CNC machining now has a dedicated job filter, operator-to-programmer career path, recent dated job leads and links to local training. The specific first steps are to compare Pasadena City College and Mt. San Antonio College training and observe an actual shop shift. The PCC CNC machinist apprenticeship launch is described as Fall 2026, with California Division of Apprenticeship Standards approval still pending on its public page. It is a training pathway, not a verified available apprenticeship opening.
+
+Source notes and role distinctions: [CNC machining research](docs/cnc-machining.md). Job leads must still pass the existing 30-day posting-date rule and may close without notice.

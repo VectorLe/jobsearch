@@ -104,6 +104,13 @@ class PublicFeedTests(unittest.TestCase):
         self.assertIsNone(feeds.normalize_greenhouse({**raw,'first_published':'2026-10-01'},'test','Test',self.geo,date(2026,11,13),{}))
         self.assertIsNone(feeds.normalize_remotive({'id':77,'title':'Shopify Support Specialist','url':'https://remotive.com/remote-jobs/test','publication_date':'2026-11-12','candidate_required_location':'UK only'},date(2026,11,13),{}))
 
+    def test_cnc_job_classification_and_public_board_matching(self):
+        self.assertTrue(feeds.relevant('CNC machinist', feeds.LOCAL_TITLES))
+        self.assertTrue(feeds.relevant('CNC operator trainee', feeds.LOCAL_TITLES))
+        self.assertEqual(feeds.category_for('CNC Lathe Machinist'),'Skilled trades')
+        self.assertEqual(feeds.category_for('CNC Mill Setup Machinist'),'Skilled trades')
+        self.assertEqual(feeds.category_for('Shopify Coordinator'),'E-commerce & digital')
+
     def test_markup_and_external_em_dash_are_sanitized(self):
         raw = 'Required Skills: Shopify ' + chr(8212) + ' two years experience'
         self.assertNotIn(chr(8212), feeds.plain_html('<p>'+raw+'</p>'))

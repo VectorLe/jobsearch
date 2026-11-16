@@ -117,5 +117,29 @@
     "careerIds": [
       "numismatic"
     ]
+  },
+  {
+    "id": "pcc-machine-shop",
+    "name": "Pasadena City College Machine Shop Technology",
+    "city": "Pasadena",
+    "address": "1570 E Colorado Blvd, Pasadena, CA 91106",
+    "category": "Training",
+    "bestFor": "CNC machinist specialist courses and Fall 2026 apprenticeship inquiry; contact faculty before visiting labs.",
+    "url": "https://www.pasadena.edu/academics/divisions/career-education/machine-shop.php",
+    "careerIds": [
+      "cnc"
+    ]
+  },
+  {
+    "id": "mtsac-cnc",
+    "name": "Mt. San Antonio College CNC Technician program",
+    "city": "Walnut",
+    "address": "1100 N Grand Ave, Walnut, CA 91789",
+    "category": "Training",
+    "bestFor": "Nine-unit CNC Technician certificate with classes in manufacturing, CNC programming and CNC operation.",
+    "url": "https://catalog.mtsac.edu/programs/programsaz/manufacturing-technology/cnc-technician-certificate/",
+    "careerIds": [
+      "cnc"
+    ]
   }
 ]

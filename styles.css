@@ -72,6 +72,7 @@ p {line-height:1.65}
 .track[data-track=physical].selected {background:#3b3d2d;border-color:#747841;color:var(--green)}
 .track[data-track=heritage].selected {background:#2b3b3d;border-color:#5a8180;color:var(--blue)}
 .track[data-track=trades].selected {background:#47302f;border-color:#9c514b;color:#fb9b88}
+.track[data-track=cnc].selected {background:#383445;border-color:var(--purple-muted);color:var(--purple)}
 .track[data-track=collectibles].selected {background:#453328;border-color:#93613c;color:var(--orange)}
 .filter-grid {display:grid;grid-template-columns:minmax(220px,1.65fr) repeat(3,minmax(150px,1fr));gap:13px}
 .filter {min-width:0;display:flex;flex-direction:column;gap:6px}
@@ -118,6 +119,7 @@ p {line-height:1.65}
 .tone-ecommerce {--accent:var(--purple);--badge-bg:#3e303d;--badge-border:#7c5571}
 .tone-technical {--accent:var(--aqua);--badge-bg:#2e3d35;--badge-border:#557b63}
 .tone-trades {--accent:var(--red);--badge-bg:#46302c;--badge-border:#9b5146}
+.tone-cnc {--accent:var(--purple);--badge-bg:#403345;--badge-border:#86607e}
 .tone-services {--accent:#bdae93;--badge-bg:#3c3836;--badge-border:#665c54}
 .job-card {min-width:0;display:flex;flex-direction:column;gap:12px;padding:20px 20px 17px;border:1px solid var(--border);border-left:4px solid var(--accent,var(--blue));border-radius:11px;background:var(--bg-soft);box-shadow:var(--shadow);transition:border-color .15s,transform .15s}
 .job-card:hover {border-top-color:#787067;border-right-color:#787067;border-bottom-color:#787067;transform:translateY(-1px)}
@@ -244,3 +246,7 @@ p {line-height:1.65}
 .trade-pay strong {color:var(--aqua)}
 @media(max-width:1150px){.apprenticeship-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:750px){.apprenticeship-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* CNC is a distinct, hands-on precision trade within the existing filters. */
+.trade-link {background:#383445;border:1px solid var(--purple-muted);color:var(--purple);border-radius:999px;font:inherit;cursor:pointer;padding:5px 9px}
+.trade-link:hover,.trade-link:focus-visible {color:var(--purple)}

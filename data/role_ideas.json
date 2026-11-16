@@ -678,5 +678,65 @@
     "typicalQualifications": "Math, outdoor work and tools",
     "query": "Construction surveying technician",
     "type": "role-idea"
+  },
+  {
+    "id": "cnc-role-operator",
+    "title": "CNC operator trainee",
+    "category": "Skilled trades",
+    "movement": "Moderate to high movement, standing at machines",
+    "summary": "Load material, run approved programs, check dimensions and maintain a safe work cell. A realistic first target when training is available.",
+    "typicalQualifications": "Blueprint basics, measuring tools, shop safety and mechanical aptitude; some employers train motivated beginners.",
+    "query": "CNC operator trainee",
+    "type": "role-idea"
+  },
+  {
+    "id": "cnc-role-lathe",
+    "title": "CNC lathe operator",
+    "category": "Skilled trades",
+    "movement": "Moderate to high movement",
+    "summary": "Turn precision components on CNC lathes, change tools, correct offsets and inspect tolerances.",
+    "typicalQualifications": "Calipers and micrometers, turning fundamentals, blueprint reading and often prior lathe experience.",
+    "query": "CNC lathe operator",
+    "type": "role-idea"
+  },
+  {
+    "id": "cnc-role-mill",
+    "title": "CNC milling machinist",
+    "category": "Skilled trades",
+    "movement": "Moderate to high movement",
+    "summary": "Mill precise parts and prototypes, adjust tools and feeds, and measure finished work.",
+    "typicalQualifications": "CNC mill operation, workholding, blueprint interpretation, GD&T and machining safety.",
+    "query": "CNC mill machinist",
+    "type": "role-idea"
+  },
+  {
+    "id": "cnc-role-setup",
+    "title": "CNC setup technician",
+    "category": "Skilled trades",
+    "movement": "Moderate to high movement",
+    "summary": "Set up machines independently, select fixtures and tools, troubleshoot programs and validate first pieces.",
+    "typicalQualifications": "Prior machining experience, G-code or machine controls, offsets, tooling and precision inspection.",
+    "query": "CNC setup machinist",
+    "type": "role-idea"
+  },
+  {
+    "id": "cnc-role-programmer",
+    "title": "CNC programmer, CAD/CAM",
+    "category": "Skilled trades",
+    "movement": "Mixed shop and desk work, often more screen time",
+    "summary": "Design toolpaths, generate or refine machine programs, and plan manufacturable parts.",
+    "typicalQualifications": "Strong machining fundamentals, CAD/CAM software such as Mastercam, blueprint reading, toolpaths and verification.",
+    "query": "CNC programmer Mastercam",
+    "type": "role-idea"
+  },
+  {
+    "id": "cnc-role-inspector",
+    "title": "Machined-parts quality inspector",
+    "category": "Skilled trades",
+    "movement": "Moderate movement across shop floor",
+    "summary": "Measure parts and ensure tolerances using gauges and quality documents. A related pathway to precision manufacturing.",
+    "typicalQualifications": "Measurement and metrology, GD&T, CMM familiarity and documentation; exact requirements vary.",
+    "query": "CNC quality inspector",
+    "type": "role-idea"
   }
 ]

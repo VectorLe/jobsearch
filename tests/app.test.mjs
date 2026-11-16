@@ -22,7 +22,10 @@ test('Job Watch presents useful filters, qualifications, pay and separate job-ti
   assert.match(body,/Bradbury/);
   assert.match(body,/West Covina/);
   assert.match(body,/Shopify and tech/);
-  assert.match(body,/Explore 68 other job titles/);
+  const ideasData=JSON.parse(await readFile(new URL('../data/role_ideas.json',import.meta.url),'utf8'));
+  assert.match(body,new RegExp('Explore '+ideasData.length+' other job titles'));
+  assert.match(body,/data-track="cnc"/);
+  assert.match(results,/Level 1 CNC lathe machinist operator/);
   assert.match(body,/Browse matching jobs/);
   assert.match(results,/Museum Education Coordinator/);
   assert.match(results,/Qualifications to check/);
