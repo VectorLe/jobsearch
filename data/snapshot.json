@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-11-17T00:15:18Z",
+  "generatedAt": "2026-11-17T23:31:44Z",
   "timezone": "America/Los_Angeles",
   "center": "El Monte",
   "method": "Deadline date checks and source URL reachability; reachable does not mean accepting applications.",
   "deadlines": {
     "crestmore": {
       "state": "passed",
-      "daysRemaining": -5
+      "daysRemaining": -6
     },
     "la-verne": {
       "state": "passed",
-      "daysRemaining": -4
+      "daysRemaining": -5
     },
     "pomona": {
       "state": "soon",
-      "daysRemaining": 6
+      "daysRemaining": 5
     },
     "arcadia-museum": {
       "state": "future",
-      "daysRemaining": 14
+      "daysRemaining": 13
     },
     "arcadia-rec": {
       "state": "future",
-      "daysRemaining": 14
+      "daysRemaining": 13
     },
     "arcadia-leader": {
       "state": "unknown",
@@ -30,39 +30,39 @@
     },
     "arcadia-library": {
       "state": "future",
-      "daysRemaining": 14
+      "daysRemaining": 13
     },
     "pomona-inclusion": {
       "state": "future",
-      "daysRemaining": 9
+      "daysRemaining": 8
     },
     "pasadena-librarian": {
       "state": "soon",
-      "daysRemaining": 3
+      "daysRemaining": 2
     },
     "arcadia-librarian": {
       "state": "future",
-      "daysRemaining": 14
+      "daysRemaining": 13
     },
     "pasadena-it-support": {
       "state": "passed",
-      "daysRemaining": -4
+      "daysRemaining": -5
     },
     "covina-it-manager": {
       "state": "future",
-      "daysRemaining": 9
+      "daysRemaining": 8
     },
     "west-covina-admin": {
-      "state": "soon",
-      "daysRemaining": 1
+      "state": "today",
+      "daysRemaining": 0
     },
     "cgu-tech-support": {
       "state": "unknown",
       "daysRemaining": null
     },
     "south-gate-rec-leader": {
-      "state": "today",
-      "daysRemaining": 0
+      "state": "passed",
+      "daysRemaining": -1
     },
     "pasadena-senior-erp-2026": {
       "state": "unknown",
@@ -115,16 +115,16 @@
       "httpStatus": 200
     },
     "arcadia-library": {
-      "result": "reachable",
-      "httpStatus": 200
+      "result": "unreachable",
+      "httpStatus": 502
     },
     "pomona-inclusion": {
-      "result": "reachable",
-      "httpStatus": 200
+      "result": "unreachable",
+      "httpStatus": 502
     },
     "pasadena-librarian": {
-      "result": "reachable",
-      "httpStatus": 200
+      "result": "unreachable",
+      "httpStatus": 502
     },
     "arcadia-librarian": {
       "result": "reachable",
