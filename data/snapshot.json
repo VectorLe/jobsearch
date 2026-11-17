@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-11-15T21:03:39Z",
+  "generatedAt": "2026-11-17T00:15:18Z",
   "timezone": "America/Los_Angeles",
   "center": "El Monte",
   "method": "Deadline date checks and source URL reachability; reachable does not mean accepting applications.",
   "deadlines": {
     "crestmore": {
       "state": "passed",
-      "daysRemaining": -4
+      "daysRemaining": -5
     },
     "la-verne": {
       "state": "passed",
-      "daysRemaining": -3
+      "daysRemaining": -4
     },
     "pomona": {
       "state": "soon",
-      "daysRemaining": 7
+      "daysRemaining": 6
     },
     "arcadia-museum": {
       "state": "future",
-      "daysRemaining": 15
+      "daysRemaining": 14
     },
     "arcadia-rec": {
       "state": "future",
-      "daysRemaining": 15
+      "daysRemaining": 14
     },
     "arcadia-leader": {
       "state": "unknown",
@@ -30,39 +30,39 @@
     },
     "arcadia-library": {
       "state": "future",
-      "daysRemaining": 15
+      "daysRemaining": 14
     },
     "pomona-inclusion": {
       "state": "future",
-      "daysRemaining": 10
+      "daysRemaining": 9
     },
     "pasadena-librarian": {
       "state": "soon",
-      "daysRemaining": 4
+      "daysRemaining": 3
     },
     "arcadia-librarian": {
       "state": "future",
-      "daysRemaining": 15
+      "daysRemaining": 14
     },
     "pasadena-it-support": {
       "state": "passed",
-      "daysRemaining": -3
+      "daysRemaining": -4
     },
     "covina-it-manager": {
       "state": "future",
-      "daysRemaining": 10
+      "daysRemaining": 9
     },
     "west-covina-admin": {
       "state": "soon",
-      "daysRemaining": 2
+      "daysRemaining": 1
     },
     "cgu-tech-support": {
       "state": "unknown",
       "daysRemaining": null
     },
     "south-gate-rec-leader": {
-      "state": "soon",
-      "daysRemaining": 1
+      "state": "today",
+      "daysRemaining": 0
     },
     "pasadena-senior-erp-2026": {
       "state": "unknown",
@@ -73,6 +73,18 @@
       "daysRemaining": null
     },
     "downey-senior-activity-specialist-2026": {
+      "state": "unknown",
+      "daysRemaining": null
+    },
+    "lawrence-cnc-lathe-level1-2026": {
+      "state": "unknown",
+      "daysRemaining": null
+    },
+    "lawrence-cnc-mill-2026": {
+      "state": "unknown",
+      "daysRemaining": null
+    },
+    "lawrence-cnc-mill-setup-2026": {
       "state": "unknown",
       "daysRemaining": null
     }
@@ -147,6 +159,18 @@
       "httpStatus": 200
     },
     "downey-senior-activity-specialist-2026": {
+      "result": "reachable",
+      "httpStatus": 200
+    },
+    "lawrence-cnc-lathe-level1-2026": {
+      "result": "reachable",
+      "httpStatus": 200
+    },
+    "lawrence-cnc-mill-2026": {
+      "result": "reachable",
+      "httpStatus": 200
+    },
+    "lawrence-cnc-mill-setup-2026": {
       "result": "reachable",
       "httpStatus": 200
     }
